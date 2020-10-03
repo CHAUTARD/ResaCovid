@@ -1,0 +1,159 @@
+/* theme.css
+ * Version : 1.0.0
+ */
+body, html, .container-fluid {
+  height: 100%;
+}
+
+body {
+  min-height: 100vh;
+
+  color: #333;
+  background-color: #f1f1f1;
+}
+
+.logo-container>img {
+	max-height: 90px;
+	padding: 15px;
+	width: auto;
+}
+
+/*-------------- N A V B A R ------------*/
+.navbar { 
+	background-color: #484848; 
+	margin-bottom: 1.5rem; 
+	margin-top: 0.5rem;
+	padding: 0.8rem; 
+}
+.navbar .navbar-nav .nav-link { color: #fff; }
+.navbar .navbar-nav .nav-link:hover { color: #fbc531; }
+.navbar .navbar-nav .active > .nav-link { color: #fbc531; }
+
+/*----------------------------------------*/
+
+.box {
+   width:1270px;
+   padding:20px;
+   background-color:#fff;
+   border:1px solid #ccc;
+   border-radius:5px;
+   margin-top:25px;
+   box-sizing:border-box;
+}
+
+/* Ensure that the demo table scrolls */
+th, td { white-space: nowrap; }
+
+div.ColVis {
+    float: left;
+}
+
+.ScrollYClass {
+  height:800px;
+  overflow-y: scroll;
+}
+
+// tableau des jours
+//.table td { text-align: center; }
+.table-style .today {background: #2A3F54; color: #ffffff;}
+.table-style .off {background: #2A3F54; color: #ffffff;}
+
+// Samedi
+.table-style th:nth-of-type(6),td:nth-of-type(6) {color: blue;}
+
+// Dimanche
+.table-style th:nth-of-type(7),td:nth-of-type(7) {color: blue;}
+
+// Pas de salle le jeudi
+.table-style th:nth-of-type(4),td:nth-of-type(4) {color: red;}
+.table-style tr:first-child th{background-color:#F6F6F6; text-align:center; font-size: 15px;}
+
+table.dataTable tbody th,
+table.dataTable tbody td {
+	padding: 0.25rem; 
+    white-space: nowrap;
+}
+
+/********************************************
+ * Ouvreur = Bouton Oui / Non
+ *******************************************/
+input[type="radio"].radioOuiNon {
+  display: none;
+}
+input[type="radio"].radioOuiNon + label {
+  padding: 0.5rem 1rem;
+  font-size: 1.25rem;
+  line-height: 1.5;
+  border-radius: 0.3rem;
+  color: #fff;
+  background-color: #6c757d;
+  border: 1px solid transparent;
+  transition: all 0.15s ease-in-out;
+}
+input[type="radio"].radioOuiNon.demoyes:hover + label {
+  background-color: #218838;
+  border-color: #1e7e34;
+}
+input[type="radio"].radioOuiNon.demoyes:checked + label {
+  background-color: #28a745;
+  border-color: #28a745;
+}
+input[type="radio"].radioOuiNon.demono:hover + label {
+  background-color: #c82333;
+  border-color: #bd2130;
+}
+input[type="radio"].radioOuiNon.demono:checked + label {
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+/*
+ * ==========================================
+ *            CUSTOM UTIL CLASSES
+ * ==========================================
+ */
+.clearfix::after,
+.calendar ol::after {
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+
+/* ====================
+    Calendar Styling 
+   ====================*/
+.calendar { border-radius: 10px; }
+.month { font-size: 2rem; }
+
+/* @media (min-width: 992px) { 
+.month { font-size: 2.5rem; }
+ } */
+
+.calendar ol li { float: left; width: 14.28571%; }
+
+.outside { background-color: #777799; color: #FFFFFF; }
+
+.calendar .day-names { border-bottom: 1px solid #eee; }
+.calendar .day-names li { margin-bottom: 0.5rem; }
+.calendar .days li { border-bottom: 1px solid #eee; min-height: 11rem; }
+/* .calendar .days li .date { margin: 0 0; } */
+
+.calendar .days li .event {
+  font-size: 0.70rem;
+  padding: 0.4rem;
+  color: white;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-radius: 4rem;
+  margin-bottom: 1px;
+}
+
+.calendar .days li .event.span-2 { width: 200%; }
+.calendar .days li .event.begin { border-radius: 1rem 0 0 1rem; }
+.calendar .days li .event.end { border-radius: 0 1rem 1rem 0; }
+.calendar .days li .event.clear { background: none; }
+.calendar .days li:nth-child(n+29) { border-bottom: none; }
+.calendar .days li.outside .date { color: #ddd; }

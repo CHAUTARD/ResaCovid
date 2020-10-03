@@ -1,0 +1,247 @@
+<!-- heure.html -->
+
+{include="header"}
+
+<body>
+	<div class="container h-100">	
+		<div class="alert alert-dark" my-3>
+			<div class="d-flex align-items-center text-white-50 bg-purple rounded box-shadow">
+	        	<img class="mr-3" width="96" height="96" src="img/logo.gif" text="{#LOGO_TITLE#}" alt="{#LOGO_TITLE#}">
+	        	<div class="lh-100 align-items-center">
+	          		<h1 class="mb-0 text-white">Choix de l'horaire du {$datechoisie}</h1>   
+	          		<br />		
+	        		<h6 class="mx-auto" style="width: 250px;">{$now}</h6>
+	        	</div>
+	      	</div>
+		</div>
+		
+		<br />
+	    <div class="alert alert-info">
+    		<p><h4><center>Bonjour, {$joueur}</center></h4></p>
+		</div> 
+		<br />
+			
+		{if="$horaire.1 > ''"}					
+		<div class="row">
+			<div class="col-sm-4">	
+				<div class="card">
+					<div class="card-header">
+						<h5>
+							<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapse1" aria-expanded="false" aria-controls="collapse1"><i class="fap fa fa-plus"></i> {$horaire.1}</button>
+							{if="$isLibre.1 == 'Oui'"}
+								<br /><br /><a href="#" onclick="AddJoueur( {$dayofyear}, {$idCreneau.1})" class="btn btn-primary" alt="M'ajouter dans la liste des joueurs" title="M'ajouter dans la liste des joueurs"><i class="far fa-check-square" aria-hidden="true"></i> Ajout</a>
+							{/if}
+						</h5>
+					</div>
+					<div class="collapse" id="collapse1">
+						<div class="card-body">
+							<h5 class="card-title">
+								{if="$isOuvreur.1 == 'Oui'"}
+								<a href="#" onclick="AddOuvreur( {$dayofyear}, {$idCreneau.1})" class="btn btn-primary" alt="Me positionner comme ouvreur" title="Me positionner comme ouvreur"><i class="fas fa-key"></i></a>&nbsp;
+								{/if}
+								{$ouvreur.1}
+							</h5>
+						</div>
+						<ul class="list-group list-group-flush">
+						    {loop="$inscript.1"}
+						    	<li class="list-group-item">{if="$value.mode == 'MOD'"}<a href="#" onclick="DelCreneau( {$dayofyear}, {$idCreneau.1})" class="btn btn-primary" alt="Supprimer cette réservation" title="Supprimer cette réservation"> - </a>&nbsp;{/if}{$value.nom}</li>
+							{/loop}
+						</ul>
+					</div>
+				</div>
+			</div>
+			
+			{if="$horaire.2 > ''"}
+			<div class="col-sm-4">
+				<div class="card">
+					<div class="card-header">
+						<h5>
+							<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapse2" aria-expanded="false" aria-controls="collapse2"><i class="fap fa fa-plus"></i> {$horaire.2}</button>
+							{if="$isLibre.2 == 'Oui'"}
+								<br /><br /><a href="#" onclick="AddJoueur( {$dayofyear}, {$idCreneau.2})" class="btn btn-primary" alt="M'ajouter dans la liste des joueurs" title="M'ajouter dans la liste des joueurs"><i class="far fa-check-square" aria-hidden="true"></i> Ajout</a>
+							{/if}
+						</h5>
+					</div>
+					<div class="collapse" id="collapse2">
+						<div class="card-body">
+							<h5 class="card-title">
+								{if="$isOuvreur.2 == 'Oui'"}
+								<a href="#" onclick="AddOuvreur( {$dayofyear}, {$idCreneau.2})" class="btn btn-primary" alt="Me positionner comme ouvreur" title="Me positionner comme ouvreur"><i class="fas fa-key"></i></a>&nbsp;
+								{/if}
+								{$ouvreur.2}
+							</h5>
+						</div>
+						<ul class="list-group list-group-flush">
+						    {loop="$inscript.2"}
+						    	<li class="list-group-item">{if="$value.mode == 'MOD'"}<a href="#" onclick="DelCreneau( {$dayofyear}, {$idCreneau.2})" class="btn btn-primary" alt="Supprimer cette réservation" title="Supprimer cette réservation"> - </a>&nbsp;{/if}{$value.nom}</li>
+							{/loop}
+						</ul>
+					</div>
+				</div>
+			</div>
+			{/if}
+			
+			{if="$horaire.3 > ''"}
+			<div class="col-sm-4">
+				<div class="card">
+					<div class="card-header">
+						<h5>
+							<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapse3" aria-expanded="false" aria-controls="collapse3"><i class="fap fa fa-plus"></i> {$horaire.3}</button>
+							{if="$isLibre.3 == 'Oui'"}
+								<br /><br /><a href="#" onclick="AddJoueur( {$dayofyear}, {$idCreneau.3})" class="btn btn-primary" alt="M'ajouter dans la liste des joueurs" title="M'ajouter dans la liste des joueurs"><i class="far fa-check-square" aria-hidden="true"></i> Ajout</a>
+							{/if}
+						</h5>
+					</div>
+					<div class="collapse" id="collapse3">
+						<div class="card-body">
+							<h5 class="card-title">
+								{if="$isOuvreur.3 == 'Oui'"}
+								<a href="#" onclick="AddOuvreur( {$dayofyear}, {$idCreneau.3})" class="btn btn-primary" alt="Me positionner comme ouvreur" title="Me positionner comme ouvreur"><i class="fas fa-key"></i></a>&nbsp;
+								{/if}
+								{$ouvreur.3}
+							</h5>
+						</div>
+						<ul class="list-group list-group-flush">
+						    {loop="$inscript.3"}
+						    	<li class="list-group-item">{if="$value.mode == 'MOD'"}<a href="#" onclick="DelCreneau( {$dayofyear}, {$idCreneau.3})" class="btn btn-primary" alt="Supprimer cette réservation" title="Supprimer cette réservation"> - </a>&nbsp;{/if}{$value.nom}</li>
+							{/loop}
+						</ul>
+					</div>
+				</div>
+			</div>
+			{/if}
+		</div>
+		{/if}
+		
+		{if="$horaire.4 > ''"}
+		<br />
+		<div class="row">
+			<div class="col-sm-4">
+				<div class="card">
+					<div class="card-header">
+						<h5>
+							<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapse4" aria-expanded="false" aria-controls="collapse4"><i class="fap fa fa-plus"></i> {$horaire.4}</button>
+							{if="$isLibre.4 == 'Oui'"}
+								<br /><br /><a href="#" onclick="AddJoueur( {$dayofyear}, {$idCreneau.4})" class="btn btn-primary" alt="M'ajouter dans la liste des joueurs" title="M'ajouter dans la liste des joueurs"><i class="far fa-check-square" aria-hidden="true"></i> Ajout</a>
+							{/if}
+						</h5>
+					</div>
+					<div class="collapse" id="collapse4">
+						<div class="card-body">
+							<h5 class="card-title">
+								{if="$isOuvreur.4 == 'Oui'"}
+								<a href="#" onclick="AddOuvreur( {$dayofyear}, {$idCreneau.4})" class="btn btn-primary" alt="Me positionner comme ouvreur" title="Me positionner comme ouvreur"><i class="fas fa-key"></i></a>&nbsp;
+								{/if}
+								{$ouvreur.4}
+							</h5>
+						</div>
+						<ul class="list-group list-group-flush">
+						    {loop="$inscript.4"}
+						    	<li class="list-group-item">{if="$value.mode == 'MOD'"}<a href="#" onclick="DelCreneau( {$dayofyear}, {$idCreneau.4})" class="btn btn-primary" alt="Supprimer cette réservation" title="Supprimer cette réservation"> - </a>&nbsp;{/if}{$value.nom}</li>
+							{/loop}
+						</ul>
+					</div>
+				</div>
+			</div>
+			
+			{if="$horaire.5 > ''"}
+			<div class="col-sm-4">
+				<div class="card">
+					<div class="card-header">
+						<h5>
+							<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapse5" aria-expanded="false" aria-controls="collapse5"><i class="fap fa fa-plus"></i> {$horaire.5}</button>
+							{if="$isLibre.5 == 'Oui'"}
+								<br /><br /><a href="#" onclick="AddJoueur( {$dayofyear}, {$idCreneau.5})" class="btn btn-primary" alt="M'ajouter dans la liste des joueurs" title="M'ajouter dans la liste des joueurs"><i class="far fa-check-square" aria-hidden="true"></i> Ajout</a>
+							{/if}
+						</h5>
+					</div>
+					<div class="collapse" id="collapse5">
+						<div class="card-body">
+							<h5 class="card-title">
+								{if="$isOuvreur.5 == 'Oui'"}
+								<a href="#" onclick="AddOuvreur( {$dayofyear}, {$idCreneau.5})" class="btn btn-primary" alt="Me positionner comme ouvreur" title="Me positionner comme ouvreur"><i class="fas fa-key"></i></a>&nbsp;
+								{/if}
+								{$ouvreur.5}
+							</h5>
+						</div>
+						<ul class="list-group list-group-flush">
+						    {loop="$inscript.5"}
+						    	<li class="list-group-item">{if="$value.mode == 'MOD'"}<a href="#" onclick="DelCreneau( {$dayofyear}, {$idCreneau.5})" class="btn btn-primary" alt="Supprimer cette réservation" title="Supprimer cette réservation"> - </a>&nbsp;{/if}{$value.nom}</li>
+							{/loop}
+						</ul>
+					</div>
+				</div>
+			</div>
+			{/if}
+			
+			{if="$horaire.6 > ''"}
+			<div class="col-sm-4">
+				<div class="card">
+					<div class="card-header">
+						<h5>
+							<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapse6" aria-expanded="false" aria-controls="collapse6"><i class="fap fa fa-plus"></i> {$horaire.6}</button>
+							{if="$isLibre.6 == 'Oui'"}
+								<br /><br /><a href="#" onclick="AddJoueur( {$dayofyear}, {$idCreneau.6})" class="btn btn-primary" alt="M'ajouter dans la liste des joueurs" title="M'ajouter dans la liste des joueurs"><i class="far fa-check-square" aria-hidden="true"></i> Ajout</a>
+							{/if}
+						</h5>
+					</div>
+					<div class="collapse" id="collapse6">
+						<div class="card-body">
+							<h5 class="card-title">
+								{if="$isOuvreur.6 == 'Oui'"}
+								<a href="#" onclick="AddOuvreur( {$dayofyear}, {$idCreneau.6})" class="btn btn-primary" alt="Me positionner comme ouvreur" title="Me positionner comme ouvreur"><i class="fas fa-key"></i></a>&nbsp;
+								{/if}
+								{$ouvreur.6}
+							</h5>
+						</div>
+						<ul class="list-group list-group-flush">
+						    {loop="$inscript.6"}
+						    	<li class="list-group-item">{if="$value.mode == 'MOD'"}<a href="#" onclick="DelCreneau( {$dayofyear}, {$idCreneau.6})" class="btn btn-primary" alt="Supprimer cette réservation" title="Supprimer cette réservation"> - </a>&nbsp;{/if}{$value.nom}</li>
+							{/loop}
+						</ul>
+					</div>
+				</div>
+			</div>
+			{/if}
+			
+		</div>
+		{/if}
+		
+		<div class="row">
+			<div class="col-sm-4">
+				<form class="form-signin" action="index.php" method="post">
+			     	<button class="btn btn-lg btn-primary btn-block" type="submit"><i class="fas fa-sign-out-alt"></i> Quitter</button>
+			   </form>
+			</div>
+			<div class="col-sm-4">&nbsp;</div>
+			<div class="col-sm-4">
+				<form class="form-signin" action="index.php" method="post">
+					<input type="hidden" name="nom" value="{$nom}">
+					<input type="hidden" name="licence" value="{$id_licencier}">
+					<input type="hidden" name="page" value="jour">
+			     	<button class="btn btn-lg btn-primary btn-block" type="submit"><i class="fa fa-repeat" aria-hidden="true"></i> Continuer</button>
+			   </form>
+			</div>
+		</div>
+	</div>
+	
+
+</body>
+
+<script>
+    $(document).ready(function(){
+        // Add minus icon for collapse element which is open by default
+        $(".collapse.show").each(function(){
+        	$(this).prev(".card-header").find(".fap").addClass("fa-minus").removeClass("fa-plus");
+        });
+        
+        // Toggle plus minus icon on show hide of collapse element
+        $(".collapse").on('show.bs.collapse', function(){
+        	$(this).prev(".card-header").find(".fap").removeClass("fa-plus").addClass("fa-minus");
+        }).on('hide.bs.collapse', function(){
+        	$(this).prev(".card-header").find(".fap").removeClass("fa-minus").addClass("fa-plus");
+        });
+    });
+</script>
+
+</html>

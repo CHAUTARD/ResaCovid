@@ -1,0 +1,52 @@
+<!-- adm_exportation.html -->
+
+{include="adm_header"}
+
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<h1>
+					<center>Exportation/Sauvegarde des tables</center>
+				</h1>
+			</div>
+
+			<div class="col">
+				<form class="form-signin" action="admin.php" method="post">
+					<input type="hidden" name="page" value="adm_menu"> 
+					<input type="hidden" name="nom" value="{$nom}">
+					<button class="btn btn-primary btn-lg btn-block btn-huge" type="submit">
+						<i class="fas fa-step-backward"></i> Retour au Menu
+					</button>
+				</form>
+			</div>
+		</div>
+	
+		<hr />
+		<div class="row">
+			<div class="col">
+				<form method="post" id="id_exportation">
+					<input type="hidden" name="page" value="adm_exportation" />
+  					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary">Importer</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	<script>
+	// this is the id of the form
+	$("#id_exportation").submit(function(e) {
+
+	    e.preventDefault(); // avoid to execute the actual submit of the form.
+	    
+	    $.ajax({
+	           type: "GET",
+	           url: "admin.php?page=database_dump>",
+	           success: function(data) { alert(data); } // show response from the php script.
+	    });	    
+	});
+	</script>
+</body>
+</html>
