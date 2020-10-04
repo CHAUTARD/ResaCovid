@@ -1,5 +1,6 @@
 <?php if(!class_exists('raintpl')){exit;}?><!-- adm_creneau.html 
-	Version : 1.0.0
+	Version : 1.0.1
+	Date : 2020-10-03
 -->
 
 <?php $tpl = new RainTPL;$tpl->assign( $this->var );$tpl->draw( "adm_header" );?>
@@ -28,7 +29,6 @@
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
 					</div>
 				</div>
-
 			</div>
 		</div>
 	</div>
@@ -283,7 +283,7 @@
 					var data = table.row( $(this).parents('tr')).data();
 					
 					// Remplir le prenom et nom du licencié
-					$('#id_nom').text(' Créneau :' + data[1] + ' ' + data[2] + ' ' + data[3] + ' ' + data[4]);
+					$('#id_nom').text(' Créneau : ' + data[1] + ' ' + data[2] + ' ' + data[3] + ' ' + data[4]);
 									
 					// Chargement des prioritées en Ajax
 					$.ajax({

@@ -1,6 +1,6 @@
 <?php if(!class_exists('raintpl')){exit;}?><!-- adm_menu.html 
-	Version : 1.0.3
-	Date : 2020-10-02
+	Version : 1.0.4
+	Date : 2020-10-04
 -->
 
 <!doctype html>
@@ -23,12 +23,33 @@
 	
 	<!-- Latest compiled and minified JavaScript -->
     <script type="text/javascript" src="js/DataTables/Jquery-3.5.1/jquery.min.js"></script>
-    <script type="text/javascript" src="js/bootstrap/js/bootstrap.min.js"></script>
     
+    <script type="text/javascript" src="js/bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/adm_vstt.js"></script>
 </head>
 
 <body>
+	<?php if( $information > '' ){ ?>
+	<div class="modal fade in" tabindex="-1" id="InfoModal" role="dialog">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title">Information</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	      	<div class="alert alert-warning" role="alert"><?php echo $information;?></div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<?php } ?>
+
 	<div class="container">
 		<div class="row">
 			<div class="col-2">
@@ -52,7 +73,7 @@
 	        		<div class="card-footer">
 			        	<form class="form-signin" action="admin.php" method="post">
 			        		<input type="hidden" name="page" value="adm_licencier">
-			            	<button class="btn btn-primary btn-lg btn-block btn-huge" type="submit">Les licenciés</button>
+			            	<button class="btn btn-primary btn-lg btn-block btn-huge" type="submit" data-toggle="tooltip" data-placement="top" title="Gestion des licenciers et affectation des prioritées">Les licenciés</button>
 			            </form>
 			        </div>
 			    </div>
@@ -191,5 +212,14 @@
 	    </div>
 	    <hr />
 	</div>
+	
+	<script type="text/javascript">
+		<?php if( $information > '' ){ ?>$(window).on('load',function(){ $('#InfoModal').modal('show'); });<?php } ?>
+		
+		// Tooltips Initialization
+		$(function () {
+		  $('[data-toggle="tooltip"]').tooltip()
+		})
+	</script>
 </body>
 </html>

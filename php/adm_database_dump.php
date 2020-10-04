@@ -1,6 +1,7 @@
 <?php
 /* adm_exportation_table.php
- * 
+ *  Version : 1.0.1
+ *  Date : 2020-10-04
  */
 
 $entete  = "-- ----------------------\n";
@@ -60,5 +61,9 @@ fwrite($fichierDump, $creations);
 fwrite($fichierDump, $insertions);
 fclose($fichierDump);
 
-echo "Sauvegarde terminée";
+// Affichage d'une fenêtre modale d'information
+$tpl->assign('information', 'Sauvegarde SQL terminée');
+
+//draw the template
+$tpl->draw('adm_menu');
 ?>

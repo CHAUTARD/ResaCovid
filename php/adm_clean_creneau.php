@@ -1,7 +1,7 @@
 <?php
 /* adm_clean_creneau.php 
- * Version : 1.0.0
- * Date : 2020-10-02
+ * Version : 1.0.1
+ * Date : 2020-10-04
  */
 
 /*--------------------------------------------------------
@@ -36,6 +36,9 @@ $sqls[] = "TRUNCATE `res_reservations`";
 $sqls[] = "TRUNCATE `res_prioritaires`";
 
 $database->transaction($sqls);
+
+// Affichage d'une fenêtre modale d'information
+$tpl->assign('information', 'Vidage des tables creneaux, reservations, prioritaires terminée');
 
 //draw the template
 $tpl->draw('adm_menu');

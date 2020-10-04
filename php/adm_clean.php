@@ -1,7 +1,7 @@
 <?php
 /* adm_clean.php 
- * Version : 1.0.0
- * Date : 2020-10-02
+ * Version : 1.0.2
+ * Date : 2020-10-04
  */
 
 /*--------------------------------------------------------
@@ -37,12 +37,20 @@ $sqls[] = "TRUNCATE `res_licenciers`";
 
 // Prioritaires
 $sqls[] = "TRUNCATE `res_creneaux`";
+
 // Réservations
 $sqls[] = "TRUNCATE `res_reservations`";
+
 // Créneaux
 $sqls[] = "TRUNCATE `res_prioritaires`";
 
+// Création d'un licencier administrateur pour ne pas être bloqué
+$sqls[] = "INSERT INTO `res_licenciers` (`id_licencier`, `Civilite`, `Nom`, `Surnom`, `Prenom`, `Classement`, `Equipe`, `Telephone`, `Email`, `Ouvreur`, `Admin`, `Actif`) VALUES ('9399999', 'Mr', 'ADMIN', '', 'Toi', '5', '0', '01.01.01.01.01', 'pas.saisie@faux', 'Non', 'Admin', '1');";
+
 $database->transaction($sqls);
+
+// Affichage d'une fenêtre modale d'information
+$tpl->assign('information', 'Vidage des tables des licenciés, des créneaux,  des réservations et des prioritaires terminée');
 
 //draw the template
 $tpl->draw('adm_menu');
