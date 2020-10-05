@@ -21,12 +21,13 @@ date_default_timezone_set('Europe/Paris');
 setlocale(LC_ALL, 'fr_FR.UTF-8', 'fra');
 
 require_once 'php/classes/raintpl.php';
-require_once "php/classes/pdo.php";
-
-$database = SimplePDO::getInstance();
 
 // Les constante de paramétrage
 require_once "php/constant.php";
+
+require_once "php/classes/pdo.php";
+
+$database = SimplePDO::getInstance();
 
 // Les fonctions génériques
 require_once 'php/functions.php';

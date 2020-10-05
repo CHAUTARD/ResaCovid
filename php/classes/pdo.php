@@ -1,5 +1,8 @@
 <?php
-/*
+/*     pdo.php
+ *  Version : 1.0.0
+ *  Date : 2020-10-05
+ *  
  Query database and return a single row:
 
     $database = SimplePDO::getInstance();
@@ -30,10 +33,6 @@
     $database->execute();
 */
 
-const _DBNAME = 'vsttreservation'; // the database name to be used
-const _USERNAME = 'vsttreservation'; // the username to be used with the database
-const _PASSWORD = 'resVSTT01'; // the password to be used with the username
-
 class SimplePDO {     
     private static $_instance = null;
 
@@ -47,10 +46,10 @@ class SimplePDO {
         if( substr(gethostbyname(gethostname()),0,8) == '192.168.')
             $host = 'localhost'; // the IP of the database
         else 
-            $host = 'vsttreservation.mysql.db';
+            $host = DB_HOST;
         
         try {
-            $this->_pdo = new PDO('mysql:host=' . $host . ';dbname=' . _DBNAME, _USERNAME, _PASSWORD, array( PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8')) ;
+            $this->_pdo = new PDO('mysql:host=' . $host . ';dbname=' . DB_DBNAME, DB_USERNAME, DB_PASSWORD, array( PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8')) ;
         } catch(PDOException $e){
             print "Erreur !: " . $e->getMessage() . "<br/>";
             die();

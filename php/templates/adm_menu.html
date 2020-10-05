@@ -23,7 +23,7 @@
 	
 	<!-- Latest compiled and minified JavaScript -->
     <script type="text/javascript" src="js/DataTables/Jquery-3.5.1/jquery.min.js"></script>
-    
+    <script type="text/javascript" src="js/popper-1.12.9/popper.min.js"></script>
     <script type="text/javascript" src="js/bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/adm_vstt.js"></script>
 </head>
@@ -60,7 +60,11 @@
 			</div>
      		<div class="col>">
      			<form class="form-signin" action="admin.php" method="post">
-					<button class="btn btn-light btn-lg btn-block btn-huge" type="submit"><img src="img/quitter.png" alt="Bye Bye !" title="Bye Bye !"></button>
+					<button class="btn btn-light btn-lg btn-block btn-huge" type="submit"
+						data-toggle="popover" data-placement="left" title="Bye Bye !"
+						data-trigger="hover" data-content="Retour à l'écran de connection">
+						<img src="img/quitter.png" alt="Bye Bye !">
+					</button>
 				</form>
      		</div>
      	</div>
@@ -73,7 +77,9 @@
 	        		<div class="card-footer">
 			        	<form class="form-signin" action="admin.php" method="post">
 			        		<input type="hidden" name="page" value="adm_licencier">
-			            	<button class="btn btn-primary btn-lg btn-block btn-huge" type="submit" data-toggle="tooltip" data-placement="top" title="Gestion des licenciers et affectation des prioritaires">Les licenciés</button>
+			            	<button class="btn btn-primary btn-lg btn-block btn-huge" type="submit" 
+			            		data-toggle="popover" data-placement="top" title="Gestion des licenciers"
+						   		data-trigger="hover" data-content="Création, modification, suppression et affectation des prioritaires">Les licenciés</button>		            	
 			            </form>
 			        </div>
 			    </div>
@@ -86,7 +92,9 @@
 	        		<div class="card-footer">
 			        	<form class="form-signin" action="admin.php" method="post">
 			        		<input type="hidden" name="page" value="adm_creneau">
-			            	<button class="btn btn-primary btn-lg btn-block btn-huge" type="submit" data-toggle="tooltip" data-placement="top" title="Gestion des créneaux et consultation des prioritaires">Les créneaux</button>
+			            	<button class="btn btn-primary btn-lg btn-block btn-huge" type="submit" 
+			            		data-toggle="popover" data-placement="top" title="Gestion des créneaux"
+						   		data-trigger="hover" data-content="Création, modification, suppression et consultation des prioritaires">Les créneaux</button>
 			            </form>
 			        </div>
 			    </div>
@@ -99,7 +107,9 @@
 	        		<div class="card-footer">
 			        	<form class="form-signin" action="admin.php" method="post">
 			        		<input type="hidden" name="page" value="adm_prioritaire">
-			            	<button class="btn btn-primary btn-lg btn-block btn-huge" type="submit" data-toggle="tooltip" data-placement="top" title="Liste des créneaux et suppression des prioritaires">Les prioritaires</button>
+			            	<button class="btn btn-primary btn-lg btn-block btn-huge" type="submit" 
+			            		data-toggle="popover" data-placement="top" title="Gestion des prioritaires"
+						   		data-trigger="hover" data-content="Liste des créneaux et suppression des prioritaires">Les prioritaires</button>
 			            </form>
 			        </div>
 			    </div>
@@ -112,7 +122,9 @@
 	        		<div class="card-footer">
 			        	<form class="form-signin" action="admin.php" method="post">
 			        		<input type="hidden" name="page" value="adm_reservation">
-			            	<button class="btn btn-primary btn-lg btn-block btn-huge" type="submit" data-toggle="tooltip" data-placement="top" title="Consultation des réservations pour un mois donnés">Les réservations</button>
+			            	<button class="btn btn-primary btn-lg btn-block btn-huge" type="submit" 
+			            		data-toggle="popover" data-placement="top" title="Gestion des réservations"
+						   		data-trigger="hover" data-content="Consultation des réservations pour un mois donnés">Les réservations</button>
 			            </form>
 			        </div>
 			    </div>
@@ -127,7 +139,9 @@
 	        		<div class="card-footer">
 			        	<form class="form-signin" action="admin.php" method="post">
 			        		<input type="hidden" name="page" value="adm_importation">
-			            	<button class="btn btn-primary btn-lg btn-block btn-huge" type="submit" data-toggle="tooltip" data-placement="top" title="Importation des licenciés à partir du site SPID de la FFTT">Importation SPID</button>
+			            	<button class="btn btn-primary btn-lg btn-block btn-huge" type="submit" 
+			            		data-toggle="popover" data-placement="top" title="Importation SPID"
+						   		data-trigger="hover" data-content="Importation des licenciés à partir du site SPID de la FFTT">Importation SPID</button>
 			            </form>
 			        </div>
 			    </div>
@@ -139,7 +153,9 @@
 	        		<div class="card-footer">
 			        	<form class="form-signin" action="admin.php" method="post">
 			        		<input type="hidden" name="page" value="adm_database_dump">
-			            	<button class="btn btn-primary btn-lg btn-block btn-huge" type="submit" data-toggle="tooltip" data-placement="top" title="Sauvegarde de la base de donnée au format SQL">Exportation SQL</button>
+			            	<button class="btn btn-primary btn-lg btn-block btn-huge" type="submit"
+			            		data-toggle="popover" data-placement="top" title="Exportation SQL"
+						   		data-trigger="hover" data-content="Sauvegarde de la base de donnée au format SQL">Exportation SQL</button>
 			            </form>
 			        </div>
 			    </div>
@@ -151,7 +167,9 @@
 	        		<div class="card-footer">
 			        	<form class="form-signin" action="admin.php" method="post">
 			        		<input type="hidden" name="page" value="adm_stat_prioritaire">
-			            	<button class="btn btn-primary btn-lg btn-block btn-huge" type="submit" data-toggle="tooltip" data-placement="top" title="Statistique sur le nombre de fois qu'un licencié est prioritaire">Stat. prioritaires</button>
+			            	<button class="btn btn-primary btn-lg btn-block btn-huge" type="submit"
+			            		data-toggle="popover" data-placement="top" title="Statistique prioritaires"
+						   		data-trigger="hover" data-content="Statistique sur le nombre de fois qu'un licencié est prioritaire">Stat. prioritaires</button>
 			            </form>
 			        </div>
 			    </div>
@@ -168,7 +186,9 @@
 	        		<div class="card-footer">
 			        	<form class="form-signin" action="admin.php" method="post" onsubmit="return ConfirmSubmit()">
 			        		<input type="hidden" name="page" value="adm_clean">
-			            	<button class="btn btn-danger btn-lg btn-block btn-huge" type="submit" data-toggle="tooltip" data-placement="top" title="Vidage de toutes les données des tables">Nettoyages</button>
+			            	<button class="btn btn-danger btn-lg btn-block btn-huge" type="submit"
+			            		data-toggle="popover" data-placement="top" data-html="true" title="Vidage complet de la base"
+						   		data-trigger="hover" data-content="Vidage de toutes les données des tables.<br />Un enregistrement ADIM$admin est créé pour pouvoir continué à travailler.">Nettoyages</button>
 			            </form>
 			        </div>
 			    </div>
@@ -180,7 +200,9 @@
 	        		<div class="card-footer">
 			        	<form class="form-signin" action="admin.php" method="post" onsubmit="return ConfirmSubmit()">
 			        		<input type="hidden" name="page" value="adm_clean_reservation">
-			            	<button class="btn btn-danger btn-lg btn-block btn-huge" type="submit" data-toggle="tooltip" data-placement="top" title="Vidage de toutes les données de la table des réservations">Réservations</button>
+			            	<button class="btn btn-danger btn-lg btn-block btn-huge" type="submit"
+			            		data-toggle="popover" data-placement="top" title="Vidage des réservations"
+						   		data-trigger="hover" data-content="Vidage de toutes les données de la table des réservations">Réservations</button>
 			            </form>
 			        </div>
 			    </div>
@@ -192,7 +214,9 @@
 	        		<div class="card-footer">
 			        	<form class="form-signin" action="admin.php" method="post" onsubmit="return ConfirmSubmit()">
 			        		<input type="hidden" name="page" value="adm_clean_prioritaire">
-			            	<button class="btn btn-danger btn-lg btn-block btn-huge" type="submit" data-toggle="tooltip" data-placement="top" title="Vidage de toutes les données de la table des prioritaires et de leurs réservations">Prioritaires</button>
+			            	<button class="btn btn-danger btn-lg btn-block btn-huge" type="submit"
+			            		data-toggle="popover" data-placement="top" title="Vidage des prioritaires"
+						   		data-trigger="hover" data-content="Vidage de toutes les données de la table des prioritaires et de leurs réservations">Prioritaires</button>
 			            </form>
 			        </div>
 			    </div>
@@ -204,7 +228,9 @@
 	        		<div class="card-footer">
 			        	<form class="form-signin" action="admin.php" method="post" onsubmit="return ConfirmSubmit()">
 			        		<input type="hidden" name="page" value="adm_clean_creneau">
-			            	<button class="btn btn-danger btn-lg btn-block btn-huge" type="submit data-toggle="tooltip" data-placement="top" title="Vidage de toutes les données de la table des créneaux, des réservations et des prioritaires">Créneaux</button>
+			            	<button class="btn btn-danger btn-lg btn-block btn-huge" type="submit"
+			            		data-toggle="popover" data-placement="top" title="Vidage des créneaux"
+						   		data-trigger="hover" data-content="Vidage de toutes les données de la table des créneaux, des réservations et des prioritaires">Créneaux</button>
 			            </form>
 			        </div>
 			    </div>
@@ -216,10 +242,8 @@
 	<script type="text/javascript">
 		{if="$information > ''"}$(window).on('load',function(){ $('#InfoModal').modal('show'); });{/if}
 		
-		// Tooltips Initialization
-		$(function () {
-		  $('[data-toggle="tooltip"]').tooltip()
-		})
+		// Select all elements with data-toggle="popover" in the document
+		$('[data-toggle="popover"]').popover(); 
 	</script>
 </body>
 </html>
