@@ -1,7 +1,7 @@
 <?php
 /* adm_clean.php 
- * Version : 1.0.2
- * Date : 2020-10-04
+ * Version : 1.0.3
+ * Date : 2020-10-05
  */
 
 /*--------------------------------------------------------
@@ -45,7 +45,7 @@ $sqls[] = "TRUNCATE `res_reservations`";
 $sqls[] = "TRUNCATE `res_prioritaires`";
 
 // Création d'un licencier administrateur pour ne pas être bloqué
-$sqls[] = "INSERT INTO `res_licenciers` (`id_licencier`, `Civilite`, `Nom`, `Surnom`, `Prenom`, `Classement`, `Equipe`, `Telephone`, `Email`, `Ouvreur`, `Admin`, `Actif`) VALUES ('9399999', 'Mr', 'ADMIN', '', 'Toi', '5', '0', '01.01.01.01.01', 'pas.saisie@faux', 'Non', 'Admin', '1');";
+$sqls[] = sprintf("INSERT INTO `res_licenciers` (`id_licencier`, `Civilite`, `Nom`, `Surnom`, `Prenom`, `Classement`, `Equipe`, `Telephone`, `Email`, `Ouvreur`, `Admin`, `Actif`) VALUES ('9399999', 'Mr', '%s', '', 'Toi', '5', '0', '01.01.01.01.01', 'pas.saisie@faux', 'Non', '%s', '1');", USER_NAME, USER_PWD );
 
 $database->transaction($sqls);
 
