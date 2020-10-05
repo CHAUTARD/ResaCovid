@@ -1,7 +1,8 @@
 <?php
 /*
  * index.php
- * Version : 1.0.0
+ * Version : 1.0.1
+ * Date : 2020-10-05
  */
 
 // Rapporte les erreurs pour la DODEV. Les autres, vous n'aurez rien ! nada !!!

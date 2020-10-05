@@ -362,15 +362,15 @@
 				    var form = $(this);
 				    
 				    $.ajax({
-							type: "GET",
-							url: "admin.php?page=save_prioritaire",
-							data: form.serialize(), // serializes the form's elements.
-							success: function(data) { 
-				        	   alert(data);  // show response from the php script.
+						type: "GET",
+						url: "admin.php?page=save_prioritaire",
+						data: form.serialize(), // serializes the form's elements.
+						success: function(data) { 
+			        	   alert(data);  // show response from the php script.
 
-								// Rechargement des données
-								table.ajax.reload();
-				           }
+							// Rechargement des données
+							table.ajax.reload();
+			           }
 				    })    
 				})
 			})

@@ -1,8 +1,109 @@
-<!-- jour.html -->
+<!-- jour.html 
+	Version : 1.0.0
+	Date : 2020-10-05
+-->
 
 {include="header"}
 
 <body>
+	<!--  Fenêtre modale Ajouter ou modifier un enregistrement  -->
+	<div class="modal fade" id="adherentModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-xl" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title"><i class="fas fa-user-plus"></i> Fiche licencié</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+
+				<div class="container py-5">
+					<div class="row">
+						<div class="col-md-10 mx-auto">
+							<div class="modal-body">
+								<form class="was-validated" id="id_form_save_licencier" method="get">
+									<input type="hidden" name="page" value="adm_add_licencier" />
+									<div class="form-group row">
+										<div class="col-sm-6">
+											<label for="addLicence" class="col-form-label">N° Licence : </label>
+											<input type="number" min="1" class="form-control" id="addLicence" name="addLicence" placeholder="Saisir votre numéro de licence FFTT" value="{$licencier.id_licencier}" required>
+											<div class="valid-feedback">Valide</div>
+											<div class="invalid-feedback">Erreur dans la saisie.</div>
+										</div>
+
+										<div class="col-sm-6">
+											<label class="col-form-label">Civilité : </label>
+											<div>
+												<label class="radio-inline">
+												<input type="radio" name="addCivilite" value="Mr" id="addCiviliteMr" {if="$licencier.Civilite == 'Mr'"}checked="checked" {/if}/> Mr </label>
+												<label class="radio-inline">
+												<input type="radio" name="addCivilite" value="Mme" id="addCiviliteMme" {if="$licencier.Civilite == 'Mme'"}checked="checked" {/if}/> Mme </label>
+											</div>
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<div class="col-sm-6">
+											<label for="addNom" class="col-form-label">Nom : </label>
+											<input type="text" class="form-control" id="addNom" name="addNom" placeholder="Saisir votre nom de famille" style="text-transform:uppercase" value="{$licencier.Nom}" required>
+											<div class="valid-feedback">Valide</div>
+											<div class="invalid-feedback">Erreur dans la saisie.</div>
+										</div>
+
+										<div class="col-sm-6">
+											<label for="addSurnom" class="col-form-label">Surnom : </label>
+											<input type="text" class="form-control" id="addSurnom" name="addSurnom" placeholder="Saisir votre surnom" value="{$licencier.Surnom}" >
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<div class="col-sm-6">
+											<label for="addPrenom" class="col-form-label">Prénom : </label>
+											<input type="text" class="form-control" id="addPrenom" name="addPrenom" placeholder="Saisir votre prénom" value="{$licencier.Prenom}" required>
+											<div class="valid-feedback">Valide</div>
+											<div class="invalid-feedback">Erreur dans la saisie.</div>
+										</div>
+
+										<div class="col-sm-6">
+											<label for="addEquipe" class="col-form-label">N° d'équipe (0 - Loisir) : <output name="valueEquipe" id="valueEquipe">{$licencier.Equipe}</output>
+											</label> <input type="range" min="0" max="{#NOMBRE_EQUIPE#}" 
+												class="form-control range" id="addEquipe" name="addEquipe"
+												value="{$licencier.Equipe}" oninput="valueEquipe.value = addEquipe.value">
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<div class="col-sm-6">
+											<label for="addTelephone" class="col-form-label">Téléphone : </label>
+											<input type="tel" class="form-control" id="addTelephone" name="addTelephone"
+												placeholder="Numéro de téléphone 06.02.03.04.05 (Portable où Fixe)"
+												pattern="^(0)[1-9]([-. ]?[0-9]{2}){3}([-. ]?[0-9]{2})$" value="{$licencier.Telephone}" required>
+											<div class="valid-feedback">Valide</div>
+											<div class="invalid-feedback">Erreur dans la saisie.</div>
+										</div>
+
+										<div class="col-sm-6">
+											<label for="addEmail" class="col-form-label">Email : </label>
+											<input type="email" class="form-control" id="addEmail" name="addEmail" placeholder="Saisir votre adresse de messagerie" value="{$licencier.Email}" required>
+											<div class="valid-feedback">Valide</div>
+											<div class="invalid-feedback">Erreur dans la saisie.</div>
+										</div>
+									</div>
+
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+										<button type="submit" class="btn btn-primary">Sauver</button>
+									</div>
+
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<div class="container h-100">	
 		<div class="alert alert-dark" my-3>
 			<div class="d-flex align-items-center text-white-50 bg-purple rounded box-shadow">
@@ -17,10 +118,15 @@
 		
 		<br />
 	    <div class="alert alert-info">
-    		<p><h4><center>Bonjour, {$joueur}</center></h4></p>
+    		<p><h4><center>Bonjour, {$licencier.Prenom} {$licencier.Nom} 
+    			<button type="button" class="btn {$btn} MyBtn" data-toggle="modal" data-placement="top" title="Licence" 
+    				data-trigger="hover" data-content="{$btnMsg}" data-target="#adherentModal">
+    				<i class="far fa-address-card fa-2x"></i>
+    			</button>						
+    		</center></h4></p>
 		</div> 
 		<br />
-			
+					
 		<center><i class="fa fa-calendar fa-3x" aria-hidden="true"> {$mois}</i></center>
 		<br />
 					
@@ -44,5 +150,32 @@
 			</tbody>
 		</table>
 	</div>
+	
+	<script>
+		$(document).ready(			
+			// this is the id of the form
+			$("#id_form_save_licencier").submit(function(e) {
+
+			    e.preventDefault(); // avoid to execute the actual submit of the form.
+
+			    var form = $(this);
+			    
+			    $.ajax({
+		           type: "GET",
+		           url: "index.php",
+		           data: form.serialize(), // serializes the form's elements.
+		           success: function(data) {
+		        		// show response from the php script.
+		        	   	alert(data); 
+		        	   	
+		        	   	location.reload();
+		    	   } 
+			    })   
+			})
+		);
+		
+		// Select all elements with data-toggle="popover" in the document
+		$('.MyBtn').popover()
+	</script>
 </body>
 </html>

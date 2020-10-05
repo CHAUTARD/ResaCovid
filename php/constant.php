@@ -12,7 +12,7 @@ define('DB_PASSWORD', 'resVSTT01'); // the password to be used with the username
 
 // Paramètre du site
 define('LOGO_TITLE', 'Le logo de VSTT');
-define('NOMBRE_EQUIPE', '9');
+define('NOMBRE_EQUIPE', 9);
 
 // Utilisateur par défault
 define('USER_NAME', 'ADMIN'); // En majuscule obligatoirement

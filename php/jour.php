@@ -1,8 +1,8 @@
 <?php
-/*
- * jour.php
- * Version : 1.0.0
- * Date : 2020-10-03
+/*   jour.php
+ * Sélection du jour pour l'inscription à la réservation
+ * Version : 1.0.1
+ * Date : 2020-10-05
  */
 
 /* Champ des tables de la base */
@@ -22,7 +22,7 @@ if ( preg_match( '/^([0-9]+)$/', $_POST['licence'], $licence) == 0)
 }
 
 // Recherche si le joueur existe
-$sql = sprintf("SELECT Nom, Prenom FROM res_licenciers WHERE (Actif = 1) AND ( Nom='%s' OR Surnom='%s') AND id_licencier=%d", $_POST['nom'], $_POST['nom'], $_POST['licence'] );
+$sql = sprintf("SELECT * FROM res_licenciers WHERE (Actif = 1) AND ( Nom='%s' OR Surnom='%s') AND id_licencier=%d", $_POST['nom'], $_POST['nom'], $_POST['licence'] );
 
 $database->query($sql);
 $result = $database->single();
@@ -38,7 +38,18 @@ $_SESSION['id_licencier'] = $_POST['licence'];
 
 // Date du jour
 $tpl->assign('now', strftime('%A %d %B %Y'));
-$tpl->assign('joueur', sprintf('%s %s', $result['Prenom'], $result['Nom']));
+
+// Information sur le licencier
+$tpl->assign('licencier', $result);
+
+if($result['Telephone'] == '' || $result['Email'] == '' || $result['Email'] == 'pas.saisie@faux') {
+    $tpl->assign('btn', 'btn-warning');
+    $tpl->assign('btnMsg', 'Votre fiche licence est incomplète !');
+} else { 
+    $tpl->assign('btn', 'btn-primary');
+    $tpl->assign('btnMsg', 'Consultation de votre fiche licence.');
+}
+        
 
 // Mois Année avec la première lettre en majuscule
 $tpl->assign('mois', ucfirst(strftime('%B %Y')));

@@ -1,7 +1,7 @@
 <?php
 /*  adm_add_licencier.php
- * Version : 1.0.0
- * Date : 2020.09.26
+ * Version : 1.0.1
+ * Date : 2020.10-05
  *  
  *  Ajout, Modification d'un licencié
  *  
@@ -17,6 +17,8 @@
   'addEmail' => string 'email@f' (length=7)
   'addOuvreur' => string 'Oui' (length=3)
   'addAdmin' => string '' (length=0)
+  
+  si les données arrive de la mise à jour de sa fiche par le licencié alors les deux derniers champs ne sont pas rempli.
  */
 
 // Recherche si l'enregistrement existe
@@ -34,6 +36,9 @@ if($result === false) {
     $msg = "Licencié(e) modifié(e) !";
 }
 
+$Ouvreur = isset($_GET['addOuvreur']) ? $_GET['addOuvreur']: 'Non';
+$Admin = isset($_GET['addAdmin']) ? $_GET['addAdmin'] : '';
+
 $database->bind(':id_licencier', $_GET['addLicence'], PDO::PARAM_INT);
 $database->bind(':Civilite', $_GET['addCivilite']);
 $database->bind(':Nom', strtoupper($_GET['addNom']));
@@ -42,8 +47,8 @@ $database->bind(':Prenom', ucfirst($_GET['addPrenom']));
 $database->bind(':Equipe', $_GET['addEquipe'], PDO::PARAM_INT);
 $database->bind(':Telephone', $_GET['addTelephone'], PDO::PARAM_STR); 
 $database->bind(':Email', $_GET['addEmail']);
-$database->bind(':Ouvreur', $_GET['addOuvreur']);
-$database->bind(':Admin', $_GET['addAdmin'], PDO::PARAM_STR);
+$database->bind(':Ouvreur', $Ouvreur);
+$database->bind(':Admin', $Admin, PDO::PARAM_STR);
 
 $database->execute();
 
