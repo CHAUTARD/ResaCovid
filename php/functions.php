@@ -1,5 +1,8 @@
 <?php
-/*   f u n c t i o n s . p h p  */
+/*   f u n c t i o n s . p h p  
+ *  Version : 1.0.0
+ *  Date : 2020-10-05 
+ */
 
 // Recherche du nom d'un joueur à partir de son numéro de licence
 function GetNomByNumLicence( $database, $numLicence)
@@ -54,7 +57,7 @@ function formatHeure($p) { return str_replace( ':', 'h', substr($p, 0, 5)); }
  * En entrée téléphone format :0102030405
  * En Sortie           format : 01.02.03.04.05
  */
-function formatTel($numTel) {
+function formatTel($numTel) {   
     $i=0;
     $j=0;
     $formate = "";

@@ -15,7 +15,7 @@ if(isset($_POST['mdp']))
         exit;
     }
     
-    if($_POST['mdp']=='Non' || strlen($_POST['mdp']) == 0)
+    if(strlen($_POST['mdp']) == 0)
     {
         header("Location: admin.php?alert=Y");
         exit;
@@ -23,10 +23,10 @@ if(isset($_POST['mdp']))
     
         
     // Recherche si le joueur existe
-    $sql = sprintf('SELECT id_licencier FROM res_licenciers WHERE (Actif = 1) AND ( Nom = "%s" OR Surnom = "%s") AND Admin = "%s"', $_POST['nom'], $_POST['nom'], $_POST['mdp'] );
+    $sql = sprintf('SELECT id_licencier FROM res_licenciers WHERE (Actif = 1) AND ( Nom = "%s" OR Surnom = "%s") AND Admin = "%s";', $_POST['nom'], $_POST['nom'], $_POST['mdp'] );  
     $database->query($sql);
     $result = $database->single();
-    
+        
     // Le code ne correspond pas !
     if( $result === false)
     {

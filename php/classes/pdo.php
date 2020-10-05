@@ -90,15 +90,15 @@ class SimplePDO {
     switch ($type) {
         case PDO::PARAM_INT:
         case PDO::PARAM_BOOL:
-            $this->_query = str_replace( ':'.$param, $value, $this->_query);
+            $this->_query = str_replace( $param, $value, $this->_query);
             break;
 
         case PDO::PARAM_NULL:
-            $this->_query = str_replace( ':'.$param, 'NULL', $this->_query);
+            $this->_query = str_replace( $param, 'NULL', $this->_query);
             break;
             
         default:
-            $this->_query = str_replace( ':'.$param, '"'.$value.'"', $this->_query);
+            $this->_query = str_replace( $param, '"'.$value.'"', $this->_query);
     }
   }
   

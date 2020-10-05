@@ -22,7 +22,7 @@
  */
 
 // Recherche si l'enregistrement existe
-$database->query("SELECT `id_licencier` FROM `res_licenciers` WHERE `id_licencier` = :id");
+$database->query("SELECT id_licencier, Ouvreur, Admin FROM `res_licenciers` WHERE `id_licencier` = :id");
 $database->bind(':id', $_GET['addLicence']);
 $result = $database->single();
 
@@ -36,8 +36,8 @@ if($result === false) {
     $msg = "Licencié(e) modifié(e) !";
 }
 
-$Ouvreur = isset($_GET['addOuvreur']) ? $_GET['addOuvreur']: 'Non';
-$Admin = isset($_GET['addAdmin']) ? $_GET['addAdmin'] : '';
+$Ouvreur = isset($_GET['addOuvreur']) ? $_GET['addOuvreur']: $result['Ouvreur'];
+$Admin = isset($_GET['addAdmin']) ? $_GET['addAdmin'] : $result['Admin'];
 
 $database->bind(':id_licencier', $_GET['addLicence'], PDO::PARAM_INT);
 $database->bind(':Civilite', $_GET['addCivilite']);

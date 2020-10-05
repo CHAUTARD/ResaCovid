@@ -1,0 +1,47 @@
+<!-- adm_traie_xls.html 
+	Version : 1.0.0
+	Date : 2020-10-05
+-->
+{include="adm_header"}
+
+<body>
+	{if="$informations > ''"}
+	<div class="modal fade in" tabindex="-1" id="InfoModal" role="dialog">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title">Informations</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	      	<div class="alert alert-warning" role="alert">{$informations}</div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	{/if}
+	
+	<div class="container">
+	   
+	{include="adm_navbar"}
+	
+	<ul class="list-group ScrollYClass">
+	{loop="$lignes"}
+		{$value}
+	{/loop}
+    </ul>
+    
+    </div>
+	
+	{if="$informations > ''"}
+	<script type="text/javascript">
+		$(window).on('load',function(){ $('#InfoModal').modal('show'); });
+	</script>
+	{/if}
+</body>
+</html>	
