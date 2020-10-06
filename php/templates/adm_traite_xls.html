@@ -1,11 +1,10 @@
 <!-- adm_traie_xls.html 
-	Version : 1.0.0
-	Date : 2020-10-05
+	Version : 1.0.1
+	Date : 2020-10-06
 -->
 {include="adm_header"}
 
 <body>
-	{if="$informations > ''"}
 	<div class="modal fade in" tabindex="-1" id="InfoModal" role="dialog">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
@@ -24,24 +23,57 @@
 	    </div>
 	  </div>
 	</div>
-	{/if}
 	
 	<div class="container">
 	   
 	{include="adm_navbar"}
 	
-	<ul class="list-group ScrollYClass">
-	{loop="$lignes"}
-		{$value}
-	{/loop}
-    </ul>
-    
+	<table id="tLicenciers" class="table table-striped table-bordered">
+		<thead>
+			<tr>
+				<th>Index</th>
+				<th>Licence</th>
+				<th>Civ</th>
+				<th>Nom</th>
+				<th>Prénom</th>
+				<th>Téléphone</th>
+				<th>Email</th>
+				<th>Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			{loop="$lignes"}
+			<tr>
+				<td>{$value.Index}</td>
+				<td>{$value.Licence}</td>
+				<td>{$value.Civilite}</td>
+				<td>{$value.Nom}</td>
+				<td>{$value.Prenom}</td>
+				<td>{$value.Telephone}</td>
+				<td>{$value.Email}</td>
+				<td>{$value.Action}</td>
+			</tr>
+			{/loop}
+		</tbody>
+	</table>
+	    
     </div>
 	
-	{if="$informations > ''"}
 	<script type="text/javascript">
+		var table = $('#tLicenciers').DataTable({
+			scrollY : '70vh',
+			scrollX : false,
+			scrollCollapse : true,
+			paging : false,
+			language : { url : "js/French.json" },
+			columnDefs : [
+				{ targets: [ 0, 7 ], className: "text-center", width: "4%" }
+			],
+			//dom : 'Bfrtip',
+			select : true
+		});
+		
 		$(window).on('load',function(){ $('#InfoModal').modal('show'); });
 	</script>
-	{/if}
 </body>
 </html>	

@@ -76,14 +76,24 @@ if( isset($_POST['page']) ) // si formulaire soumis
                         $Civilite = ($tab[1] == 'MR' ? 'Mr': 'Mme');
                         $Nom  = utf8_encode(strtoupper($tab[2]));
                         $Prenom = utf8_encode(ucfirst($tab[3]));
-                        $PhoneT = formatTel($tab[26]);
-                        $PhoneP = formatTel($tab[27]);
+                        $PhoneT = formatTel($tab[27]);
+                        $PhoneP = formatTel($tab[28]);
                         if($PhoneP == "" && $PhoneT > '')
                             $PhoneP = $PhoneT;
                         
-                        $Email = $tab[28]; 
-                        if($Email == 'licences.fftt@vstt.com' || $Email == 'licence.fftt@vstt.com') $Email = 'pas.saisie@faux';
-                                        
+                        // Email
+                        switch($tab[29])
+                        {
+                            case '' :
+                            case 'licences.fftt@vstt.com':
+                            case 'licence.fftt@vstt.com':
+                                $Email = 'pas.saisie@faux';
+                                break;
+                                
+                            default:
+                                $Email = $tab[29]; 
+                        }
+                                                                
                         // Recherche si l'enregistrement existe
                         $database->query("SELECT `id_licencier`, `Telephone`,`Email` FROM `res_licenciers` WHERE `id_licencier` = :id_licencier");
                         $database->bind(':id_licencier', $id_licencier);
@@ -117,7 +127,16 @@ if( isset($_POST['page']) ) // si formulaire soumis
                         
                         $database->execute();                       
                         
-                        $lignes[] = sprintf('<li class="list-group-item">%d) Lic : %d, %s %s %s , Tel : %s, Email : %s %s</li>', $ligne, $id_licencier, $Civilite, $Nom, $Prenom, $PhoneP, $Email, $msg);
+                        $lignes[] =array(
+                            'Index' => $ligne,
+                            'Licence' => $id_licencier,
+                            'Civilite' => $Civilite,
+                            'Nom' => $Nom,
+                            'Prenom' => $Prenom,
+                            'Telephone' => $PhoneP,
+                            'Email' => $Email,
+                            'Action' => $msg
+                        );
                     }
                 
                     fclose($fic);
