@@ -1,5 +1,5 @@
 -- ----------------------
--- dump de la base  au 04-Oct-2020
+-- dump de la base  au 06-Oct-2020
 -- ----------------------
 
 
@@ -28,10 +28,10 @@ CREATE TABLE `res_licenciers` (
   `id_licencier` int(11) NOT NULL,
   `Civilite` enum('Mr','Mme') NOT NULL DEFAULT 'Mr',
   `Nom` varchar(35) NOT NULL,
-  `Surnom` varchar(35) NOT NULL,
+  `Surnom` varchar(35) DEFAULT NULL,
   `Prenom` varchar(35) NOT NULL,
   `Classement` int(11) NOT NULL DEFAULT 5,
-  `Equipe` tinyint(4) NOT NULL,
+  `Equipe` tinyint(4) NOT NULL DEFAULT 0,
   `Telephone` varchar(14) NOT NULL DEFAULT '01.01.01.01.01',
   `Email` varchar(50) NOT NULL DEFAULT 'pas.saisie@faux',
   `Ouvreur` enum('Oui','Non') NOT NULL DEFAULT 'Non',
@@ -89,79 +89,89 @@ INSERT INTO res_creneaux VALUES('15', 'Débutant', 'Coppée', '6', '10:00:00', '
 -- --------------------------------------
 -- Contenu de la table res_licenciers
 -- --------------------------------------
-INSERT INTO res_licenciers VALUES('93396', 'Mr', 'DALLE PIAGGE', '', 'Yves', '0', '0', '06.01.02.03.04', 'yves.dallepiagge@gmail.com', 'Oui', '4pP4RER+TL', '1');
-INSERT INTO res_licenciers VALUES('93413', 'Mr', 'GRANDIN', 'NANAR', 'Bernard', '0', '0', '06.01.02.03.05', 'nanar@free.fr', 'Non', '', '1');
+INSERT INTO res_licenciers VALUES('93396', 'Mr', 'DALLE PIAGGE', '', 'Yves', '0', '0', '06.80.77.48.00', 'pas.saisie@faux', 'Oui', '4pP4RER+TL', '1');
+INSERT INTO res_licenciers VALUES('93413', 'Mr', 'GRANDIN', 'NANAR', 'Bernard', '0', '0', '06.01.02.03.05', 'pas.saisie@faux', 'Non', '', '1');
 INSERT INTO res_licenciers VALUES('93728', 'Mr', 'LAMOLINAIRIE', '', 'Henrique', '0', '0', '', '', 'Non', '', '1');
-INSERT INTO res_licenciers VALUES('773840', 'Mr', 'CONCHON', '', 'Sylvain', '5', '3', '01.01.01.01.01', 'pas.saisie@faux', 'Non', '', '1');
-INSERT INTO res_licenciers VALUES('865607', 'Mr', 'WILMUS', '', 'Franck', '15', '3', '01.01.01.01.01', 'pas.saisie@faux', 'Oui', '', '1');
-INSERT INTO res_licenciers VALUES('931327', 'Mr', 'VALADE', '', 'Patrick', '0', '0', '', '', 'Non', '', '1');
-INSERT INTO res_licenciers VALUES('933602', 'Mr', 'LABOUREAU', '', 'Pierre', '0', '0', '', '', 'Oui', 'e9j>WMhy3z', '1');
-INSERT INTO res_licenciers VALUES('933604', 'Mr', 'PALUYAN', '', 'Ari', '0', '3', '', '', 'Non', '', '1');
-INSERT INTO res_licenciers VALUES('935669', 'Mr', 'DUVAL', '', 'Jérôme', '0', '0', '', '', 'Oui', '', '1');
-INSERT INTO res_licenciers VALUES('935871', 'Mr', 'BOULANGER', '', 'Frédéric', '0', '0', '', '', 'Non', '', '1');
+INSERT INTO res_licenciers VALUES('773840', 'Mr', 'CONCHON', '', 'Sylvain', '5', '3', '06.72.80.88.00', 'beuhaaar@yahoo.fr', 'Non', '', '1');
+INSERT INTO res_licenciers VALUES('865607', 'Mr', 'WILMUS', '', 'Franck', '15', '3', '06.62.55.94.72', 'pas.saisie@faux', 'Oui', '', '1');
+INSERT INTO res_licenciers VALUES('931327', 'Mr', 'VALADE', '', 'Patrick', '0', '0', '', 'pas.saisie@faux', 'Non', '', '1');
+INSERT INTO res_licenciers VALUES('933602', 'Mr', 'LABOUREAU', '', 'Pierre', '0', '0', '06.71.28.37.86', 'bureau@vstt.com', 'Oui', 'e9j>WMhy3z', '1');
+INSERT INTO res_licenciers VALUES('933604', 'Mr', 'PALUYAN', '', 'Ari', '0', '3', '06.48.28.98.96', 'bureau@vstt.com', 'Non', '', '1');
+INSERT INTO res_licenciers VALUES('935669', 'Mr', 'DUVAL', '', 'Jérôme', '0', '0', '06.03.23.06.04', 'pas.saisie@faux', 'Oui', '', '1');
+INSERT INTO res_licenciers VALUES('935871', 'Mr', 'BOULANGER', '', 'Frédéric', '0', '0', '06.78.92.23.52', 'pas.saisie@faux', 'Non', '', '1');
+INSERT INTO res_licenciers VALUES('935888', 'Mr', 'ANDRIEU', '', 'Luc', '5', '0', '', 'pas.saisie@faux', 'Non', 'Non', '1');
+INSERT INTO res_licenciers VALUES('936887', 'Mr', 'MAYOUTE', '', 'Cedric', '5', '0', '06.86.52.66.26', 'pas.saisie@faux', 'Non', 'Non', '1');
+INSERT INTO res_licenciers VALUES('936927', 'Mme', 'AUBIN', '', 'Marie-agnès', '5', '0', '06.19.76.04.29', 'bureau@vstt.com', 'Non', 'Non', '1');
+INSERT INTO res_licenciers VALUES('937183', 'Mr', 'TORVAL', '', 'Eddie', '5', '0', '07.86.03.60.50', 'pas.saisie@faux', 'Non', 'Non', '1');
 INSERT INTO res_licenciers VALUES('937876', 'Mr', 'DESBOIS', '', 'Sébastien', '0', '0', '', '', 'Oui', 'i9pWJ[Wc9K', '1');
 INSERT INTO res_licenciers VALUES('938125', 'Mme', 'AUBIN', '', 'Janine', '0', '0', '', '', 'Non', '', '1');
-INSERT INTO res_licenciers VALUES('938219', 'Mr', 'GICQUEL', '', 'Erwann', '5', '2', '01.01.01.01.01', 'pas.saisie@faux', 'Non', '', '1');
-INSERT INTO res_licenciers VALUES('939644', 'Mr', 'LECOCQ', 'MA POULE', 'Xavier', '0', '7', '06.01.02.03.04', 'xavier.lecocq@cg94.fr', 'Non', '>LecocqXa<', '1');
+INSERT INTO res_licenciers VALUES('938219', 'Mr', 'GICQUEL', '', 'Erwann', '5', '2', '01.01.01.01.01', 'acbtennisdetable@alicepro.fr', 'Non', '', '1');
+INSERT INTO res_licenciers VALUES('938986', 'Mr', 'IMAQUE', '', 'Stéphane', '5', '0', '07.87.75.40.85', 'pas.saisie@faux', 'Non', 'Non', '1');
+INSERT INTO res_licenciers VALUES('939644', 'Mr', 'LECOCQ', 'MA POULE', 'Xavier', '0', '7', '06.01.02.03.04', 'pas.saisie@faux', 'Non', '>LecocqXa<', '1');
+INSERT INTO res_licenciers VALUES('939804', 'Mr', 'QUINQUIS', '', 'Dominique', '5', '0', '06.72.95.67.41', 'pas.saisie@faux', 'Non', 'Non', '1');
 INSERT INTO res_licenciers VALUES('949068', 'Mr', 'JOLY', '', 'Christophe', '0', '2', '01.01.01.01.01', 'pas.saisie@faux', 'Non', '', '1');
-INSERT INTO res_licenciers VALUES('951246', 'Mr', 'MACHET', '', 'Thierry', '0', '1', '', '', 'Non', '', '1');
-INSERT INTO res_licenciers VALUES('957044', 'Mr', 'COLOMER', '', 'Thierry', '0', '0', '', '', 'Non', '', '1');
-INSERT INTO res_licenciers VALUES('7711698', 'Mr', 'CHARDIN', 'GuiGui', 'Guillaume', '18', '1', '01.01.01.01.01', 'pas.saisie@faux', 'Oui', '', '1');
-INSERT INTO res_licenciers VALUES('7712599', 'Mr', 'DE LA BARRERA', '', 'Romain', '16', '1', '', '', 'Oui', '', '1');
-INSERT INTO res_licenciers VALUES('7714816', 'Mr', 'JEAN-BAPTISTE', '', 'Jerome', '5', '0', '01.01.01.01.01', 'pas.saisie@faux', 'Non', '', '1');
+INSERT INTO res_licenciers VALUES('951246', 'Mr', 'MACHET', '', 'Thierry', '0', '1', '07.89.01.50.86', 't.machet@wanadoo.fr', 'Non', '', '1');
+INSERT INTO res_licenciers VALUES('957044', 'Mr', 'COLOMER', '', 'Thierry', '0', '0', '01.39.95.07.57', 'pas.saisie@faux', 'Non', '', '1');
+INSERT INTO res_licenciers VALUES('3726084', 'Mr', 'YE', '', 'Julien', '5', '0', '06.46.49.14.50', 'pure_yf@yahoo.fr', 'Non', 'Non', '1');
+INSERT INTO res_licenciers VALUES('7711698', 'Mr', 'CHARDIN', 'GuiGui', 'Guillaume', '18', '1', '06.63.08.65.56', 'pas.saisie@faux', 'Oui', '', '1');
+INSERT INTO res_licenciers VALUES('7712599', 'Mr', 'DE LA BARRERA', '', 'Romain', '16', '1', '06.77.19.07.59', 'romain_77500@hotmail.fr', 'Oui', '', '1');
+INSERT INTO res_licenciers VALUES('7712701', 'Mme', 'CONSTANT MORAND', '', 'Caroline', '5', '0', '', 'speedy-caro@orange.fr', 'Non', 'Non', '1');
+INSERT INTO res_licenciers VALUES('7714816', 'Mr', 'JEAN BAPTISTE', '', 'Jerome', '5', '0', '06.17.12.08.19', 'pas.saisie@faux', 'Non', '', '1');
 INSERT INTO res_licenciers VALUES('7717097', 'Mr', 'JOLY', '', 'Clément', '5', '1', '01.01.01.01.01', 'pas.saisie@faux', 'Non', '', '1');
 INSERT INTO res_licenciers VALUES('7727498', 'Mr', 'STAUBER', '', 'Julien', '5', '2', '01.01.01.01.01', 'pas.saisie@faux', 'Non', '', '1');
-INSERT INTO res_licenciers VALUES('9311514', 'Mr', 'BARTHELEMY', '', 'Stéphane', '0', '8', '01.01.01.01.01', 'pas.saisie@faux', 'Oui', '#Stephane>', '1');
-INSERT INTO res_licenciers VALUES('9311718', 'Mr', 'MERELLE', '', 'Jacques', '0', '10', '', '', 'Non', '', '1');
-INSERT INTO res_licenciers VALUES('9311926', 'Mr', 'LELIEUX', '', 'Jérôme', '0', '8', '', '', 'Non', '', '1');
+INSERT INTO res_licenciers VALUES('9311514', 'Mr', 'BARTHELEMY', '', 'Stéphane', '0', '8', '06.01.81.68.30', 'bureau@vstt.com', 'Oui', '#Stephane>', '1');
+INSERT INTO res_licenciers VALUES('9311718', 'Mr', 'MERELLE', '', 'Jacques', '0', '10', '06.89.55.31.03', 'pas.saisie@faux', 'Non', '', '1');
+INSERT INTO res_licenciers VALUES('9311926', 'Mr', 'LELIEUX', '', 'Jérôme', '0', '8', '06.10.65.49.88', 'j.lelieux@berim.fr', 'Non', '', '1');
+INSERT INTO res_licenciers VALUES('9312434', 'Mr', 'NICOLAS', '', 'Jean-françois', '5', '0', '', 'pas.saisie@faux', 'Non', 'Non', '1');
 INSERT INTO res_licenciers VALUES('9312573', 'Mr', 'QUINQUIS', '', 'Erwann', '5', '1', '01.01.01.01.01', 'pas.saisie@faux', 'Non', '', '1');
 INSERT INTO res_licenciers VALUES('9312604', 'Mr', 'CARON', '', 'Donovan', '0', '1', '01.01.01.01.01', 'pas.saisie@faux', 'Non', '', '1');
-INSERT INTO res_licenciers VALUES('9312611', 'Mr', 'ESNAULT', '', 'Jérémy', '0', '0', '', '', 'Non', '', '1');
+INSERT INTO res_licenciers VALUES('9312607', 'Mr', 'SAINTON', '', 'Nicolas', '5', '0', '06.86.82.21.03', 'pas.saisie@faux', 'Non', 'Non', '1');
+INSERT INTO res_licenciers VALUES('9312611', 'Mr', 'ESNAULT', '', 'Jérémy', '0', '0', '', 'pas.saisie@faux', 'Non', '', '1');
 INSERT INTO res_licenciers VALUES('9312623', 'Mr', 'DINOT', '', 'Samuel', '0', '1', '01.01.01.01.01', 'pas.saisie@faux', 'Oui', '', '1');
 INSERT INTO res_licenciers VALUES('9312754', 'Mr', 'GIORDANO', '', 'Christophe', '0', '0', '', '', 'Non', '', '1');
 INSERT INTO res_licenciers VALUES('9312902', 'Mr', 'CHAPUS-MINETTO', '', 'Brigitte', '0', '0', '01.01.01.01.01', 'pas.saisie@faux', 'Non', '', '1');
 INSERT INTO res_licenciers VALUES('9313033', 'Mr', 'PEETERS', '', 'Marie-laure', '0', '0', '', '', 'Non', '', '1');
 INSERT INTO res_licenciers VALUES('9313532', 'Mr', 'GROSCOT', '', 'Jose', '0', '0', '', '', 'Non', '', '1');
-INSERT INTO res_licenciers VALUES('9313773', 'Mr', 'LEMOINE', '', 'Alexandre', '0', '2', '', '', 'Oui', '', '1');
+INSERT INTO res_licenciers VALUES('9313773', 'Mr', 'LEMOINE', '', 'Alexandre', '0', '2', '06.33.17.78.47', 'lemoine.alexandre@live.fr', 'Oui', '', '1');
 INSERT INTO res_licenciers VALUES('9313882', 'Mr', 'HALIN', '', 'Marcel', '0', '0', '', '', 'Non', '', '1');
-INSERT INTO res_licenciers VALUES('9314069', 'Mr', 'SALMON', '', 'Dominique', '0', '0', '', '', 'Non', '', '1');
+INSERT INTO res_licenciers VALUES('9314069', 'Mr', 'SALMON', '', 'Dominique', '0', '0', '', 'pas.saisie@faux', 'Non', '', '1');
 INSERT INTO res_licenciers VALUES('9314199', 'Mr', 'ROBERT', '', 'Philippe', '0', '0', '', '', 'Non', '', '1');
 INSERT INTO res_licenciers VALUES('9314255', 'Mr', 'BOSSÉ', '', 'Arthur', '0', '0', '', '', 'Non', '', '1');
-INSERT INTO res_licenciers VALUES('9314351', 'Mr', 'PUTIGNY', '', 'Tony', '5', '2', '01.01.01.01.01', 'pas.saisie@faux', 'Non', '', '1');
-INSERT INTO res_licenciers VALUES('9314691', 'Mr', 'DRUART', '', 'Anthony', '0', '10', '', '', 'Non', '', '1');
+INSERT INTO res_licenciers VALUES('9314351', 'Mr', 'PUTIGNY', '', 'Tony', '5', '2', '06.20.78.33.58', 'pas.saisie@faux', 'Non', '', '1');
+INSERT INTO res_licenciers VALUES('9314691', 'Mr', 'DRUART', '', 'Anthony', '0', '10', '', 'pas.saisie@faux', 'Non', '', '1');
 INSERT INTO res_licenciers VALUES('9315171', 'Mr', 'LOUISE', '', 'Norbert', '0', '0', '', '', 'Non', '', '1');
 INSERT INTO res_licenciers VALUES('9315195', 'Mr', 'DEHAINE', '', 'François', '0', '0', '', '', 'Non', '', '1');
 INSERT INTO res_licenciers VALUES('9315215', 'Mr', 'GIBON', '', 'Florian', '0', '0', '', '', 'Non', '', '1');
 INSERT INTO res_licenciers VALUES('9315622', 'Mr', 'CARON', '', 'Patricia', '0', '0', '', '', 'Non', '', '1');
-INSERT INTO res_licenciers VALUES('9315851', 'Mr', 'SAGUES', '', 'David', '0', '0', '', '', 'Non', '', '1');
+INSERT INTO res_licenciers VALUES('9315851', 'Mr', 'SAGUES', '', 'David', '0', '0', '', 'pas.saisie@faux', 'Non', '', '1');
 INSERT INTO res_licenciers VALUES('9315906', 'Mr', 'CHALET', '', 'Sébastien', '0', '0', '', '', 'Non', '', '1');
 INSERT INTO res_licenciers VALUES('9315950', 'Mr', 'ZANNONI', '', 'Florent', '0', '0', '', '', 'Non', '', '1');
 INSERT INTO res_licenciers VALUES('9316145', 'Mr', 'BILLARD', '', 'Bruno', '0', '0', '01.01.01.01.01', 'pas.saisie@faux', 'Non', '', '1');
-INSERT INTO res_licenciers VALUES('9316334', 'Mr', 'PAPP', '', 'Ladislau', '0', '0', '', 'licences.fftt@vstt.com', 'Non', '', '1');
+INSERT INTO res_licenciers VALUES('9316334', 'Mr', 'PAPP', '', 'Ladislau', '0', '3', '01.01.01.01.01', 'pas.saisie@faux', 'Non', '', '1');
 INSERT INTO res_licenciers VALUES('9316339', 'Mr', 'DOINEAU', '', 'Lucas', '0', '0', '', '', 'Non', '', '1');
-INSERT INTO res_licenciers VALUES('9316466', 'Mr', 'MICHEL', '', 'Antoine', '0', '0', '', '', 'Non', '', '1');
+INSERT INTO res_licenciers VALUES('9316466', 'Mr', 'MICHEL', '', 'Antoine', '0', '0', '06.07.68.82.13', 'pas.saisie@faux', 'Non', '', '1');
 INSERT INTO res_licenciers VALUES('9316502', 'Mr', 'GALEA', '', 'Jean pierre', '0', '0', '', '', 'Non', '', '1');
 INSERT INTO res_licenciers VALUES('9316613', 'Mr', 'SILLOU', '', 'Elisa', '0', '0', '', '', 'Non', '', '1');
 INSERT INTO res_licenciers VALUES('9316851', 'Mr', 'ITIM', '', 'Akima', '0', '0', '', '', 'Non', '', '1');
-INSERT INTO res_licenciers VALUES('9316954', 'Mr', 'BACHIR', '', 'Julian-khan', '0', '0', '', '', 'Non', '', '1');
+INSERT INTO res_licenciers VALUES('9316954', 'Mr', 'BACHIR', '', 'Julian-khan', '0', '0', '06.71.72.29.14', 'pas.saisie@faux', 'Non', '', '1');
 INSERT INTO res_licenciers VALUES('9316991', 'Mr', 'DONET', '', 'Sylvain', '0', '0', '', '', 'Non', '', '1');
 INSERT INTO res_licenciers VALUES('9317005', 'Mr', 'LAUGIER', '', 'Louis', '0', '0', '', '', 'Non', '', '1');
 INSERT INTO res_licenciers VALUES('9317312', 'Mr', 'DOINEAU', '', 'Maxence', '0', '0', '', '', 'Non', '', '1');
-INSERT INTO res_licenciers VALUES('9317315', 'Mr', 'CHAUTARD', 'PAT', 'Patrick', '0', '9', '', 'licences.fftt@vstt.com', 'Oui', '#Henri1957', '1');
+INSERT INTO res_licenciers VALUES('9317315', 'Mr', 'CHAUTARD', 'PAT', 'Patrick', '0', '9', '06.75.07.60.71', 'patrick.chautard@free.fr', 'Oui', '#Henri1957', '1');
 INSERT INTO res_licenciers VALUES('9317599', 'Mr', 'DUMONT', '', 'Corentin', '0', '0', '', '', 'Non', '', '1');
-INSERT INTO res_licenciers VALUES('9317703', 'Mr', 'OUK', '', 'Vibol', '0', '0', '', '', 'Oui', '', '1');
+INSERT INTO res_licenciers VALUES('9317703', 'Mr', 'OUK', '', 'Vibol', '0', '0', '', 'pas.saisie@faux', 'Oui', '', '1');
 INSERT INTO res_licenciers VALUES('9317979', 'Mr', 'NOIRET', '', 'Quentin', '0', '0', '', '', 'Non', '', '1');
-INSERT INTO res_licenciers VALUES('9318103', 'Mr', 'GEORGE', '', 'Fabrice', '0', '10', '', '', 'Non', '', '1');
+INSERT INTO res_licenciers VALUES('9318103', 'Mr', 'GEORGE', '', 'Fabrice', '0', '10', '', 'pas.saisie@faux', 'Non', '', '1');
 INSERT INTO res_licenciers VALUES('9318106', 'Mr', 'BOIRIE', '', 'Julien', '0', '0', '', '', 'Non', '', '1');
-INSERT INTO res_licenciers VALUES('9318235', 'Mr', 'PELOILLE', '', 'Baptiste', '0', '0', '', '', 'Non', '', '1');
-INSERT INTO res_licenciers VALUES('9318237', 'Mr', 'RICHARD', '', 'Antoine', '0', '9', '', 'licences.fftt@vstt.com', 'Non', '', '1');
+INSERT INTO res_licenciers VALUES('9318235', 'Mr', 'PELOILLE', '', 'Baptiste', '0', '0', '', 'pas.saisie@faux', 'Non', '', '1');
+INSERT INTO res_licenciers VALUES('9318237', 'Mr', 'RICHARD', '', 'Antoine', '0', '9', '', 'pas.saisie@faux', 'Non', '', '1');
 INSERT INTO res_licenciers VALUES('9318245', 'Mr', 'PORTEFIN', '', 'Camille', '0', '0', '', '', 'Non', '', '1');
 INSERT INTO res_licenciers VALUES('9318258', 'Mr', 'TAMISIER', '', 'Flavien', '0', '0', '', '', 'Non', '', '1');
 INSERT INTO res_licenciers VALUES('9318263', 'Mr', 'TRAISNEL', '', 'Charles', '0', '0', '', '', 'Non', '', '1');
 INSERT INTO res_licenciers VALUES('9318307', 'Mr', 'IANKOVSKAIA', '', 'Svetlana', '0', '0', '', '', 'Non', '', '1');
 INSERT INTO res_licenciers VALUES('9318400', 'Mr', 'LADRECH', '', 'Tiago', '0', '0', '', '', 'Non', '', '1');
-INSERT INTO res_licenciers VALUES('9318443', 'Mr', 'FICHOU', '', 'Sebastien', '0', '9', '', '', 'Oui', '#Fichou443', '1');
-INSERT INTO res_licenciers VALUES('9318450', 'Mr', 'DALLE PIAGGE', '', 'Martine', '0', '0', '01.01.01.01.01', 'pas.saisie@faux', 'Non', '', '1');
+INSERT INTO res_licenciers VALUES('9318443', 'Mr', 'FICHOU', '', 'Sebastien', '0', '9', '', 'pas.saisie@faux', 'Oui', '#Fichou443', '1');
+INSERT INTO res_licenciers VALUES('9318450', 'Mme', 'DALLE PIAGGE', '', 'Martine', '0', '0', '01.01.01.01.01', 'pas.saisie@faux', 'Non', '', '1');
 INSERT INTO res_licenciers VALUES('9318676', 'Mr', 'DAMASSE', '', 'Robert', '0', '0', '', '', 'Non', '', '1');
 INSERT INTO res_licenciers VALUES('9318738', 'Mr', 'LELIEUX', '', 'Arthur', '0', '0', '', '', 'Non', '', '1');
 INSERT INTO res_licenciers VALUES('9318846', 'Mr', 'CAUMONT', '', 'Basile', '0', '0', '', '', 'Non', '', '1');
@@ -175,7 +185,7 @@ INSERT INTO res_licenciers VALUES('9319466', 'Mr', 'BOURSE', '', 'Léo', '0', '0
 INSERT INTO res_licenciers VALUES('9319470', 'Mr', 'DELOR', '', 'Noam', '0', '0', '', '', 'Non', '', '1');
 INSERT INTO res_licenciers VALUES('9319471', 'Mr', 'CALMON-BERDAH', '', 'Logan', '0', '0', '', '', 'Non', '', '1');
 INSERT INTO res_licenciers VALUES('9319472', 'Mr', 'GERBIER', '', 'Thibault', '0', '0', '', '', 'Non', '', '1');
-INSERT INTO res_licenciers VALUES('9319474', 'Mr', 'AOUADI', '', 'Selyan', '0', '0', '', '', 'Non', '', '1');
+INSERT INTO res_licenciers VALUES('9319474', 'Mr', 'AOUADI', '', 'Selyan', '0', '0', '', 'pas.saisie@faux', 'Non', '', '1');
 INSERT INTO res_licenciers VALUES('9319478', 'Mr', 'QUINIOU', '', 'Gaël', '0', '0', '', '', 'Non', '', '1');
 INSERT INTO res_licenciers VALUES('9319482', 'Mr', 'DEMANGE', '', 'Louis', '0', '0', '', '', 'Non', '', '1');
 INSERT INTO res_licenciers VALUES('9319483', 'Mr', 'VIALLARD', '', 'Pierre', '0', '0', '', '', 'Non', '', '1');
@@ -192,12 +202,12 @@ INSERT INTO res_licenciers VALUES('9319960', 'Mr', 'LELONG', '', 'Jules', '0', '
 INSERT INTO res_licenciers VALUES('9319961', 'Mme', 'ANTUNES-HOUNE', '', 'Laura', '0', '0', '', '', 'Non', '', '1');
 INSERT INTO res_licenciers VALUES('9319963', 'Mr', 'DIDELOT', '', 'Yannis', '0', '0', '', '', 'Non', '', '1');
 INSERT INTO res_licenciers VALUES('9319964', 'Mr', 'MARCHAL', '', 'Félix', '0', '0', '', '', 'Non', '', '1');
-INSERT INTO res_licenciers VALUES('9319965', 'Mr', 'JOUANNE', '', 'Louis', '0', '0', '', 'licences.fftt@vstt.com', 'Non', '', '1');
+INSERT INTO res_licenciers VALUES('9319965', 'Mr', 'JOUANNE', '', 'Louis', '0', '0', '', 'pas.saisie@faux', 'Non', '', '1');
 INSERT INTO res_licenciers VALUES('9319966', 'Mr', 'GALIZZI', '', 'Juliano', '0', '0', '', '', 'Non', '', '1');
 INSERT INTO res_licenciers VALUES('9319967', 'Mr', 'CHRISTOPHE', '', 'Nathalie', '0', '0', '', '', 'Non', '', '1');
 INSERT INTO res_licenciers VALUES('9319968', 'Mr', 'CHRISTOPHE', '', 'Baptiste', '0', '0', '', '', 'Non', '', '1');
-INSERT INTO res_licenciers VALUES('9319969', 'Mr', 'POZLEWOICZ', '', 'Stéphane', '0', '0', '', '', 'Non', '', '1');
-INSERT INTO res_licenciers VALUES('9320072', 'Mr', 'HERROUX', '', 'Kilian', '0', '9', '', 'licences.fftt@vstt.com', 'Non', '', '1');
+INSERT INTO res_licenciers VALUES('9319969', 'Mr', 'POZLEWICZ', '', 'Stéphane', '0', '0', '', 'pas.saisie@faux', 'Non', '', '1');
+INSERT INTO res_licenciers VALUES('9320072', 'Mr', 'HERROUX', '', 'Kilian', '0', '9', '', 'pas.saisie@faux', 'Non', '', '1');
 INSERT INTO res_licenciers VALUES('9320073', 'Mr', 'BAUMAN', '', 'Eric', '0', '0', '', '', 'Non', '', '1');
 INSERT INTO res_licenciers VALUES('9320074', 'Mr', 'MARCULESCU', '', 'Eric', '0', '0', '', '', 'Non', '', '1');
 INSERT INTO res_licenciers VALUES('9320075', 'Mr', 'KALLOU', '', 'Salim', '0', '0', '', '', 'Non', '', '1');
@@ -214,19 +224,28 @@ INSERT INTO res_licenciers VALUES('9320146', 'Mr', 'ALTMANN-ILIC', '', 'Ilan', '
 INSERT INTO res_licenciers VALUES('9320147', 'Mr', 'FIGUEIREDO', '', 'Alexandra', '0', '0', '', '', 'Non', '', '1');
 INSERT INTO res_licenciers VALUES('9320148', 'Mr', 'BONNET', '', 'Matthéo', '0', '0', '', '', 'Non', '', '1');
 INSERT INTO res_licenciers VALUES('9320149', 'Mr', 'DONET-ST GES', '', 'Timéo', '0', '0', '', '', 'Non', '', '1');
-INSERT INTO res_licenciers VALUES('9320150', 'Mr', 'LE HOLLOCO', '', 'Jean-antoine', '0', '10', '', '', 'Non', '', '1');
+INSERT INTO res_licenciers VALUES('9320150', 'Mr', 'LE HOLLOCO', '', 'Jean-antoine', '0', '10', '', 'pas.saisie@faux', 'Non', '', '1');
 INSERT INTO res_licenciers VALUES('9320151', 'Mr', 'RIZZO', '', 'Paul', '0', '0', '', '', 'Non', '', '1');
 INSERT INTO res_licenciers VALUES('9320152', 'Mr', 'PAGET', '', 'Eric', '0', '0', '', '', 'Non', '', '1');
 INSERT INTO res_licenciers VALUES('9320153', 'Mr', 'CHARRUA', '', 'Claudio', '0', '0', '', '', 'Non', '', '1');
+INSERT INTO res_licenciers VALUES('9320600', 'Mr', 'DIOT', '', 'Thomas', '5', '0', '06.61.57.00.54', 'pas.saisie@faux', 'Non', 'Non', '1');
+INSERT INTO res_licenciers VALUES('9320765', 'Mr', 'BLANDEL', '', 'Josselin', '5', '0', '', 'pas.saisie@faux', 'Non', 'Non', '1');
 INSERT INTO res_licenciers VALUES('9321187', 'Mr', 'SCHMITT', '', 'Aurélien', '5', '0', '01.01.01.01.01', 'pas.saisie@faux', 'Non', '', '1');
-INSERT INTO res_licenciers VALUES('9322804', 'Mr', 'DIONNET', '', 'Benjamin', '5', '0', '06.25.77.44.83', 'pas.saisie@faux', 'Non', 'nnn', '1');
+INSERT INTO res_licenciers VALUES('9321237', 'Mr', 'IM', '', 'Tony', '5', '0', '06.12.40.64.24', 'pas.saisie@faux', 'Non', 'Non', '1');
+INSERT INTO res_licenciers VALUES('9321343', 'Mr', 'DE OLIVEIRA', '', 'Theo', '5', '0', '', 'pas.saisie@faux', 'Non', 'Non', '1');
+INSERT INTO res_licenciers VALUES('9321348', 'Mr', 'BELCOURT', '', 'Maxime', '5', '0', '', 'pas.saisie@faux', 'Non', 'Non', '1');
+INSERT INTO res_licenciers VALUES('9322006', 'Mr', 'ANTZ', '', 'Achille', '5', '0', '', 'pas.saisie@faux', 'Non', 'Non', '1');
+INSERT INTO res_licenciers VALUES('9322795', 'Mr', 'MARDAYMOOTOO', '', 'Veniten', '5', '0', '', 'pas.saisie@faux', 'Non', 'Non', '1');
+INSERT INTO res_licenciers VALUES('9322804', 'Mr', 'DIONNET', '', 'Benjamin', '5', '0', '06.25.77.44.83', 'pas.saisie@faux', 'Non', '', '1');
+INSERT INTO res_licenciers VALUES('9322808', 'Mr', 'DJENA', '', 'Haron', '5', '0', '', 'pas.saisie@faux', 'Non', 'Non', '1');
 INSERT INTO res_licenciers VALUES('9322809', 'Mr', 'BOURDERIOUX', '', 'Florent', '5', '0', '06.08.27.36.32', 'pas.saisie@faux', 'Non', '', '1');
-INSERT INTO res_licenciers VALUES('9322810', 'Mr', 'SCHMITT', '', 'Martin', '5', '0', '06.01.02.03.04', 'pas.saisie@faux', 'Non', 'Non', '1');
+INSERT INTO res_licenciers VALUES('9322810', 'Mr', 'SCHMITT', '', 'Martin', '5', '0', '06.01.02.03.04', 'pas.saisie@faux', 'Non', '', '1');
 INSERT INTO res_licenciers VALUES('9322900', 'Mr', 'TREVIL VIGNOCAN', '', 'Jaden', '5', '0', '0643.33.03.53', 'pas.saisie@faux', 'Non', '', '1');
 INSERT INTO res_licenciers VALUES('9322901', 'Mr', 'LE GARS', '', 'Mathis', '5', '0', '06.71.63.47.62', 'pas.saisie@faux', 'Non', '', '1');
 INSERT INTO res_licenciers VALUES('9322902', 'Mr', 'CARDUCCI', '', 'Antonin', '5', '0', '06.20.31.48.58', 'pas.saisie@faux', 'Non', '', '1');
 INSERT INTO res_licenciers VALUES('9322903', 'Mr', 'DEMART', '', 'Yam', '5', '0', '06-25-29-31-24', 'pas.saisie@faux', 'Non', '', '1');
 INSERT INTO res_licenciers VALUES('9322904', 'Mr', 'GWERARD', '', 'Arthur', '5', '0', '06.81.52.63.25', 'pas.saisie@faux', 'Non', '', '1');
+INSERT INTO res_licenciers VALUES('9323235', 'Mr', 'COTTIN', '', 'Noé', '5', '0', '', 'pas.saisie@faux', 'Non', 'Non', '1');
 
 -- --------------------------------------
 -- Contenu de la table res_prioritaires
