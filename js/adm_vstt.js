@@ -1,7 +1,23 @@
-/* adm_vstt.js
- * Version : 1.0.1
- * Date : 2020-10-02
+/** adm_vstt.js
+ * @version : 1.0.2
+ * @date : 2020-10-06
  */
+
+// Setup DataTable Defaults
+/*
+$.extend( $.fn.dataTable.defaults, {
+	fnInitComplete: function(oSettings, json) {
+
+		// Add "Clear Filter" button to Filter
+		var btnClear = $('<a class="btnClearDataTableFilter"><span style="color: Tomato;"><i class="fas fa-times-circle"></i></span></a>');
+		
+		btnClear.appendTo($('#' + oSettings.sTableId).parents('.dataTables_wrapper').find('.dataTables_filter'));
+		$('#' + oSettings.sTableId + '_wrapper .btnClearDataTableFilter').click(function () {
+			$('#' + oSettings.sTableId).dataTable().fnFilter('');
+		});
+	}
+});
+*/
 
 // Add ouvreur
 function AddOuvreur( yearNum, creneau) {

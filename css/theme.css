@@ -48,12 +48,9 @@ div.ColVis {
     float: left;
 }
 
-.ScrollYClass {
-  height:800px;
-  overflow-y: scroll;
-}
-
-// tableau des jours
+/*************************************************************
+ * Tableau des jours
+ *************************************************************/
 //.table td { text-align: center; }
 .table-style .today {background: #2A3F54; color: #ffffff;}
 .table-style .off {background: #2A3F54; color: #ffffff;}
