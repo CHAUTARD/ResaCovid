@@ -1,28 +1,15 @@
-<!-- adm_exportation.html -->
+<!-- adm_exportation.html 
+	@version : 1.0.0
+	@date : 2020-10-06
+-->
 
 {include="adm_header"}
 
 <body>
 	<div class="container">
-		<div class="row">
-			<div class="col">
-				<h1>
-					<center>Exportation/Sauvegarde des tables</center>
-				</h1>
-			</div>
-
-			<div class="col">
-				<form class="form-signin" action="admin.php" method="post">
-					<input type="hidden" name="page" value="adm_menu"> 
-					<input type="hidden" name="nom" value="{$nom}">
-					<button class="btn btn-primary btn-lg btn-block btn-huge" type="submit">
-						<i class="fas fa-step-backward"></i> Retour au Menu
-					</button>
-				</form>
-			</div>
-		</div>
 	
-		<hr />
+		{include="adm_navbar"}
+		
 		<div class="row">
 			<div class="col">
 				<form method="post" id="id_exportation">

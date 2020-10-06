@@ -1,8 +1,12 @@
 <?php
-/*  adm_stat_prioritaire.php 
+/**  adm_stat_prioritaire.php 
+ *  @version : 1.0.0
+ *  @date : 2020-10-06
  * 
  * Statistique sur le nombre de foix qu'une personne est prioritaire
  */
+
+$tpl->assign( 'titre', '<i class="far fa-chart-bar"></i> Statistiques');
 
 // Recherche du nombre total de licencié actif
 $database->query("SELECT COUNT(*) count FROM `res_licenciers` WHERE Actif=1");
