@@ -142,7 +142,7 @@
 
 										<div class="col-sm-6">
 											<label for="addAdmin" class="col-form-label">Administrateur : </label>
-											<input type="password" class="form-control" id="addAdmin" name="addAdmin" placeholder="Non où mot de passe sur 10 caractères" value="">
+											<input type="password" class="form-control" id="addAdmin" name="addAdmin" placeholder="Mot de passe sur 10 caractères" value="">
 										</div>
 									</div>
 
@@ -226,17 +226,6 @@
 							var rowData = dt.row({ selected : true }).data();
 
 							// Transfert des données dans le formulaire
-							/* console.log(rowData);
-							    	0: 865607​
-									1: "WILMUS"​
-									2: ""​
-									3: "Franck"​
-									4: 3​
-									5: ""​
-									6: ""​
-									7: "Non"​
-									8: "Non"​
-							 */
 							$('#addLicence').val(rowData[0]);
 							if (rowData[1] == 'Mr')
 								$('#addCiviliteMr').prop('checked',true);
