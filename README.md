@@ -1,2 +1,2 @@
 # ResaCovid
-Réservation de table au tennis de table durant la période CODIV.
+Réservation de tables au tennis de table durant la période CODIV.
