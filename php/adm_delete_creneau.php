@@ -1,9 +1,10 @@
 <?php
-/*   a d m _ d e l e t e _ c r e n e a u . p h p  
+/*   adm_delete_creneau.php  
  * 
- *  Version : 1.0.0
+ *  @version : 1.0.0
+ *  @date : 2020-10-10
  * 
- * Supprimer un joueur dans les reservation 
+ * Supprimer un ou des créneaux
  * 
  * Appel à partir de jquery en Ajax :
  *      DelCreneau( {$dayofyear}, {$idCreneau.1})
@@ -17,7 +18,7 @@
  */
 
 // Suppression si l'enregistrement existe déjà
-$database->query("DELETE FROM `res_reservations` WHERE `id_creneau` = :id_creneau AND `iDate` = :iDate AND id_licencier = :id_licencier AND ouvreur = 'Non';");
+$database->query("DELETE FROM `res_reservations` WHERE `id_creneau` = :id_creneau AND `iDate` = :iDate AND id_licencier = :id_licencier AND Ouvreur = 'Non';");
 $database->bind(':id_creneau', $_GET['iCreneau']);
 $database->bind(':iDate', $_GET['iDate']);
 $database->bind(':id_licencier', $_SESSION['id_licencier']);

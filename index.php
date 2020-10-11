@@ -13,7 +13,7 @@ session_save_path( 'templates' );
 if (!isset($_SESSION)) {
     if( ! session_start() )
     {
-        alert ( 'DÃ©marrage session impossible !' );
+        alert ( 'Démarrage session impossible !' );
         die();
     }
 }
@@ -23,14 +23,14 @@ setlocale(LC_ALL, 'fr_FR.UTF-8', 'fra');
 
 require_once 'php/classes/raintpl.php';
 
-// Les constante de paramÃ©trage
+// Les constante de paramètrage
 require_once "php/constant.php";
 
 require_once "php/classes/pdo.php";
 
 $database = SimplePDO::getInstance();
 
-// Les fonctions gÃ©nÃ©riques
+// Les fonctions génériques
 require_once 'php/functions.php';
 
 // Appel de traitement en AJAX

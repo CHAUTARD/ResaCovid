@@ -1,34 +1,96 @@
-<!-- adm_login.html -->
+<!-- adm_login.html 
 
-{include="header"}
+	@version : 1.0.0
+	@date : 2020-10-11
+-->
+
+{include="adm_header"}
 
 <body class="text-center">
-	<form class="form-signin" action="admin.php" method="post">
+	<div class="container">
+		<!--  Fenêtre modale Lost Password  -->
+		<div class="modal fade" id="LostPasswordModal" tabindex="-2" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title"><i class="fas fa-lock"></i>  J’ai oublié mon mot de passe</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="text-center">
+							<p>Voullez-vous recevoir votre mot de passe.</p>
 
-		<img class="mb-4" src="{$logo}" alt="{#LOGO_TITLE#}" title="{#LOGO_TITLE#}" />
-     	<h1 class="h3 mb-3 font-weight-normal">Administration de la réservation des créneaux</h1>
-     	
-     	<!-- Error Alert -->
-     	{if="$alert=='Y'"}
-		<div class="alert alert-danger alert-dismissible fade show">
-		    <strong>Erreur !</strong><br />Code d'utilisation inconnu !
-		</div>
-		{/if}
+
+							<form id="register-form" role="form" autocomplete="off" class="form" method="get">       
+								<div class="form-group">
+									<div class="input-group input-group-lg">
+										<div class="input-group-prepend">
+											<span class="input-group-text"><i class="far fa-envelope"></i></span>
+										</div>
+										<input id="email" name="email" placeholder="email address" class="form-control" type="email">
+									</div>
+								</div>
+								
+								<input id="recoverSubmit" class="btn btn-lg btn-primary btn-block" value="Envoyer le mot de passe" type="submit">
+							</form>
+
+						</div>
+					</div>
+	
+				</div>
+			</div>
+		</div>	
 		
-     	<label for="nom" class="sr-only">Nom du joueur</label>
-     	<input type="text" id="nom" name="nom" class="form-control" placeholder="Nom en majuscule" value="" pattern="[A-Z \-]+" required autofocus>
-		<br />
-		
-		<label for="licence" class="sr-only">Mot de passe</label>
-     	<input type="password" id="mdp" name="mdp" class="form-control" placeholder="Mot de passe" value="" required autofocus>
-		<br />
-		
-		<input type="hidden" name="page" value="adm_menu">
-     	<button class="btn btn-lg btn-primary btn-block" type="submit">Se connecter</button>
-     	
-     	<p class="mt-5 mb-3 text-muted">&copy; VSTT, Patrick CHAUTARD (2020)</p>
-     	<p class="mt-5 mb-3 text-muted"><a href='https://fr.freepik.com/vecteurs/commercialisation'>Commercialisation vecteur créé par macrovector - fr.freepik.com</a></p>
-     	<p class="mt-5 mb-3 text-muted"><a target="_blank" href="https://docs.google.com/document/d/1ruXVzn-4_qtp-bVetTzUiqoOh2hz9dJ-gA5PHGhZGHY/edit?usp=sharing">Documentation sur Google doc</a></p>
-   </form>
+		<form class="form-signin" action="admin.php" method="post">
+	
+			<img class="mb-4" src="{$logo}" alt="{#LOGO_TITLE#}" title="{#LOGO_TITLE#}" />
+	     	<h1 class="h3 mb-3 font-weight-normal">Administration de la réservation des créneaux</h1>
+	     	
+	     	<!-- Error Alert -->
+	     	{if="$alert=='Y'"}
+			<div class="alert alert-danger alert-dismissible fade show">
+			    <strong>Erreur !</strong><br />Code d'utilisation inconnu !
+			</div>
+			{/if}
+			
+	     	<label for="nom" class="sr-only">Nom du joueur</label>
+	     	<input type="text" id="nom" name="nom" class="form-control" placeholder="Nom en majuscule" value="" pattern="[A-Z \-]+" required autofocus>
+			<br />
+			
+			<label for="licence" class="sr-only">Mot de passe</label>
+	     	<input type="password" id="mdp" name="mdp" class="form-control" placeholder="Mot de passe" value="" required autofocus>
+			<br />
+			
+			<input type="hidden" name="page" value="adm_menu">
+	     	<button class="btn btn-lg btn-primary btn-block" type="submit">Se connecter</button>
+	     	<a onClick="$('#LostPasswordModal').modal('show');">J’ai oublié mon mot de passe</a>
+	     	
+	     	<p class="mt-5 mb-3 text-muted">&copy; VSTT, Patrick CHAUTARD (2020)</p>
+	     	<p class="mt-5 mb-3 text-muted"><a href='https://fr.freepik.com/vecteurs/commercialisation'>Commercialisation vecteur créé par macrovector - fr.freepik.com</a></p>
+	     	<p class="mt-5 mb-3 text-muted"><a target="_blank" href="https://docs.google.com/document/d/1ruXVzn-4_qtp-bVetTzUiqoOh2hz9dJ-gA5PHGhZGHY/edit?usp=sharing">Documentation sur Google doc</a></p>
+	   </form>
+	</div>
 </body>
 </html>
+
+<script>
+ 	$(document).ready(function(){	 
+	    $("#recoverSubmit").click(function(e){
+
+	        e.preventDefault();
+	        	        
+	        $.ajax({
+	        	type: "GET",
+				url: 'admin.php?page=password&email=' + $('#email').val(),
+				
+				success: function(data) { 
+	        	   console.log(data);  // show response from the php script.
+	        	   
+	        	   $('#LostPasswordModal').modal('hide');
+	           	}
+			})
+	    })
+	})
+</script>

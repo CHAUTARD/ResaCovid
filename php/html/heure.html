@@ -1,23 +1,22 @@
-<!-- heure.html -->
+<!-- heure.html
+		@version : 1.0.0
+		@date : 2020-10-10
+ -->
 
 {include="header"}
 
 <body>
-	<div class="container h-100">	
-		<div class="alert alert-dark" my-3>
-			<div class="d-flex align-items-center text-white-50 bg-purple rounded box-shadow">
-	        	<img class="mr-3" width="96" height="96" src="img/logo.gif" text="{#LOGO_TITLE#}" alt="{#LOGO_TITLE#}">
-	        	<div class="lh-100 align-items-center">
-	          		<h1 class="mb-0 text-white">Choix de l'horaire du {$datechoisie}</h1>   
-	          		<br />		
-	        		<h6 class="mx-auto" style="width: 250px;">{$now}</h6>
-	        	</div>
+	<div class="container">	
+		<div class="alert alert-dark">
+			<div class="row">
+				<div class="col-1 align-self-start"><img width="96" height="96" src="img/logo.gif" text="{#LOGO_TITLE#}" alt="{#LOGO_TITLE#}"></div>
+	        	<div class="col text-center"><h1 class="text-white">Choix de l'horaire du {$datechoisie}</h1></div>   
 	      	</div>
-		</div>
+	    </div>
 		
 		<br />
-	    <div class="alert alert-info">
-    		<p><h4><center>Bonjour, {$joueur}</center></h4></p>
+	    <div class="alert alert-info text-center">
+    		<h4>Bonjour, {$joueur}</h4>
 		</div> 
 		<br />
 			
@@ -27,13 +26,14 @@
 				<div class="card">
 					<div class="card-header">
 						<h5>
-							<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapse1" aria-expanded="false" aria-controls="collapse1"><i class="fap fa fa-plus"></i> {$horaire.1}</button>
+							<button class="btn {$btColor.1}" type="button" data-toggle="collapse" data-target="#collapse1" aria-expanded="{$expand.1}" aria-controls="collapse1">
+								<i class="fap fa fa-plus"></i> <i class="fas fa-{if="$isLibre.1 == 'Oui'"}door-open{else}table-tennis{/if}"></i> {$horaire.1}</button>
 							{if="$isLibre.1 == 'Oui'"}
 								<br /><br /><a href="#" onclick="AddJoueur( {$dayofyear}, {$idCreneau.1})" class="btn btn-primary" alt="M'ajouter dans la liste des joueurs" title="M'ajouter dans la liste des joueurs"><i class="far fa-check-square" aria-hidden="true"></i> Ajout</a>
 							{/if}
 						</h5>
 					</div>
-					<div class="collapse" id="collapse1">
+					<div class="collapse{if="$expand.1 == 'true'"} show{/if}" id="collapse1">
 						<div class="card-body">
 							<h5 class="card-title">
 								{if="$isOuvreur.1 == 'Oui'"}
@@ -56,13 +56,14 @@
 				<div class="card">
 					<div class="card-header">
 						<h5>
-							<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapse2" aria-expanded="false" aria-controls="collapse2"><i class="fap fa fa-plus"></i> {$horaire.2}</button>
+							<button class="btn {$btColor.2}" type="button" data-toggle="collapse" data-target="#collapse2" aria-expanded="{$expand.2}" aria-controls="collapse2">
+								<i class="fap fa fa-plus"></i> <i class="fas fa-{if="$isLibre.2 == 'Oui'"}door-open{else}table-tennis{/if}"></i>  {$horaire.2}</button>
 							{if="$isLibre.2 == 'Oui'"}
 								<br /><br /><a href="#" onclick="AddJoueur( {$dayofyear}, {$idCreneau.2})" class="btn btn-primary" alt="M'ajouter dans la liste des joueurs" title="M'ajouter dans la liste des joueurs"><i class="far fa-check-square" aria-hidden="true"></i> Ajout</a>
 							{/if}
 						</h5>
 					</div>
-					<div class="collapse" id="collapse2">
+					<div class="collapse{if="$expand.2 == 'true'"} show{/if}" id="collapse2">
 						<div class="card-body">
 							<h5 class="card-title">
 								{if="$isOuvreur.2 == 'Oui'"}
@@ -86,13 +87,14 @@
 				<div class="card">
 					<div class="card-header">
 						<h5>
-							<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapse3" aria-expanded="false" aria-controls="collapse3"><i class="fap fa fa-plus"></i> {$horaire.3}</button>
+							<button class="btn {$btColor.3}" type="button" data-toggle="collapse" data-target="#collapse3" aria-expanded="{$expand.3}" aria-controls="collapse3">
+								<i class="fap fa fa-plus"></i> <i class="fas fa-{if="$isLibre.3 == 'Oui'"}door-open{else}table-tennis{/if}"></i>  {$horaire.3}</button>
 							{if="$isLibre.3 == 'Oui'"}
 								<br /><br /><a href="#" onclick="AddJoueur( {$dayofyear}, {$idCreneau.3})" class="btn btn-primary" alt="M'ajouter dans la liste des joueurs" title="M'ajouter dans la liste des joueurs"><i class="far fa-check-square" aria-hidden="true"></i> Ajout</a>
 							{/if}
 						</h5>
 					</div>
-					<div class="collapse" id="collapse3">
+					<div class="collapse{if="$expand.3 == 'true'"} show{/if}" id="collapse3">
 						<div class="card-body">
 							<h5 class="card-title">
 								{if="$isOuvreur.3 == 'Oui'"}
@@ -120,13 +122,14 @@
 				<div class="card">
 					<div class="card-header">
 						<h5>
-							<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapse4" aria-expanded="false" aria-controls="collapse4"><i class="fap fa fa-plus"></i> {$horaire.4}</button>
+							<button class="btn {$btColor.4}" type="button" data-toggle="collapse" data-target="#collapse4" aria-expanded="{$expand.4}" aria-controls="collapse4">
+								<i class="fap fa fa-plus"></i> <i class="fas fa-{if="$isLibre.4 == 'Oui'"}door-open{else}table-tennis{/if}"></i>  {$horaire.4}</button>
 							{if="$isLibre.4 == 'Oui'"}
 								<br /><br /><a href="#" onclick="AddJoueur( {$dayofyear}, {$idCreneau.4})" class="btn btn-primary" alt="M'ajouter dans la liste des joueurs" title="M'ajouter dans la liste des joueurs"><i class="far fa-check-square" aria-hidden="true"></i> Ajout</a>
 							{/if}
 						</h5>
 					</div>
-					<div class="collapse" id="collapse4">
+					<div class="collapse{if="$expand.4 == 'true'"} show{/if}" id="collapse4">
 						<div class="card-body">
 							<h5 class="card-title">
 								{if="$isOuvreur.4 == 'Oui'"}
@@ -149,13 +152,14 @@
 				<div class="card">
 					<div class="card-header">
 						<h5>
-							<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapse5" aria-expanded="false" aria-controls="collapse5"><i class="fap fa fa-plus"></i> {$horaire.5}</button>
+							<button class="btn {$btColor.5}" type="button" data-toggle="collapse" data-target="#collapse5" aria-expanded="{$expand.5}" aria-controls="collapse5">
+								<i class="fap fa fa-plus"></i> <i class="fas fa-{if="$isLibre.5 == 'Oui'"}door-open{else}table-tennis{/if}"></i>  {$horaire.5}</button>
 							{if="$isLibre.5 == 'Oui'"}
 								<br /><br /><a href="#" onclick="AddJoueur( {$dayofyear}, {$idCreneau.5})" class="btn btn-primary" alt="M'ajouter dans la liste des joueurs" title="M'ajouter dans la liste des joueurs"><i class="far fa-check-square" aria-hidden="true"></i> Ajout</a>
 							{/if}
 						</h5>
 					</div>
-					<div class="collapse" id="collapse5">
+					<div class="collapse{if="$expand.5 == 'true'"} show{/if}" id="collapse5">
 						<div class="card-body">
 							<h5 class="card-title">
 								{if="$isOuvreur.5 == 'Oui'"}
@@ -179,13 +183,14 @@
 				<div class="card">
 					<div class="card-header">
 						<h5>
-							<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapse6" aria-expanded="false" aria-controls="collapse6"><i class="fap fa fa-plus"></i> {$horaire.6}</button>
+							<button class="btn {$btColor.6}" type="button" data-toggle="collapse" data-target="#collapse6" aria-expanded="{$expand.6}" aria-controls="collapse6">
+								<i class="fap fa fa-plus"></i> <i class="fas fa-{if="$isLibre.6 == 'Oui'"}door-open{else}table-tennis{/if}"></i>  {$horaire.6}</button>
 							{if="$isLibre.6 == 'Oui'"}
 								<br /><br /><a href="#" onclick="AddJoueur( {$dayofyear}, {$idCreneau.6})" class="btn btn-primary" alt="M'ajouter dans la liste des joueurs" title="M'ajouter dans la liste des joueurs"><i class="far fa-check-square" aria-hidden="true"></i> Ajout</a>
 							{/if}
 						</h5>
 					</div>
-					<div class="collapse" id="collapse6">
+					<div class="collapse{if="$expand.6 == 'true'"} show{/if}" id="collapse6">
 						<div class="card-body">
 							<h5 class="card-title">
 								{if="$isOuvreur.6 == 'Oui'"}

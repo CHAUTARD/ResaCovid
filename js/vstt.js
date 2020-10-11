@@ -53,7 +53,8 @@ function AddJoueur( yearNum, creneau) {
 	           var msg = $.parseJSON(msg);
 	           if(msg.success=='Oui')
 	           {
-	        	   alert(msg.data);
+	        	   // Supprimé à la demande de Yves
+	        	   // alert(msg.data);
 	        	   
 	        	   // Rechargement de la page
 	        	   location.reload(true);
@@ -112,4 +113,20 @@ function DelCreneau( yearNum, creneau) {
 
          }
     });
+}
+
+function DelReservation(idReservation) {	
+	alert('ici');
+	// Chargement des prioritées en Ajax
+	$.ajax({
+		url : 'admin.php',
+		type : 'GET',
+		data : {
+			page : 'delete_reservation',
+			idReservation : idReservation
+		},
+		success : function(response) {	
+			location.reload(true);
+		}
+	})
 }

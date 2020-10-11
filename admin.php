@@ -1,6 +1,8 @@
 <?php
 /* admin.php
- * Version : 1.0.1
+ * 
+ * @version : 1.0.2
+ * @date : 2020-10-11
  */
 
 // Rapporte les erreurs pour la DODEV. Les autres, vous n'aurez rien ! nada !!!
@@ -35,6 +37,7 @@ require_once 'php/functions.php';
 $tpl->assign('logo', 'img/logo.gif');
 
 // Appel de traitement en AJAX
+
 if(isset($_GET) && isset($_GET['page']))
 {   
     include 'php/adm_'.$_GET['page'].'.php';

@@ -1,8 +1,9 @@
 <?php
 /*   jour.php
+ * 
  * Sélection du jour pour l'inscription à la réservation
- * Version : 1.0.1
- * Date : 2020-10-05
+ *  @version : 1.0.2
+ *  @date : 2020-10-10
  */
 
 /* Champ des tables de la base */
@@ -157,10 +158,28 @@ switch($dJour)
 }
 
 $tpl->assign('lgn1', $ret);
-
 $tpl->assign('lgn2', $ret2);
-
 $tpl->assign('lgn3', $ret3);
+
+// Exemple : 20256 -> 256 éme jours de 2020
+$iDate = date('yz');
+
+// Recherche de toutes les réservation à venir
+$database->query("SELECT re.`id_reservation` as id_reservation, re.`id_creneau` as id_creneau, re.`iDate` as iDate, cr.`Salle` as Salle, cr.`Heure_Debut` as Heure_Debut, cr.`Heure_Fin` as Heure_Fin FROM `res_reservations` re LEFT JOIN `res_creneaux` cr USING (id_creneau) WHERE `id_licencier` = :id_licencier AND `Ouvreur` = 'Non' AND `iDate` >= :iDate;");
+$database->bind(':id_licencier', $_SESSION['id_licencier']);
+$database->bind(':iDate', $iDate);
+
+
+$reservations = $database->resultSet();
+
+for( $i=0, $iLen = count($reservations); $i < $iLen; $i++) {
+    // Transformation du iDate en Lundi jj mois
+    $reservations[$i]['Date'] = quatiemeToDate( $reservations[$i]['iDate'] );
+    $reservations[$i]['Heure_Debut'] = formatHeure( $reservations[$i]['Heure_Debut'] );
+    $reservations[$i]['Heure_Fin'] = formatHeure( $reservations[$i]['Heure_Fin'] );
+}
+
+$tpl->assign('reservations', $reservations);
 
 //draw the template
 $tpl->draw('jour');
@@ -168,6 +187,13 @@ $tpl->draw('jour');
 /*------------------------------------------------------------------------------------------------
  *     F o n c t i o n
  *------------------------------------------------------------------------------------------------*/
+
+function quatiemeToDate( $yddd) {
+    $timestamp = mktime( 0, 0, 0, 1, 1, 2000 + substr($yddd, 0, 2));
+    $timestamp += substr($yddd, 2) * 86400;
+       
+    return ucwords( strftime("%A %d %B", $timestamp)) ;
+}
 
 // P1D veut dire 1 Jour, P2D veut dire 2 jours ...
 function calculeJourMoins($jour, $duree=1 )

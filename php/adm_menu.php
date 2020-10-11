@@ -20,7 +20,6 @@ if(isset($_POST['mdp']))
         header("Location: admin.php?alert=Y");
         exit;
     }
-    
         
     // Recherche si le joueur existe
     $sql = sprintf('SELECT id_licencier FROM res_licenciers WHERE (Actif = 1) AND ( Nom = "%s" OR Surnom = "%s") AND Admin = "%s";', $_POST['nom'], $_POST['nom'], $_POST['mdp'] );  
