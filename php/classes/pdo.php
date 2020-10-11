@@ -1,7 +1,7 @@
 <?php
 /*     pdo.php
- *  Version : 1.0.0
- *  Date : 2020-10-05
+ *  Version : 1.0.1
+ *  Date : 2020-10-11
  *  
  Query database and return a single row:
 
@@ -98,7 +98,7 @@ class SimplePDO {
             break;
             
         default:
-            $this->_query = str_replace( $param, '"'.$value.'"', $this->_query);
+            $this->_query = str_replace( $param, '"' . $value . '"', $this->_query);
     }
   }
   

@@ -1,6 +1,6 @@
-<!-- adm_menu.html 
-  Version : 1.0.2
-  Date : 2020-10-03
+<!-- adm_licencier.html 
+  Version : 1.0.3
+  Date : 2020-10-11
 -->
 
 {include="adm_header"}
@@ -194,8 +194,11 @@
 					scrollCollapse : true,
 					paging : false,
 					language : { url : "js/French.json" },
+					order: [[ 2, 'asc'],[ 3, 'asc']],
 					columnDefs : [
 						{ targets: [ 1, 9 ], visible : false, searchable : false },
+						{ targets: [ 2 ], orderData: [ 2, 3 ] },
+						{ targets: [ 3 ], orderData: [ 3, 2 ] },
 						{ targets: [ 0, 5, 8, -1 ], className: "text-center", width: "4%" },
 						{ targets : -1, data : null, "searchable": false, "orderable": false, defaultContent : "<button><i class='fas fa-user-lock'></i></button>" }
 					],
@@ -331,7 +334,7 @@
 				    
 				    $.ajax({
 				           type: "GET",
-				           url: "admin.php?page=add_licencier>",
+				           url: "admin.php?page=add_licencier",
 				           data: form.serialize(), // serializes the form's elements.
 				           success: function(data) { 
 				        	   	alert(data); 

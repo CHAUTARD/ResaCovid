@@ -1,5 +1,9 @@
 <?php
 /*  adm_add_creneau.php 
+ * 
+ *  @version : 1.0.0
+ *  @date : 2020-10-11
+ *  
  *  Ajout d'un creneau
  *  
     array (size=11)
@@ -28,27 +32,25 @@ if($_GET['id_creneau'] > 0)
 
 // Non -> Création
 if($result === false) {
-    $database->query('INSERT INTO `res_creneaux` (`id_creneau`, `Nom`, `Salle`, `Jour`, `Heure_Debut`, `Heure_Fin`, `Libre`, `id_ouvreur`, `Nbr_Place`, `Ord`) VALUES (NULL, ":Nom", ":Salle", :Jour, ":HeureDebut", ":HeureFin", "", ":Libre", :LicenceOuvreur, :NbrPlace, :addOrd);');
+    $database->query('INSERT INTO `res_creneaux` (`id_creneau`, `Nom`, `Salle`, `Jour`, `Heure_Debut`, `Heure_Fin`, `Libre`, `id_ouvreur`, `Nbr_Place`, `Ord`) VALUES (NULL, :Nom, :Salle, :Jour, :HeureDebut, :HeureFin, :Libre, :LicenceOuvreur, :NbrPlace, :addOrd);');
     $msg = "Créneau créé !";
     
 } else {
     // Oui -> Update
-    $database->query('UPDATE `res_creneaux` SET `id_creneau` = ":id_creneau", `Nom` = ":Salle", `Jour` = ":Jour", `Heure_Debut` = ":HeureDebut", `Heure_Fin` = :HeureFin, `Libre` = ":Libre", `id_ouvreur` = ":LicenceOuvreur", `Nbr_Place` = ":NbrPlace", `Ord` = ":addOrd" WHERE `id_creneau` = :id_creneau');
+    $database->query('UPDATE `res_creneaux` SET `Nom` = :Nom, `Salle` = :Salle, `Jour` = :Jour, `Heure_Debut` = :HeureDebut, `Heure_Fin` = :HeureFin, `Libre` = :Libre, `id_ouvreur` = :LicenceOuvreur, `Nbr_Place` = :NbrPlace, `Ord` = :addOrd WHERE `id_creneau` = :id_creneau');
     $database->bind(':id_creneau', $_GET['id_creneau']);
     $msg = "Licencié modifié !";
 }
 
 $database->bind(':Nom', $_GET['addNom']);
 $database->bind(':Salle', $_GET['addSalle']);
-$database->bind(':Jour', $_GET['addJour']); 
+$database->bind(':Jour', $_GET['addJour'], PDO::PARAM_INT); 
 $database->bind(':HeureDebut', $_GET['addHeureDebut']);
 $database->bind(':HeureFin', $_GET['addHeureFin']);
 $database->bind(':Libre', $_GET['addLibre']); 
-$database->bind(':LicenceOuvreur', $_GET['addOuvreur']);
-$database->bind(':NbrPlace', $_GET['addNbrPlace']);
-$database->bind(':addOrd', $_GET['addOrd']);
-
-// $database->Dump();
+$database->bind(':LicenceOuvreur', $_GET['addOuvreur'], PDO::PARAM_INT);
+$database->bind(':NbrPlace', $_GET['addNbrPlace'], PDO::PARAM_INT);
+$database->bind(':addOrd', $_GET['addOrd'], PDO::PARAM_INT);
 
 $database->execute();
 

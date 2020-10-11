@@ -1,6 +1,6 @@
 <!-- adm_creneau.html 
-	Version : 1.0.1
-	Date : 2020-10-03
+	Version : 1.0.2
+	Date : 2020-10-11
 -->
 
 {include="adm_header"}
@@ -76,7 +76,7 @@
 											  <option value="4">Jeudi</option>
 											  <option value="5">Vendredi</option>
 											  <option value="6">Samedi</option>
-											  <option value="0">Dimanche</option>
+											  <option value="7">Dimanche</option>
 											</select>
 										</div>
 
@@ -150,10 +150,12 @@
 					<th>Index</th>
 					<th>Nom</th>
 					<th>Salle</th>
+					<th>nJour</th>
 					<th>Jour</th>
 					<th>H. Début</th>
 					<th>H. Fin</th>
 					<th>Libre</th>
+					<th>id_ouv</th>
 					<th>Ouv.</th>
 					<th>Plac.</th>
 					<th>Ord</th>
@@ -166,11 +168,13 @@
 					<td>{$value.id_creneau}</td>
 					<td>{$value.Nom}</td>
 					<td>{$value.Salle}</td>
+					<td>{$value.nJour}</td>
 					<td>{$value.Jour}</td>
 					<td>{$value.Heure_Debut}</td>
 					<td>{$value.Heure_Fin}</td>
 					<td>{$value.Libre}</td>
 					<td>{$value.id_ouvreur}</td>
+					<td>{$value.Ouvreur}</td>
 					<td>{$value.Nbr_Place}</td>
 					<td>{$value.Ord}</td>
 					<td><button><i class='fas fa-user-lock'></i></button></td>
@@ -191,11 +195,13 @@
 					language : { url : "js/French.json" },
 					dom : 'Bfrtip',
 					select : true,
+					order: [[ 3, 'asc'],[ 5, 'asc']],
 					columnDefs : [
-						{ targets : 0, visible : false, searchable : false },
-						{ targets: [ 0, 4, 5, 6, 10 ], className: "text-center", width: "4%" },
-						{ targets: [ 8, 9 ], className: "text-right" },
-						{ targets: 10, searchable: false, orderable: false}
+						{ targets: [ 0, 3, 8 ], visible : false, searchable : false },
+						{ targets: [ 4 ], orderData: [ 3, 5 ] },
+						{ targets: [ 0, 5, 6, 7, 12 ], className: "text-center", width: "4%" },
+						{ targets: [ 10, 11 ], className: "text-right" },
+						{ targets: 12, searchable: false, orderable: false}
 					],
 					buttons : [{
 						text : '<i class="far fa-plus-square"></i> Ajouter un créneau',
@@ -203,7 +209,7 @@
 							$('#addCreneau').val('');
 							$('#addNom').val('');
 							$('#addSalle').val('Coppée');
-							$('#addJour').val('');
+							$('#addJour').val(1);
 							$('#addHeureDebut').val('');
 							$('#addHeureFin').val('');
 							$('#addLibre').val('Oui');
@@ -223,17 +229,20 @@
 								// Transfert des données dans le formulaire
 								$('#addCreneau').val(rowData[0]);
 								$('#addNom').val(rowData[1]);
-								$('#addSalle').val(rowData[2]);
+								$("#addSalle option[value='" + rowData[2] + "']").prop('selected', true);
 								$('#addJour').val(rowData[3]);
-								$('#addHeureDebut').val(rowData[4]);
-								$('#addHeureFin').val(rowData[5]);
-								$('#addLibre').val(rowData[6]);
-								$('#addIdOuvreur').val(rowData[7]);
-								$('#addNbrPlace').val(rowData[8]);
-								$('#addOrd').val(rowData[9]);
+								$('#addHeureDebut').val(rowData[5].replace('h',':'));
+								$('#addHeureFin').val(rowData[6].replace('h',':'));	
+								if(rowData[7] == 'Oui')
+									$('#addLibreOui').attr('checked', true);
+								else
+									$('#addLibreNon').attr('checked', true);
+								$('#addIdOuvreur').val(rowData[8]);
+								$('#addNbrPlace').val(rowData[10]);
+								$('#addOrd').val(rowData[11]);
 
 								// Ouverture d'une fenêtre modale
-								$('#adherentModal').modal('show');
+								$('#creneauModal').modal('show');
 							}
 						}, {
 							text : '<i class="far fa-trash-alt"></i> Supprimer',
@@ -259,7 +268,7 @@
 							extend : 'pdfHtml5',
 							title: 'Liste des créneaux',
 							exportOptions: {
-			                    columns: [ 1, 2, 3, 4, 6, 7, 8 ]
+			                    columns: [ 1, 2, 4, 5, 7, 8, 9 ]
 			                },
 							text : '<i class="far fa-file-pdf"></i> PDF'
 						},
@@ -316,7 +325,7 @@
 				    
 				    $.ajax({
 						type: "GET",
-						url: "admin.php?page=>add_creneau&id_creneau=0",	
+						url: "admin.php?page=add_creneau&id_creneau=0",	
 						data: form.serialize(), // serializes the form's elements.
 						success: function(data) { 
 							alert(data);  // show response from the php script.
