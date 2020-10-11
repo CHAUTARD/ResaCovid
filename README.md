@@ -1,9 +1,9 @@
 # ResaCovid
-Réservation de table au tennis de table durant la période CODIV.
+Réservation de tables au tennis de table durant la période CODIV.
 
-Ce site permet la réservation de créneau horaire pour les entraînement et le loisir durant cette triste période.
+Ce site permet la réservation de créneaux horaire pour les entraînements et le loisir durant cette triste période.
 
-Vous pouvez trouver la documentation sur la partie Frontale (utilisateur) dans Google Doc
+Vous pouvez trouver la documentation sur la partie frontale (utilisateur) dans Google Doc
 
 https://docs.google.com/document/d/1Ha6CYmFDTwsbk9bmJgs4SVAzGatbEKfK1cqafPqyLLY/edit?usp=sharing
 
