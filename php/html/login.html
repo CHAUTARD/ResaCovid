@@ -1,38 +1,54 @@
 <!-- login.html 
-	@version : 1.0.0
-	@date : 2020-10-03
+	@version : 1.0.1
+	@date : 2020-10-12
 -->
 
 {include="header"}
 
 <body class="text-center">
-	<div class="container">
-		<form class="form-signin" action="index.php" method="post">
-	
-			<img class="mb-4" src="img/logo.gif" alt="{#LOGO_TITLE#}" title="{#LOGO_TITLE#}">
-	     	<h1 class="h3 mb-3 font-weight-normal">Sélection de créneau pour le tennis de table</h1>
-	     	
-	     	<!-- Error Alert -->
-	     	{if="$alert=='Y'"}
-			<div class="alert alert-danger alert-dismissible fade show">
-			    <strong>Erreur !</strong><br />Code d'utilisation inconnu !
+	<div class="container h-100">
+	    <!-- Error Alert -->
+     	{if="$alert=='Y'"}
+		<div class="alert alert-danger alert-dismissible fade show">
+		    <strong>Erreur !</strong><br />Code d'utilisation inconnu !
+		</div>
+		{/if}
+			
+		<div class="d-flex justify-content-center">
+			<div class="card mt-5 col-md-4 animated bounceInDown myForm">
+				<div class="card-header">
+					<img class="mb-4" src="img/logo.gif" alt="{#LOGO_TITLE#}" title="{#LOGO_TITLE#}">
+	     			<h1 class="h3 mb-3 font-weight-normal">Sélection de créneau pour le tennis de table</h1>
+				</div>
+				<form class="form-signin" action="index.php" method="post">
+					<div class="card-body">		
+						<div id="dynamic_container">
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text br-15"><i class="far fa-user"></i></span>
+								</div>
+								<input type="text" id="nom" name="nom" class="form-control" placeholder="Nom du licencié(e)" pattern="[A-Za-z \-]+" style="text-transform:uppercase" required autofocus>
+							</div>
+						</div>
+						<div class="input-group mt-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text br-15"><i class="far fa-id-badge"></i></span>
+							</div>
+							<input type="text" id="licence" name="licence" class="form-control" placeholder="Numéro de licence" pattern="[0-9]+" required autofocus>
+						</div>				     
+					</div>
+					<div class="card-footer">
+						<button class="btn btn-primary btn-sm btn-block" type="submit"><i class="far fa-arrow-alt-circle-right"></i> Se connecter</button>
+						<br />							
+						<a class="btn btn-outline-secondary btn-sm btn-block" href="http://www.vstt.com" target="_blank"><i class="far fa-copyright"></i> VSTT, Patrick CHAUTARD (2020)</a>	
+    	
+						<a class="btn btn-outline-info btn-sm btn-block" href="https://docs.google.com/document/d/1Ha6CYmFDTwsbk9bmJgs4SVAzGatbEKfK1cqafPqyLLY/edit?usp=sharing" target="_blank"><i class="fas fa-book"></i> Documentation sur Google doc</a>
+					</div>
+				
+					<input type="hidden" name="page" value="jour">
+				</form>
 			</div>
-			{/if}
-			
-	     	<label for="nom" class="sr-only">Nom du joueur</label>
-	     	<input type="text" id="nom" name="nom" class="form-control" placeholder="Nom en majuscule" pattern="[A-Za-z \-]+" style="text-transform:uppercase" required autofocus>
-			<br />
-			
-			<label for="licence" class="sr-only">Numéro de licence</label>
-	     	<input type="text" id="licence" name="licence" class="form-control" placeholder="Numéro de licence" pattern="[0-9]+" required autofocus>
-			<br />
-			
-			<input type="hidden" name="page" value="jour">
-	     	<button class="btn btn-lg btn-primary btn-block" type="submit">Se connecter</button>
-	     	
-	     	<p class="mt-5 mb-3 text-muted">&copy; VSTT, Patrick CHAUTARD (2020)</p>
-	     	<p class="mt-5 mb-3 text-muted"><a target="_blank" href="https://docs.google.com/document/d/1Ha6CYmFDTwsbk9bmJgs4SVAzGatbEKfK1cqafPqyLLY/edit?usp=sharing">Documentation sur Google doc</a></p>
-	   </form>
+		</div>
    	</div>
 </body>
 </html>
