@@ -60,8 +60,12 @@
 										<div class="col-sm-6">
 											<label class="col-form-label">Salle : </label>
 											<select class="browser-default custom-select" id="addSalle" name='addSalle'>
-											  <option value="Copée" selected>Copée</option>
-											  <option value="Tcheuméo">Tcheuméo</option>
+											  <option value="{#SALLE1#}" selected>{#SALLE1#}</option>
+											  {if="NBR_SALLE > 1"}<option value="{#SALLE2#}">{#SALLE2#}</option>{/if}
+											  {if="NBR_SALLE > 2"}<option value="{#SALLE3#}">{#SALLE3#}</option>{/if}
+											  {if="NBR_SALLE > 3"}<option value="{#SALLE4#}">{#SALLE4#}</option>{/if}
+											  {if="NBR_SALLE > 4"}<option value="{#SALLE5#}">{#SALLE5#}</option>{/if}
+											  {if="NBR_SALLE > 5"}<option value="{#SALLE6#}">{#SALLE6#}</option>{/if}
 											</select>
 										</div>
 									</div>

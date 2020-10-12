@@ -15,6 +15,10 @@ define('LOGO_TITLE', 'Le logo de VSTT');
 define('NOMBRE_EQUIPE', 9);
 define('NUMERO_CLUB', '08930113'); // FFTT
 
+define('NBR_SALLE', 2);
+define('SALLE1', 'Copée');
+define('SALLE2', 'Tcheuméo');
+
 // Utilisateur par défault
 define('USER_NAME', 'ADMIN'); // En majuscule obligatoirement
 define('USER_PWD', '#Admin<..>');
