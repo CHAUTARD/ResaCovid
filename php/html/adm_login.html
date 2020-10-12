@@ -7,7 +7,14 @@
 {include="adm_header"}
 
 <body class="text-center">
-	<div class="container">
+	<div class="container h-100">
+	     <!-- Error Alert -->
+     	{if="$alert=='Y'"}
+		<div class="alert alert-danger alert-dismissible fade show">
+		    <strong>Erreur !</strong><br />Code d'utilisation inconnu !
+		</div>
+		{/if}
+			
 		<!--  Fenêtre modale Lost Password  -->
 		<div class="modal fade" id="LostPasswordModal" tabindex="-2" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 			<div class="modal-dialog" role="document">
@@ -42,34 +49,44 @@
 			</div>
 		</div>	
 		
-		<form class="form-signin" action="admin.php" method="post">
-	
-			<img class="mb-4" src="{$logo}" alt="{#LOGO_TITLE#}" title="{#LOGO_TITLE#}" />
-	     	<h1 class="h3 mb-3 font-weight-normal">Administration de la réservation des créneaux</h1>
+		<div class="d-flex justify-content-center">
+			<div class="card mt-5 col-md-4 animated bounceInDown myForm">
+				<div class="card-header">
+					<img class="mb-4" src="img/logo.gif" alt="{#LOGO_TITLE#}" title="{#LOGO_TITLE#}">
+	     			<h1 class="h3 mb-3 font-weight-normal">Administration de la réservation des créneaux</h1>
+				</div>
+				
+				<form class="form-signin" action="admin.php" method="post">
+					<div class="card-body">		
+						<div id="dynamic_container">
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text br-15"><i class="far fa-user"></i></span>
+								</div>
+								<input type="text" id="nom" name="nom" class="form-control" placeholder="Nom administrateur" pattern="[A-Za-z \-]+" style="text-transform:uppercase" required autofocus>
+							</div>
+						</div>	
 	     	
-	     	<!-- Error Alert -->
-	     	{if="$alert=='Y'"}
-			<div class="alert alert-danger alert-dismissible fade show">
-			    <strong>Erreur !</strong><br />Code d'utilisation inconnu !
-			</div>
-			{/if}
-			
-	     	<label for="nom" class="sr-only">Nom du joueur</label>
-	     	<input type="text" id="nom" name="nom" class="form-control" placeholder="Nom en majuscule" pattern="[A-Za-z \-]+" style="text-transform:uppercase" required autofocus>
-			<br />
-			
-			<label for="licence" class="sr-only">Mot de passe</label>
-	     	<input type="password" id="mdp" name="mdp" class="form-control" placeholder="Mot de passe" required autofocus>
-			<br />
-			
-			<input type="hidden" name="page" value="adm_menu">
-	     	<button class="btn btn-lg btn-primary btn-block" type="submit">Se connecter</button>
-	     	<a href="#" class="text-info" onClick="$('#LostPasswordModal').modal('show');">J’ai oublié mon mot de passe</a>
-	     	
-	     	<p class="mt-5 mb-3 text-muted">&copy; VSTT, Patrick CHAUTARD (2020)</p>
-	     	<p class="mt-5 mb-3 text-muted"><a href='https://fr.freepik.com/vecteurs/commercialisation'>Commercialisation vecteur créé par macrovector - fr.freepik.com</a></p>
-	     	<p class="mt-5 mb-3 text-muted"><a target="_blank" href="https://docs.google.com/document/d/1ruXVzn-4_qtp-bVetTzUiqoOh2hz9dJ-gA5PHGhZGHY/edit?usp=sharing">Documentation sur Google doc</a></p>
-	   </form>
+						<div class="input-group mt-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text br-15"><i class="fas fa-unlock-alt"></i></span>
+							</div>
+							<input type="password" id="mdp" name="mdp" class="form-control" placeholder="Mot de passe" required autofocus>
+						</div>				     
+					</div>
+					<div class="card-footer">
+						<button class="btn btn-primary btn-sm btn-block" type="submit"><i class="far fa-arrow-alt-circle-right"></i> Se connecter</button>
+						<a href="#" class="text-info" onClick="$('#LostPasswordModal').modal('show');">J’ai oublié mon mot de passe</a>
+						<br /><br />		
+						<a class="btn btn-outline-secondary btn-sm btn-block" href="http://www.vstt.com" target="_blank"><i class="far fa-copyright"></i> VSTT, Patrick CHAUTARD (2020)</a>	
+		    	
+						<a class="btn btn-outline-info btn-sm btn-block" href="https://docs.google.com/document/d/1ruXVzn-4_qtp-bVetTzUiqoOh2hz9dJ-gA5PHGhZGHY/edit?usp=sharing" target="_blank"><i class="fas fa-book"></i> Documentation sur Google doc</a>
+						<a class="btn btn-outline-info btn-sm btn-block" href='https://fr.freepik.com/vecteurs/commercialisation'>Commercialisation vecteur créé par macrovector - fr.freepik.com</a>
+					</div>
+					<input type="hidden" name="page" value="adm_menu">
+	   			</form>
+	   		</div>
+   		</div>
 	</div>
 </body>
 </html>
