@@ -1,7 +1,7 @@
 <?php
 /* adm_prioritaire.php
- * Version : 1.0.1
- * Date : 2020-06-25
+ *      @version : 1.0.1
+ *      @date : 2020-10-12
  * 
  * Administration des prioritaires
  */
@@ -37,12 +37,18 @@ foreach($result as $r)
     $database->query("SELECT p.`id_prioritaire`, l.id_licencier, l.Nom, l.Prenom FROM `res_prioritaires` p LEFT JOIN `res_licenciers` l USING(`id_licencier`) WHERE `id_creneau` = ".$r['id_creneau']." ORDER BY l.Nom, l.Prenom");
     $resultLic = $database->resultSet();
         
+    if($resultLic === false)
+        $NbrJoueur = 0;
+    else 
+        $NbrJoueur = count($resultLic);
+    
     $creneaux[] = array(
         'id_creneau' => $r['id_creneau'],
         'Salle' => $r['Salle'],
         'Jour' => $jour[ $r['Jour'] ],
         'Heure_Debut' => formatHeure($r['Heure_Debut']),
-        'Nbr_Place' => '(' . count($resultLic) . '/' . $r['Nbr_Place'] . ')',
+        'Nbr_Place' => '(' . $NbrJoueur . '/' . $r['Nbr_Place'] . ')',
+        'Disabled' => $NbrJoueur == 0 ? ' disabled' : '',
         'Licenciers' => $resultLic,
         'Active' => $actif ? ' active' : '',
         'ShowActive' => $actif ? ' show active' : ''

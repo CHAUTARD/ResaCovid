@@ -1,5 +1,6 @@
 <!-- adm_prioritaire.html 
-	Version : 1.0.0
+	@version : 1.0.0
+	@date : 2020-10-12
 -->
 
 {include="adm_header"}
@@ -13,9 +14,7 @@
 			<div class="col-sm-3">
 				<div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
 					{loop="$creneaux"}
-					<a class="nav-link{$value.Active}" id="v-tab-{$value.id_creneau}" data-toggle="pill" href="#v-pills-{$value.id_creneau}" role="tab" aria-controls="v-pills-{$value.id_creneau}" aria-selected="true">
-						{$value.Salle} {$value.Jour} {$value.Heure_Debut} {$value.Nbr_Place}
-					</a>
+					<a class="nav-link{$value.Active}{$value.Disabled}" id="v-tab-{$value.id_creneau}" data-toggle="pill" href="#v-pills-{$value.id_creneau}" role="tab" aria-controls="v-pills-{$value.id_creneau}" aria-selected="true">{$value.Salle} {$value.Jour} {$value.Heure_Debut} {$value.Nbr_Place}</a>
 					{/loop}
 				</div>
 			</div>
@@ -25,9 +24,7 @@
 					<div class="tab-pane fade{$value.ShowActive}" id="v-pills-{$value.id_creneau}" role="tabpanel" aria-labelledby="v-pills-{$value.id_creneau}">
 						<ul class="list-group">
 							{loop="$value.Licenciers"}
-							<li class="list-group-item">
-							 	<button onclick="DelPrioritaire({$value.id_prioritaire})"><i class="far fa-trash-alt"></i></button> Lic : {$value.id_licencier}, {$value.Nom} {$value.Prenom}
-							</li>
+							<li class="list-group-item"><button onclick="DelPrioritaire({$value.id_prioritaire})"><i class="far fa-trash-alt"></i></button> Lic : {$value.id_licencier}, {$value.Nom} {$value.Prenom}</li>
 							{/loop}
 						</ul>
 					</div>
