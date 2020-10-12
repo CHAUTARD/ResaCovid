@@ -2,15 +2,17 @@
 /*   jour.php
  * 
  * Sélection du jour pour l'inscription à la réservation
- *  @version : 1.0.2
- *  @date : 2020-10-10
+ *  @version : 1.0.3
+ *  @date : 2020-10-12
  */
 
 /* Champ des tables de la base */
 
 $tpl->assign('version', '1.00' );
 
-if ( preg_match( '/^([A-Z \-]+)$/', strtoupper($_POST['nom']), $nom) == 0)
+$nom = strtoupper($_POST['nom']);
+
+if ( preg_match( '/^([A-Z \-]+)$/', $nom) == 0)
 {
     header("Location: index.php?alert=Y");
     exit;
@@ -23,9 +25,9 @@ if ( preg_match( '/^([0-9]+)$/', $_POST['licence'], $licence) == 0)
 }
 
 // Recherche si le joueur existe
-$sql = sprintf("SELECT * FROM res_licenciers WHERE (Actif = 1) AND ( Nom='%s' OR Surnom='%s') AND id_licencier=%d", $_POST['nom'], $_POST['nom'], $_POST['licence'] );
-
-$database->query($sql);
+$database->query("SELECT * FROM res_licenciers WHERE (Actif = 1) AND ( Nom = :Nom OR Surnom = :Nom) AND id_licencier = :id_licencier");
+$database->bind(':Nom', $nom);
+$database->bind(':id_licencier', $_POST['licence'], PDO::PARAM_INT);
 $result = $database->single();
 
 // Le code ne correspond pas !

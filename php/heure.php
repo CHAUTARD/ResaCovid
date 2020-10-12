@@ -1,7 +1,7 @@
 <?php
 /** heure.php
- * @version 1.0.1
- * @date : 2020-10-10
+ * @version 1.0.2
+ * @date : 2020-10-12
  */
 
 // $_GET
@@ -112,7 +112,7 @@ foreach($result as $r)
     }
       
     // Recherche des numeros de licence des inscripts pour ce créneau
-    $database->query("SELECT l.id_licencier, l.Nom, l.Prenom  FROM `res_reservations` r LEFT JOIN `res_licenciers` l ON r.id_licencier = l.id_licencier WHERE `id_creneau` = :id_creneau AND `iDate` = :iDate AND r.Ouvreur = 'Non';");
+    $database->query("SELECT l.id_licencier, CONCAT( l.Prenom, ' ', l.Nom) as PN  FROM `res_reservations` r LEFT JOIN `res_licenciers` l ON r.id_licencier = l.id_licencier WHERE `id_creneau` = :id_creneau AND `iDate` = :iDate AND r.Ouvreur = 'Non' ORDER BY Nom, Prenom;");
     $database->bind(':id_creneau', $r['id_creneau']);
     $database->bind(':iDate', $iDate);
     $resultJoueur = $database->resultSet();
@@ -129,16 +129,14 @@ foreach($result as $r)
     
     // Recherche des noms des joueurs inscript
     foreach($resultJoueur as $rj)
-    {      
-        $NomInscrit = sprintf('%s %s', $rj['Prenom'], $rj['Nom']);
-        
+    {             
         if($rj['id_licencier'] == $_SESSION['id_licencier'])
         {
-            $inscript[$i][] = array( 'mode' => 'MOD', 'nom' => $NomInscrit);
+            $inscript[$i][] = array( 'mode' => 'MOD', 'nom' => $rj['PN']);
             $dejaInscrit = true;
         }
         else
-            $inscript[$i][] = array( 'mode' => '---', 'nom' => $NomInscrit);
+            $inscript[$i][] = array( 'mode' => '---', 'nom' => $rj['PN']);
     }
         
     // Plus de places         

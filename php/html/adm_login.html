@@ -22,7 +22,6 @@
 						<div class="text-center">
 							<p>Voullez-vous recevoir votre mot de passe.</p>
 
-
 							<form id="register-form" role="form" autocomplete="off" class="form" method="get">       
 								<div class="form-group">
 									<div class="input-group input-group-lg">
@@ -56,16 +55,16 @@
 			{/if}
 			
 	     	<label for="nom" class="sr-only">Nom du joueur</label>
-	     	<input type="text" id="nom" name="nom" class="form-control" placeholder="Nom en majuscule" value="" pattern="[A-Z \-]+" required autofocus>
+	     	<input type="text" id="nom" name="nom" class="form-control" placeholder="Nom en majuscule" pattern="[A-Za-z \-]+" style="text-transform:uppercase" required autofocus>
 			<br />
 			
 			<label for="licence" class="sr-only">Mot de passe</label>
-	     	<input type="password" id="mdp" name="mdp" class="form-control" placeholder="Mot de passe" value="" required autofocus>
+	     	<input type="password" id="mdp" name="mdp" class="form-control" placeholder="Mot de passe" required autofocus>
 			<br />
 			
 			<input type="hidden" name="page" value="adm_menu">
 	     	<button class="btn btn-lg btn-primary btn-block" type="submit">Se connecter</button>
-	     	<a onClick="$('#LostPasswordModal').modal('show');">J’ai oublié mon mot de passe</a>
+	     	<a href="#" class="text-info" onClick="$('#LostPasswordModal').modal('show');">J’ai oublié mon mot de passe</a>
 	     	
 	     	<p class="mt-5 mb-3 text-muted">&copy; VSTT, Patrick CHAUTARD (2020)</p>
 	     	<p class="mt-5 mb-3 text-muted"><a href='https://fr.freepik.com/vecteurs/commercialisation'>Commercialisation vecteur créé par macrovector - fr.freepik.com</a></p>
