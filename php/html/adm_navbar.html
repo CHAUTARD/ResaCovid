@@ -1,6 +1,6 @@
 <!-- titre_header.html
-	Version : 1.0.1
-	Date : 2020-10-03
+	Version : 1.0.2
+	Date : 2020-10-12
  -->
 
 <!--- Navbar --->
@@ -33,9 +33,69 @@
 				<a class="nav-link" href="admin.php"><i class="fas fa-sign-out-alt fa-fw mr-1"></i>Quitter</a>
 			</li>
 			<li class="nav-item pl-1">
-				<a class="nav-link" href="#" onClick="alert('Site construit par Patrick CHAUTARD.')"><i class="fas fa-info-circle fa-fw mr-1"></i>A propos de ...</a>
+				<a class="nav-link" data-toggle="modal" data-target="#AboutModal"><i class="fas fa-info-circle fa-fw mr-1"></i>A propos de ...</a>
 			</li>
 		</ul>
 	</div>
 </nav>
+
+<!-- Modal -->
+<div class="modal fade" id="AboutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">A propos du site.</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			</div>
+			<div class="modal-body">
+				<div id="accordion">
+					<div class="card">
+						<div class="card-header" id="headingOne">
+							<h5 class="mb-0">
+								<button class="btn btn-outline-primary btn-lg btn-block" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"><h4><i class="fas fa-user-astronaut"></i> Profil du développeur</h4></button>
+							</h5>
+						</div>
+
+						<div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+							<div class="card-body" style="text-align:center;">
+								<img src="img/Profil_pat.jpg"  class="rounded-circle" alt="Rounded Image" width="200">
+								<p />
+								<h4>Patrick CHAUTARD</h4>
+								Aprés une longue carrière dans le développement, maintenant à la retraire je continue pour aider nos associations.
+							</div>
+						</div>
+					</div>
+					<div class="card">
+						<div class="card-header" id="headingTwo">
+							<h5 class="mb-0">
+								<button class="btn btn-outline-secondary btn-lg btn-block collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"><h4><i class="fab fa-facebook"></i> Facebook</h4></button>
+							</h5>
+						</div>
+						<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+							<div class="card-body">
+								Vous pouvez me joindre sur Facebook :<br />
+								- <a href="https://www.facebook.com/patrick.chautard.9" target="_blank">https://www.facebook.com/patrick.chautard.9</a><br />
+								- Sur ma messagerie :<br />
+								patrick.chautard@free.fr
+							</div>
+						</div>
+					</div>
+					<div class="card">
+						<div class="card-header" id="headingThree">
+							<h5 class="mb-0">
+								<button class="btn btn-outline-info btn-lg btn-block collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree"><h4><i class="fas fa-donate"></i> Dons</h4></button>
+							</h5>
+						</div>
+						<div id="collapseThree" class="collapse"
+							aria-labelledby="headingThree" data-parent="#accordion">
+							<div class="card-body">
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 <!--# Navbar #-->
