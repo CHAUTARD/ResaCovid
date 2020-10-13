@@ -9,8 +9,9 @@ body {
   min-height: 100vh;
 
   color: #333;
-  /* background-color: #f1f1f1; */
-  background: linear-gradient(90deg, #F0C27B 10%, #4B1248 90%);
+
+  // background: linear-gradient(0deg, #F0C27B 10%, #4B1248 90%);
+  background: linear-gradient(148deg, #fcb045 10%, #0070ff 50%, #fcb045 90%);
 }
 
 .logo-container>img {
