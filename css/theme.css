@@ -61,6 +61,16 @@ div.ColVis {
 	cursor: not-allowed;
 }
 
+/*************************************************************
+ * Carousel modification des bouton next, previous
+ *************************************************************/
+.carousel-control-next-icon,
+.carousel-control-prev-icon {
+    filter: invert(100%);
+	width: 60px;
+	height: 60px;
+}
+
 /********************************************
  * Ouvreur = Bouton Oui / Non
  *******************************************/
