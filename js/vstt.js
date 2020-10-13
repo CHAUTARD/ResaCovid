@@ -1,6 +1,15 @@
-// vstt.js
+/* vstt.js
 
-// Add ouvreur
+ */
+
+/** AddOuvreur
+ * 
+ * Ajout d'un ouvreur
+ * 
+ * @param yearNum
+ * @param creneau
+ * @returns
+ */
 function AddOuvreur( yearNum, creneau) {
       $.ajax({
            type: "GET",
@@ -38,7 +47,14 @@ function AddOuvreur( yearNum, creneau) {
       });
  }
 
-//Add ouvreur
+/** AddJoueur
+ * 
+ * Ajout d'un licencier
+ * 
+ * @param yearNum
+ * @param creneau
+ * @returns
+ */
 function AddJoueur( yearNum, creneau) {
       $.ajax({
            type: "GET",
@@ -77,7 +93,14 @@ function AddJoueur( yearNum, creneau) {
       });
  }
 
-// DelCreneau
+/** DelCreneau
+ * 
+ * Suppression d'un créneau
+ * 
+ * @param yearNum
+ * @param creneau
+ * @returns
+ */
 function DelCreneau( yearNum, creneau) {
     $.ajax({
          type: "GET",
@@ -115,9 +138,14 @@ function DelCreneau( yearNum, creneau) {
     });
 }
 
+/** DelReservation
+ * Supression d'une réservation par le licencier
+ * 
+ * @param idReservation
+ * @returns
+ */
 function DelReservation(idReservation) {	
-	alert('ici');
-	// Chargement des prioritées en Ajax
+	// Chargement des prioriétées en Ajax
 	$.ajax({
 		url : 'admin.php',
 		type : 'GET',

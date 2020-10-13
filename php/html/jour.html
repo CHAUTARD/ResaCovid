@@ -147,7 +147,10 @@
 			</tbody>
 		</table>
 		
-		Mes réservations :
+		{if="count($reservations) == 0"}
+		<br />
+		{else}
+		<h4>Mes réservations :</h4>
 		
 		<table class="table">
 		  <thead>
@@ -171,8 +174,10 @@
 				{/loop}
 			</tbody>
 		</table>
+		{/if}
 	</div>
 	
+	<br />
 	<div class="container">
 		<div class="row bg-transparent">
 			<div class="col-4 bg-light p-2">
