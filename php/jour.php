@@ -53,7 +53,16 @@ if($result['Telephone'] == '' || $result['Email'] == '' || $result['Email'] == '
     $tpl->assign('btnMsg', 'Consultation de votre fiche licence.');
 }
         
+// Recherche des jours de la semaine avec ou sans créneau
+$database->query("SELECT DISTINCT(Jour) jj FROM `res_creneaux` ORDER BY Jour");
+$result = $database->resultSet();
 
+// 1 => Lundi .. 7 => Dimanche
+// false => Pas de créneau
+$aJour = array( 1 => false, false,false,false,false,false,false);
+foreach($result as $r)
+        $aJour[$r['jj']] = true;
+    
 // Mois Année avec la première lettre en majuscule
 $tpl->assign('mois', ucfirst(strftime('%B %Y')));
  
@@ -212,29 +221,51 @@ function calculeJour($jour, $duree=1 )
     return $date->format('Y-m-d');
 }
 
-function setTd($value='&nbsp;', $etat='OFF')
-{   
+function setTd($value='&nbsp;', $etat='OFF' )
+{  
+    global $aJour;
+    
+    // Jour du mois
+    $J = date("d", strtotime($value));
+    
+    // Jour de la semaine 1 .. 7
+    $N = date("N", strtotime($value));
+    
+    // Modification si jour est sans créneau
     switch($etat)
     {
         case 'ON':
-            return sprintf('<td><center>'.
+            if( $aJour[$N] === false)
+                return sprintf('<td><button class="btn btn-warning" title="Pas de créneau sur ce jour" disabled>%s</button></td>', $J);
+            break;
+            
+        case 'TODAY':
+            if( $aJour[$N] === false)
+                return sprintf('<td><button class="btn btn-success" title="Pas de créneau aujourd\'hui" disabled>%s</button></td>', $J);
+            break;
+            
+        case 'OFF':
+            return sprintf('<td><button class="btn btn-secondary" title="Pas disponible" disabled>%s</button></td>', $J);  
+    }
+        
+        
+    switch($etat)
+    {
+        case 'ON':
+            return sprintf('<td>'.
             '<form action="index.php" method="get">'.
                 '<input type="hidden" name="page" value="heure">'.
                 '<input type="hidden" name="jour" id="jour" value="%s">'.
-                '<button type="submit" class="btn btn-outline-primary">%s</button>'.
-                '</form></center></td>', $value, date("d", strtotime($value)) );
+                '<button type="submit" class="btn btn-outline-primary" title="Voir les créneaux">%s</button>'.
+                '</form></td>', $value, $J );
             
         case 'TODAY':
-            return sprintf('<td><center>'.
+            return sprintf('<td>'.
                 '<form action="index.php" method="get">'.
                 '<input type="hidden" name="page" value="heure">'.
                 '<input type="hidden" name="jour" id="jour" value="%s">'.
-                '<button type="submit" class="btn btn-outline-success">%s</button>'.
-                '</form></center></td>', $value, date("d", strtotime($value)));
-            
-        case 'OFF':
-            return sprintf('<td><center><button class="btn btn-secondary" disabled>%s</button></center></td>', date("d", strtotime($value)));  
-
+                '<button type="submit" class="btn btn-outline-success" title="Voir les créneaux du jour">%s</button>'.
+                '</form></td>', $value, $J);
     }
     return false;
 }

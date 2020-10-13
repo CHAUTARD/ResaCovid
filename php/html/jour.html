@@ -117,7 +117,7 @@
 		<br />
 	    <div class="alert alert-info text-center">
     		<h4>Bonjour, {$licencier.Prenom} {$licencier.Nom} 
-    			<button type="button" class="btn {$btn} MyBtn" data-toggle="modal" data-placement="top" title="Licence" data-trigger="hover" data-content="{$btnMsg}" data-target="#adherentModal">
+    			<button type="button" class="btn {$btn}" data-toggle="modal" title="{$btnMsg}" data-trigger="hover" data-target="#adherentModal">
     				<i class="far fa-address-card fa-2x"></i>
     			</button>						
     		</h4>
@@ -215,10 +215,7 @@
 		    	   } 
 			    })   
 			})
-	});
-	
-	// Select all elements with data-toggle="popover" in the document
-	$('.MyBtn').popover()
+	})
 </script>
 
 </html>

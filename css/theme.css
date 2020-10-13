@@ -53,24 +53,12 @@ div.ColVis {
 /*************************************************************
  * Tableau des jours
  *************************************************************/
-//.table td { text-align: center; }
-.table-style .today {background: #2A3F54; color: #ffffff;}
-.table-style .off {background: #2A3F54; color: #ffffff;}
 
-// Samedi
-.table-style th:nth-of-type(6),td:nth-of-type(6) {color: blue;}
+.table th { text-align: center; }
+.table td { text-align: center; }
 
-// Dimanche
-.table-style th:nth-of-type(7),td:nth-of-type(7) {color: blue;}
-
-// Pas de salle le jeudi
-.table-style th:nth-of-type(4),td:nth-of-type(4) {color: red;}
-.table-style tr:first-child th{background-color:#F6F6F6; text-align:center; font-size: 15px;}
-
-table.dataTable tbody th,
-table.dataTable tbody td {
-	padding: 0.25rem; 
-    white-space: nowrap;
+.btn[disabled] {
+	cursor: not-allowed;
 }
 
 /********************************************
