@@ -1,7 +1,7 @@
 <?php
 /** heure.php
- * @version 1.0.2
- * @date : 2020-10-12
+ * @version 1.0.3
+ * @date : 2020-10-14
  */
 
 // $_GET
@@ -104,7 +104,7 @@ foreach($result as $r)
     else
     {
         // Image plus le nom de l'ouvreur
-        $ouvreur[$i] = '<img src="img/clefs.png" alt="Ouvreur" class="img-thumbnail" style="border:none;background:none;"  width="36"> ' . GetNomByNumLicence( $database, $resultOuvreur['id_licencier'] );
+        $ouvreur[$i] = '<img src="img/clefs.png" alt="Ouvreur" class="img-thumbnail" style="border:none;background:none;"  width="36"> ' . GetNomByNumLicence($resultOuvreur['id_licencier'] );
         
         // Déjà inscript comme ouvreur pour ce créneau
         if($_SESSION['id_licencier'] == $resultOuvreur['id_licencier'])

@@ -1,12 +1,19 @@
 <?php
-/*   f u n c t i o n s . p h p  
- *  Version : 1.0.0
- *  Date : 2020-10-05 
+/**   f u n c t i o n s . p h p  
+ *  Version : 1.0.1
+ *  Date : 2020-10-14 
  */
 
-// Recherche du nom d'un joueur à partir de son numéro de licence
-function GetNomByNumLicence( $database, $numLicence)
+/** Recherche du nom d'un joueur à partir de son numéro de licence
+ * 
+ * @param global $database
+ * @param int $numLicence
+ * @return string
+ */
+function GetNomByNumLicence($numLicence)
 {
+    global $database;
+    
     // Recherche des informations sur le joueur connexté
     $sql = sprintf("SELECT Nom, Prenom FROM res_licenciers WHERE id_licencier=%d", $numLicence );
     
@@ -20,9 +27,15 @@ function GetNomByNumLicence( $database, $numLicence)
     return sprintf('%s %s', $result['Prenom'], $result['Nom']);
 }
 
-/* Recherche des licenciers ouvreurs */
-function GetOuvreurs($database)
+/** Recherche des licenciers ouvreurs
+ * 
+ * @param global $database
+ * @return string[]
+ */
+function GetOuvreurs()
 {
+    global $database;
+    
     $database->query("SELECT `id_licencier`,  `Nom`,  `Prenom` FROM `res_licenciers` WHERE Ouvreur = 'Oui' ORDER BY Nom, Prenom;");
     $result = $database->resultSet();
     
@@ -33,8 +46,17 @@ function GetOuvreurs($database)
     return $ret;
 }
 
-function IsOuvreur($database, $idCreneau, $idLicencier) 
+/** Présence d'un ouvreur pour un créneau donné
+ * 
+ * @param global $database
+ * @param int $idCreneau
+ * @param int $idLicencier
+ * @return boolean
+ */
+function IsOuvreur( $idCreneau, $idLicencier) 
 {   
+    global $database;
+    
     $database->query("SELECT COUNT(*) as count FROM `res_creneaux` WHERE `id_ouvreur` = :id_licencier AND `id_creneau` = :id_creneau");
     $database->bind(':id_licencier', $idLicencier, PDO::PARAM_INT);
     $database->bind(':id_creneau', $idCreneau, PDO::PARAM_INT);
@@ -46,9 +68,10 @@ function IsOuvreur($database, $idCreneau, $idLicencier)
     return $result['count'] == 1;
 }
 
-/*
- * En entrée heure format HH:MM:SS
- * En sortie       format HHhMM
+/** Formatage de l'heure
+ * 
+ * @param string time $p format HH:MM:SS
+ * @return string format HHhMM
  */
 function formatHeure($p) { return str_replace( ':', 'h', substr($p, 0, 5)); }
 
@@ -78,9 +101,11 @@ function formatTel($numTel) {
     return $formate;
 }
 
-/*----------------------------
- * Le jour de la semaine
- *----------------------------*/
+/** Le jour de la semaine
+ * 
+ * @param string $date
+ * @return number
+ */
 function JourSemaine($date)
 {
     // N 	Représentation numérique ISO-8601 du jour de la semaine = 1 (pour Lundi) à 7 (pour Dimanche)
