@@ -218,7 +218,7 @@
 					language : { url : "js/French.json" },
 					order: [[ NOM, 'asc'],[ PRENOM, 'asc']],
 					columnDefs : [
-						{ targets: [ CIVILITE, ADMIN ], visible : false, searchable : false },
+						{ targets: [ CIVILITE, ADMIN, ACTIF ], visible : false, searchable : false },
 						{ targets: [ NOM ], orderData: [ NOM, PRENOM ] },
 						{ targets: [ PRENOM ], orderData: [ PRENOM, NOM ] },
 						{ targets: [ ID_LICENCIER, EQUIPE, OUVREUR, ACTIF, ACTION ], className: "text-center", width: "4%" },
