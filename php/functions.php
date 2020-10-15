@@ -8,9 +8,10 @@
  * 
  * @param global $database
  * @param int $numLicence
+ * @param int $lenNom = Longeur du nom à partir du début
  * @return string
  */
-function GetNomByNumLicence($numLicence)
+function GetNomByNumLicence($numLicence, $lenNom = 25)
 {
     global $database;
     
@@ -24,7 +25,7 @@ function GetNomByNumLicence($numLicence)
     if( $result === false)
         return false;
         
-    return sprintf('%s %s', $result['Prenom'], $result['Nom']);
+    return sprintf('%s %s', $result['Prenom'], substr( $result['Nom'], 0 , $lenNom));
 }
 
 /** Recherche des licenciers ouvreurs
@@ -57,12 +58,12 @@ function IsOuvreur( $idCreneau, $idLicencier)
 {   
     global $database;
     
-    $database->query("SELECT COUNT(*) as count FROM `res_creneaux` WHERE `id_ouvreur` = :id_licencier AND `id_creneau` = :id_creneau");
+    $database->query("SELECT COUNT(*) FROM `res_creneaux` WHERE `id_ouvreur` = :id_licencier AND `id_creneau` = :id_creneau");
     $database->bind(':id_licencier', $idLicencier, PDO::PARAM_INT);
     $database->bind(':id_creneau', $idCreneau, PDO::PARAM_INT);
        
     $result = $database->single();
-       
+           
     if($result === false) return false;
     
     return $result['count'] == 1;
@@ -74,6 +75,13 @@ function IsOuvreur( $idCreneau, $idLicencier)
  * @return string format HHhMM
  */
 function formatHeure($p) { return str_replace( ':', 'h', substr($p, 0, 5)); }
+
+/** Mise en forme d'une date
+ * 
+ * @param string $originalDate     '09-01'
+ * @return string                   '01/09'
+ */
+function formatDate($originalDate) { return date("d/m", strtotime('2020-' . $originalDate)); }
 
 /*
  *                             0123456789

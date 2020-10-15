@@ -1,7 +1,7 @@
 <?php
 /* adm_delete_row.php
- *  Version : 1.0.0
- *  Date : 2020-10-03
+ *  Version : 1.0.1
+ *  Date : 2020-10-15
  *
  * Supprime physiquement ou logiquement un licencié
  * 
@@ -31,8 +31,8 @@ if($result['Nbr'] == 0)
 else 
 {
     // sinon
-    // res_licenciers Actif = 0 et Suppression dans res_prioritaire   
-    $database->query("UPDATE `res_licenciers` SET `Actif` = '0' WHERE `id_licencier` = :id");
+    // res_licenciers Actif = Non et Suppression dans res_prioritaire   
+    $database->query("UPDATE `res_licenciers` SET `Actif` = 'Non' WHERE `id_licencier` = :id");
     $database->bind(':id', $idLicencier);
     $database->execute();
 }

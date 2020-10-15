@@ -1,8 +1,10 @@
 <?php
-/* adm_get_licenciers.php 
- *
+/** adm_get_licenciers.php 
+ *      @version : 1.0.0
+ *      @date : 2020-10-15
+ *      
  * Renvoi la liste de tous les licenciers trié par numéro de licence
- * .
+ * 
  */
 
 // Liste des licenciers
@@ -15,7 +17,7 @@ $first = '';
 
 foreach($result as $value)
 {
-    $ret .= sprintf('%s[ %d, "%s", "%s", "%s", "%s", %d, "%s", "%s", "%s", "%s"]',
+    $ret .= sprintf('%s[ %d, "%s", "%s", "%s", "%s", %d, "%s", "%s", "%s", "%s", "%s"]',
         $first,
         $value['id_licencier'],
         $value['Civilite'],
@@ -26,7 +28,8 @@ foreach($result as $value)
         $value['Telephone'], 
         $value['Email'], 
         $value['Ouvreur'],
-        $value['Admin']
+        $value['Admin'],
+        $value['Actif']
      );
     $first = ',';
 }

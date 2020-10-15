@@ -1,28 +1,34 @@
 <?php
 /*   adm_delete_creneau.php  
  * 
- *  @version : 1.0.0
- *  @date : 2020-10-10
+ *  @version : 1.0.2
+ *  @date : 2020-10-15
  * 
- * Supprimer un ou des créneaux
+ * Supprimer un créneau
  * 
- * Appel à partir de jquery en Ajax :
- *      DelCreneau( {$dayofyear}, {$idCreneau.1})
- *      
- * Champs de la table utilisés :
- *      id_creneau      -> Paramétre
- *      iDate           -> Paramétre
- *      id_licencier    -> $_SESSION
- *      Ouvreur         -> 'Oui'
- * 
+ * 	id_creneau : aRow[0],
+ *	id_creneau_date : aRow[7]
  */
 
-// Suppression si l'enregistrement existe déjà
-$database->query("DELETE FROM `res_reservations` WHERE `id_creneau` = :id_creneau AND `iDate` = :iDate AND id_licencier = :id_licencier AND Ouvreur = 'Non';");
-$database->bind(':id_creneau', $_GET['iCreneau']);
-$database->bind(':iDate', $_GET['iDate']);
-$database->bind(':id_licencier', $_SESSION['id_licencier']);
+$idCreneau = intval($_GET['id']);
+
+// Si l'identifiant n'existe pas dans res_reservations
+$database->query('SELECT COUNT(*) as Nbr FROM res_reservations WHERE id_creneau = ' . $idCreneau);
+$result = $database->single();
+
+if($result === false || $result['Nbr'] == 0)
+{
+    // Suppression dans  res_prioritaire et res_licenciers
+    $database->query("DELETE FROM `res_creneaux` WHERE `id_creneau` = :id");
+}
+else
+{
+    // sinon
+    // res_licenciers Actif = Non et Suppression dans res_prioritaire
+    $database->query("UPDATE `res_creneaux` SET `Actif` = 'Non' WHERE `id_creneau` = :id");
+}
+$database->bind(':id', $idCreneau);
 $database->execute();
 
-die (json_encode(array('success' => 'Oui', 'data' => "Suppression de la réservation !")) );
+die(true);
 ?>

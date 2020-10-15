@@ -1,8 +1,8 @@
 <?php
 /*  adm_add_creneau.php 
  * 
- *  @version : 1.0.0
- *  @date : 2020-10-11
+ *  @version : 1.0.2
+ *  @date : 2020-10-15
  *  
  *  Ajout d'un creneau
  *  
@@ -18,13 +18,13 @@
       'addOuvreur' => string '9317315' (length=7)
       'addNbrPlace' => string '10' (length=2)
       'addOrd' => string '0' (length=1)
+      'addActif' => string 'Oui' (length=3)
  */
 
 $result = false;
 
 // Recherche si l'enregistrement existe
-if($_GET['id_creneau'] > 0)
-{
+if($_GET['id_creneau'] > 0) {
     $database->query("SELECT `id_creneau` FROM `res_creneaux` WHERE `id_creneau` = :id");
     $database->bind(':id', $_GET['addLicence']);
     $result = $database->single();
@@ -32,15 +32,17 @@ if($_GET['id_creneau'] > 0)
 
 // Non -> Création
 if($result === false) {
-    $database->query('INSERT INTO `res_creneaux` (`id_creneau`, `Nom`, `Salle`, `Jour`, `Heure_Debut`, `Heure_Fin`, `Libre`, `id_ouvreur`, `Nbr_Place`, `Ord`) VALUES (NULL, :Nom, :Salle, :Jour, :HeureDebut, :HeureFin, :Libre, :LicenceOuvreur, :NbrPlace, :addOrd);');
+    $database->query('INSERT INTO `res_creneaux` (`id_creneau`, `Nom`, `Salle`, `Jour`, `Heure_Debut`, `Heure_Fin`, `Libre`, `id_ouvreur`, `Nbr_Place`, `Ord`, `Actif`) VALUES (NULL, :Nom, :Salle, :Jour, :HeureDebut, :HeureFin, :Libre, :LicenceOuvreur, :NbrPlace, :addOrd, :addActif);');
     $msg = "Créneau créé !";
     
 } else {
     // Oui -> Update
-    $database->query('UPDATE `res_creneaux` SET `Nom` = :Nom, `Salle` = :Salle, `Jour` = :Jour, `Heure_Debut` = :HeureDebut, `Heure_Fin` = :HeureFin, `Libre` = :Libre, `id_ouvreur` = :LicenceOuvreur, `Nbr_Place` = :NbrPlace, `Ord` = :addOrd WHERE `id_creneau` = :id_creneau');
+    $database->query('UPDATE `res_creneaux` SET `Nom` = :Nom, `Salle` = :Salle, `Jour` = :Jour, `Heure_Debut` = :HeureDebut, `Heure_Fin` = :HeureFin, `Libre` = :Libre, `id_ouvreur` = :LicenceOuvreur, `Nbr_Place` = :NbrPlace, `Ord` = :addOrd, `Actif` = :addActif WHERE `id_creneau` = :id_creneau');
     $database->bind(':id_creneau', $_GET['id_creneau']);
     $msg = "Licencié modifié !";
 }
+
+$Actif = isset($_GET['addActif']) ? $_GET['addActif']: $result['Actif'];
 
 $database->bind(':Nom', $_GET['addNom']);
 $database->bind(':Salle', $_GET['addSalle']);
@@ -51,8 +53,17 @@ $database->bind(':Libre', $_GET['addLibre']);
 $database->bind(':LicenceOuvreur', $_GET['addOuvreur'], PDO::PARAM_INT);
 $database->bind(':NbrPlace', $_GET['addNbrPlace'], PDO::PARAM_INT);
 $database->bind(':addOrd', $_GET['addOrd'], PDO::PARAM_INT);
-
+$database->bind(':Actif', $Actif);
 $database->execute();
+
+/* Non -> Création de l'enregistrement dans res_creneau-date avec les valeurs par défaut
+if($result === false) {
+    $database->query('INSERT INTO `res_creneaux_date` (`id_creneau_date`, `id_creneau`, `Date_Debut`, `Date_Fin`) VALUES (NULL, :id_creneau, :DateDebut, :DateFin)');
+    $database->bind(':id_creneau', $database->lastInsertId());
+    $database->bind(':DateDebut', ANNEE_SAISON . '-' . DATE_DEBUT_SAISON);
+    $database->bind(':DateFin', ANNEE_SAISON . '-' . DATE_FIN_SAISON); 
+}
+*/
 
 Die($msg);
 ?>

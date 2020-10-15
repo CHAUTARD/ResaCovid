@@ -1,7 +1,7 @@
 <?php
 /** heure.php
- * @version 1.0.3
- * @date : 2020-10-14
+ * @version 1.0.4
+ * @date : 2020-10-15
  */
 
 // $_GET
@@ -53,14 +53,14 @@ $iDate = date_format( $date, 'yz');
 $tpl->assign('dayofyear', $iDate);
 
 // Jour de la semaine au format numérique
-// 0 (pour dimanche) à 6 (pour samedi)
-$dJour = date_format( $date, 'w');
-// Dimanche = 7
-if($dJour == 0) $dJour=7;
+// 1 (pour lundi) à 7 (pour dimanche)
+$dJour = date_format( $date, 'N');
 
 // Recherche des créneaux pour le jour choisi
-$sql = sprintf('SELECT `id_creneau`, `Salle`, `Heure_Debut`,`Heure_Fin`, `id_ouvreur`, `Nbr_Place`, `Libre`, `Ord`  FROM `res_creneaux` WHERE `Jour` = %d ORDER BY Heure_Debut;', $dJour);
-$database->query($sql);
+//$database->query('SELECT cr.`id_creneau`, cr.`Salle`, cr.`Heure_Debut`, cr.`Heure_Fin`, cr.`id_ouvreur`, cr.`Nbr_Place`, cr.`Libre`, cr.`Ord`  FROM `res_creneaux` cr LEFT JOIN `res_creneaux_date` crd USING(id_creneau) WHERE :date BETWEEN crd.Date_Debut AND crd.Date_Fin AND cr.`Jour` = :jour ORDER BY cr.Heure_Debut;');
+$database->query('SELECT `id_creneau`, `Salle`, `Heure_Debut`, `Heure_Fin`, `id_ouvreur`, `Nbr_Place`, `Libre`, `Ord`  FROM `res_creneaux` WHERE `Actif` = "Oui"  AND `Jour` = :jour ORDER BY Heure_Debut;');
+//$database->bind(':date', date('Y-m-d'));
+$database->bind(':jour', $dJour);
 $result = $database->resultSet();
 
 // les creneaux

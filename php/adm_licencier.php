@@ -1,16 +1,20 @@
 <?php
-/*
+/**
  * adm_licencier.php
+ * 
+ *      @version : 1.0.2
+ *      @date : 2020-10-15
  */
 
 $tpl->assign( 'titre', '<i class="fas fa-users"></i> Les licenciers');
 
-// Recherche de tous les créneaux qi sont dirigés
-$database->query("SELECT `id_creneau`, `Salle`, `Jour`, `Heure_Debut`, `Heure_Fin` FROM `res_creneaux` WHERE `Libre` = 'Non' ORDER BY `Jour`, `Heure_Debut`");
+// Recherche de tous les créneaux qui sont dirigés
+// $database->query("SELECT cr.`id_creneau`, cr.`Salle`, cr.`Jour`, cr.`Heure_Debut`, cr.`Heure_Fin` FROM `res_creneaux` cr LEFT JOIN `res_creneaux_date` crd USING(id_creneau) WHERE :date BETWEEN crd.Date_Debut AND crd.Date_Fin AND `Libre` = 'Non' ORDER BY cr.`Jour`, cr.`Heure_Debut`");
+$database->query("SELECT `id_creneau`, `Salle`, `Jour`, `Heure_Debut`, `Heure_Fin` FROM `res_creneaux` WHERE `Libre` = 'Non' AND `Actif` = 'Oui' ORDER BY `Jour`, `Heure_Debut`");
+//$database->bind(':date', date('Y-m-d'));
 $result = $database->resultSet();
 
 /*
- * 
 id_creneau	 Salle	  Jour 	Heure_Debut Heure_Fin
     2 	     Coppée 	1 	20:00:00 	21:00:00
     3 	     Coppée 	1 	21:00:00 	22:30:00

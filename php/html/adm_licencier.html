@@ -104,10 +104,8 @@
 										</div>
 
 										<div class="col-sm-6">
-											<label for="addEquipe" class="col-form-label">N° d'équipe (0 - Loisir) : <output name="valueEquipe" id="valueEquipe">0</output>
-											</label> <input type="range" min="0" max="{#NOMBRE_EQUIPE#}"
-												class="form-control range" id="addEquipe" name="addEquipe"
-												value="0" oninput="valueEquipe.value = addEquipe.value">
+											<label for="addEquipe" class="col-form-label">N° d'équipe (0 - Loisir) : <output name="valueEquipe" id="valueEquipe">0</output></label>
+											<input type="range" min="0" max="{#NOMBRE_EQUIPE#}" class="form-control range" id="addEquipe" name="addEquipe" value="0" oninput="valueEquipe.value = addEquipe.value">
 										</div>
 									</div>
 
@@ -145,6 +143,18 @@
 											<input type="password" class="form-control" id="addAdmin" name="addAdmin" placeholder="Mot de passe sur 10 caractères" value="">
 										</div>
 									</div>
+									
+									<div class="form-group row">
+										<div class="col-sm-6">
+											<label class="col-form-label">Actif : </label>
+											<div>
+												<input type="radio" name="addActif" class="radioOuiNon demoyes" id="addActifOui" value="Oui" checked>
+												<label for="addActifOui">Oui</label> 
+												<input type="radio" name="addActif" class="radioOuiNon demono" id="addActifNon" value="Non">
+												 <label for="addActifNon">Non</label>
+											</div>
+										</div>
+									</div>
 
 									<div class="modal-footer">
 										<button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
@@ -173,6 +183,7 @@
 					<th>Email</th>
 					<th>Ouv.</th>
 					<th>Admin</th>
+					<th>Actif</th>
 					<th>Action</th>
 				</tr>
 			</thead>
@@ -180,30 +191,46 @@
 	</div>
 
 	<script>
+		const ID_LICENCIER = 0;
+		const CIVILITE = 1;
+		const NOM = 2;
+		const SURNOM = 3;
+		const PRENOM = 4;
+		const EQUIPE = 5;
+		const TELEPHONE = 6;
+		const EMAIL = 7;
+		const OUVREUR = 8;
+		const ADMIN = 9;
+		const ACTIF = 10;
+		const ACTION = 11;
+	
 		$(document).ready(
 			function() {
 				var table = $('#tLicenciers').DataTable({
 					ajax : {
 					    url: "admin.php",
-					    data: {
-					    	page: "get_licenciers"
-					    }
+					    data: { page: "get_licenciers" }
 					},
 					scrollY : '70vh',
 					scrollX : false,
 					scrollCollapse : true,
 					paging : false,
 					language : { url : "js/French.json" },
-					order: [[ 2, 'asc'],[ 3, 'asc']],
+					order: [[ NOM, 'asc'],[ PRENOM, 'asc']],
 					columnDefs : [
-						{ targets: [ 1, 9 ], visible : false, searchable : false },
-						{ targets: [ 2 ], orderData: [ 2, 3 ] },
-						{ targets: [ 3 ], orderData: [ 3, 2 ] },
-						{ targets: [ 0, 5, 8, -1 ], className: "text-center", width: "4%" },
-						{ targets : -1, data : null, "searchable": false, "orderable": false, defaultContent : "<button><i class='fas fa-user-lock'></i></button>" }
+						{ targets: [ CIVILITE, ADMIN ], visible : false, searchable : false },
+						{ targets: [ NOM ], orderData: [ NOM, PRENOM ] },
+						{ targets: [ PRENOM ], orderData: [ PRENOM, NOM ] },
+						{ targets: [ ID_LICENCIER, EQUIPE, OUVREUR, ACTIF, ACTION ], className: "text-center", width: "4%" },
+						{ targets : ACTION, data : null, "searchable": false, "orderable": false, defaultContent : "<button><i class='fas fa-user-lock'></i></button>" }
 					],
 					dom : 'Bfrtip',
 					select : true,
+					createdRow: function( row, data, dataIndex){
+		                if( data[ACTIF] ==  `Non`){
+		                    $(row).addClass('table-warning');
+		                }
+		            },
 					buttons : [{
 						text : '<i class="fas fa-user-plus"></i> Ajouter un licencié',
 						action : function( e, dt, node,	config) {
@@ -218,6 +245,7 @@
 							$('#addEmail').val('pas.saisie@faux');
 							$('#addOuvreurNon').prop('checked',true);
 							$('#addAdmin').val('');
+							$('#addActifOui').prop('checked',true);
 							
 							// Ouverture d'une fenêtre modale
 							$('#adherentModal').modal('show');
@@ -229,24 +257,29 @@
 							var rowData = dt.row({ selected : true }).data();
 
 							// Transfert des données dans le formulaire
-							$('#addLicence').val(rowData[0]);
-							if (rowData[1] == 'Mr')
+							$('#addLicence').val(rowData[ID_LICENCIER]);
+							if (rowData[CIVILITE] == 'Mr')
 								$('#addCiviliteMr').prop('checked',true);
 							else
 								$('#addCiviliteMme').prop('checked',true);
-							$('#addNom').val(rowData[2]);
-							$('#addSurnom').val(rowData[3]);
-							$('#addPrenom').val(rowData[4]);
-							$('#addEquipe').val(rowData[5]);
-							$('#valueEquipe').val(rowData[5]);
-							$('#addTelephone').val(rowData[6]);
-							$('#addEmail').val(rowData[7]);
-							if (rowData[8] == 'Oui')
+							$('#addNom').val(rowData[NOM]);
+							$('#addSurnom').val(rowData[SURNOM]);
+							$('#addPrenom').val(rowData[PRENOM]);
+							$('#addEquipe').val(rowData[EQUIPE]);
+							$('#valueEquipe').val(rowData[EQUIPE]);
+							$('#addTelephone').val(rowData[TELEPHONE]);
+							$('#addEmail').val(rowData[EMAIL]);
+							if (rowData[OUVREUR] == 'Oui')
 								$('#addOuvreurOui').prop('checked',true);
 							else
 								$('#addOuvreurNon').prop('checked',true);
 
-							$('#addAdmin').val(rowData[9]);
+							$('#addAdmin').val(rowData[ADMIN]);
+							
+							if (rowData[ACTIF] == 'Oui')
+								$('#addActifOui').prop('checked',true);
+							else
+								$('#addActifNon').prop('checked',true);
 
 							// Ouverture d'une fenêtre modale
 							$('#adherentModal').modal('show');
@@ -263,7 +296,7 @@
 									type : 'GET',
 									data : {
 										page : 'delete_licencier',
-										id : aRow[0]
+										id : aRow[ID_LICENCIER]
 									},
 									success : function(response) {
 										table.row('.selected').remove().draw(false);
@@ -275,7 +308,7 @@
 						extend : 'pdfHtml5',
 						title: 'Liste des licenciers',
 						exportOptions: {
-		                    columns: [ 0, 1, 2, 3, 4, 6, 7 ]
+		                    columns: [ ID_LICENCIER, CIVILITE, NOM, SURNOM, PRENOM, TELEPHONE, EMAIL ]
 		                },
 						text : '<i class="far fa-file-pdf"></i> PDF'
 					}, {
@@ -298,7 +331,7 @@
 					var data = table.row( $(this).parents('tr')).data();
 					
 					// Remplir le prenom et nom du licencié
-					$('#id_nom').text(data[4] + ' ' + data[2] + ' prioritaire :');
+					$('#id_nom').text(data[PRENOM] + ' ' + data[NOM] + ' prioritaire :');
 					
 					// Décoche tous les choix
 					$('.checkPrioritaire:checkbox:checked').each(function() {
@@ -311,7 +344,7 @@
 						type : 'GET',
 						data : {
 							page : 'get_prioritaire',
-							id : data[0]
+							id : data[ID_LICENCIER]
 						},
 						success : function(response) {						
 							// Check des créneaux concernés
@@ -340,9 +373,8 @@
 				        	   	alert(data); 
 				        	   
 								// Rechargement des données
-								table.ajax.reload();
-								
-				    	   } // show response from the php script.
+								table.ajax.reload();								
+				    	   }
 				    })   
 				});
 				

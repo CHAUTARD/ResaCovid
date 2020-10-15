@@ -3,13 +3,13 @@
  * 
  *  Envoi d'un email avec le password
  *  
- *      @version : 1.0.0
- *      @date : 2020-10-11
+ *      @version : 1.0.1
+ *      @date : 2020-10-15
  *
  */
 
 // Recherche si le joueur existe
-$database->query("SELECT Admin, Prenom FROM res_licenciers WHERE (Actif = 1) AND Email=:Email");
+$database->query("SELECT Admin, Prenom FROM res_licenciers WHERE (Actif = 'Oui') AND Email=:Email");
 $database->bind(':Email', $_GET['email']);
 $result = $database->single();
 

@@ -1,9 +1,10 @@
 <?php
-/*   jour.php
+/**   jour.php
  * 
  * Sélection du jour pour l'inscription à la réservation
- *  @version : 1.0.3
- *  @date : 2020-10-12
+ * 
+ *  @version : 1.0.4
+ *  @date : 2020-10-15
  */
 
 /* Champ des tables de la base */
@@ -25,7 +26,7 @@ if ( preg_match( '/^([0-9]+)$/', $_POST['licence'], $licence) == 0)
 }
 
 // Recherche si le joueur existe
-$database->query("SELECT * FROM res_licenciers WHERE (Actif = 1) AND ( Nom = :Nom OR Surnom = :Nom) AND id_licencier = :id_licencier");
+$database->query("SELECT * FROM res_licenciers WHERE (Actif = 'Oui') AND ( Nom = :Nom OR Surnom = :Nom) AND id_licencier = :id_licencier");
 $database->bind(':Nom', $nom);
 $database->bind(':id_licencier', $_POST['licence'], PDO::PARAM_INT);
 $result = $database->single();
@@ -54,7 +55,9 @@ if($result['Telephone'] == '' || $result['Email'] == '' || $result['Email'] == '
 }
         
 // Recherche des jours de la semaine avec ou sans créneau
-$database->query("SELECT DISTINCT(Jour) jj FROM `res_creneaux` ORDER BY Jour");
+//$database->query("SELECT DISTINCT(cr.Jour) jj FROM `res_creneaux` cr LEFT JOIN `res_creneaux_date` crd USING(id_creneau) WHERE :date BETWEEN crd.Date_Debut AND crd.Date_Fin ORDER BY Jour");
+$database->query("SELECT DISTINCT(Jour) jj FROM `res_creneaux` WHERE `Actif` = 'Oui'  ORDER BY Jour");
+//$database->bind(':date', date('Y-m-d'));
 $result = $database->resultSet();
 
 // 1 => Lundi .. 7 => Dimanche
@@ -67,10 +70,8 @@ foreach($result as $r)
 $tpl->assign('mois', ucfirst(strftime('%B %Y')));
  
 // Jour de la semaine actuel
-// 0 (pour dimanche) à 6 (pour samedi)
-$dJour = date('w');
-// Dimanche = 7
-if($dJour == 0) $dJour=7;
+// 1 (pour lundi) à 7 (pour dimanche)
+$dJour = date('N');
 
 $jour = date('Y-m-d');
 
@@ -175,12 +176,18 @@ $tpl->assign('lgn3', $ret3);
 // Exemple : 20256 -> 256 éme jours de 2020
 $iDate = date('yz');
 
-// Recherche de toutes les réservation à venir
-$database->query("SELECT re.`id_reservation` as id_reservation, re.`id_creneau` as id_creneau, re.`iDate` as iDate, cr.`Salle` as Salle, cr.`Heure_Debut` as Heure_Debut, cr.`Heure_Fin` as Heure_Fin FROM `res_reservations` re LEFT JOIN `res_creneaux` cr USING (id_creneau) WHERE `id_licencier` = :id_licencier AND `Ouvreur` = 'Non' AND `iDate` >= :iDate;");
-$database->bind(':id_licencier', $_SESSION['id_licencier']);
-$database->bind(':iDate', $iDate);
-
-
+// Recherche de toutes les réservations à venir
+/*
+$database->query("SELECT re.`id_reservation`, re.`id_creneau`, re.`iDate`, cr.`Salle`, cr.`Heure_Debut`, cr.`Heure_Fin` ".
+"FROM `res_reservations` re LEFT JOIN `res_creneaux` cr USING (id_creneau) " .
+"LEFT JOIN `res_creneaux_date` crd USING(id_creneau) " .
+"WHERE :date BETWEEN crd.Date_Debut AND crd.Date_Fin AND re.`id_licencier` = :id_licencier AND re.`Ouvreur` = 'Non' AND cr.`iDate` >= :iDate"); */
+$database->query("SELECT re.`id_reservation`, re.`id_creneau`, re.`iDate`, cr.`Salle`, cr.`Heure_Debut`, cr.`Heure_Fin` ".
+    "FROM `res_reservations` re LEFT JOIN `res_creneaux` cr USING (id_creneau) " .
+    "WHERE cr.`Actif` = 'Oui' AND re.`id_licencier` = :id_licencier AND re.`Ouvreur` = 'Non' AND cr.`iDate` >= :iDate");
+$database->bind(':id_licencier', $_SESSION['id_licencier'], PDO::PARAM_INT);
+$database->bind(':iDate', $iDate, PDO::PARAM_INT);
+//$database->bind(':date', date('Y-m-d'));
 $reservations = $database->resultSet();
 
 for( $i=0, $iLen = count($reservations); $i < $iLen; $i++) {

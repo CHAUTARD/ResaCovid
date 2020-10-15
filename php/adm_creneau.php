@@ -1,7 +1,7 @@
 <?php
 /** adm_creneau.php
- *  Version : 1.0.2
- *  Date : 2020-10-14
+ *  @version : 1.0.4
+ *  @date : 2020-10-15
  *  
  * Administration des creneaux
  */
@@ -13,21 +13,6 @@ $jour = array( 1 => 'Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi', 'Dim
 // // Recherche tous les enregistrements existent
 $database->query("SELECT * FROM `res_creneaux` ORDER BY `Jour` ASC, `Heure_Debut`");
 $result = $database->resultSet();
-
-/*
- Index  Nom 	    Index		Type
-  1 	id_creneau	Primaire 	int(11)
-  2 	Nom 					varchar(35)
-  3 	Salle 					enum('Coppée', 'Tcheuméo')
-  4 	Jour 					tinyint(4)
-  5 	Heure_Debut 			time
-  6 	Heure_Fin 				time
-  7 	Libre 					enum('Oui', 'Non')
-  8 	id_ouvreur	Index 		int(11)
-  9 	Nbr_Place 				int(11)
- 10 	Ord 					int(11)
- 
- */
 
 $ret = array();
 
@@ -43,9 +28,10 @@ foreach($result as $r)
         'Heure_Fin' => formatHeure($r['Heure_Fin']),
         'Libre' => $r['Libre'],
         'id_ouvreur' => $r['id_ouvreur'],
-        'Ouvreur' => GetNomByNumLicence($r['id_ouvreur']),
+        'Ouvreur' => GetNomByNumLicence($r['id_ouvreur'], 1),
         'Nbr_Place' => $r['Nbr_Place'],
-        'Ord' => $r['Ord']
+        'Ord' => $r['Ord'],
+        'Actif' => $r['Actif']
     );
 }
 

@@ -1,7 +1,7 @@
 <?php
-/*     pdo.php
- *  Version : 1.0.1
- *  Date : 2020-10-11
+/**     pdo.php
+ *  @version : 1.0.2
+ *  @date : 2020-10-14
  *  
  Query database and return a single row:
 
@@ -56,6 +56,10 @@ class SimplePDO {
         }
     }
 
+    /** Singleton
+     * 
+     * @return SimplePDO
+     */
     public static function getInstance() {
         if(!isset(self::$_instance)) {
             self::$_instance = new SimplePDO();
@@ -64,12 +68,22 @@ class SimplePDO {
         return self::$_instance;
     }
 
+    /**
+     * 
+     * @param string $query
+     */
     public function query($query) {
         $this->_query = $query;
         $this->_stmt = $this->_pdo->prepare($query);
     }
 
-  public function bind($param, $value, $type = null) {
+    /**
+     * 
+     * @param string $param
+     * @param string $value
+     * @param string $type
+     */
+    public function bind($param, $value, $type = null) {
     if (is_null($type)) {
       switch (true) {
         case is_int($value):
@@ -102,10 +116,17 @@ class SimplePDO {
     }
   }
   
+  /**
+   * Debug de la requ^te préparé
+   */
   public function Dump() {
       var_dump($this->_query);
   }
 
+  /**
+   * 
+   * @return boolean/string
+   */
   public function execute() {
       try {
           return $this->_stmt->execute();
@@ -114,25 +135,56 @@ class SimplePDO {
       } 
   }
 
+  /**
+   * 
+   * @return array
+   */
   public function resultSet() {
     $this->execute();
     return $this->_stmt->fetchAll(PDO::FETCH_ASSOC);
   }
 
+  /**
+   * 
+   * @return number
+   */
   public function rowCount() {
     return $this->_stmt->rowCount();
   }
 
+  /**
+   * 
+   * @return array
+   */
   public function single() {
     $this->execute();
     return $this->_stmt->fetch(PDO::FETCH_ASSOC);
   }
   
+  /**
+   * 
+   * @param string $name
+   * @return string
+   */
+  public function lastInsertId($name = null)
+  {
+      return $this->_pdo->lastInsertId($name);
+  }
+  
+  /**
+   * 
+   */
   public function debugDumpParams()
   {
       return $this->_stmt->debugDumpParams();
   }
   
+  /**
+   * 
+   * @param array $sqls
+   * @param array $params
+   * @throws PDOException
+   */
   public function transaction($sqls = array(), $params = array())
   {
         try {
