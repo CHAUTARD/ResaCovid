@@ -14,28 +14,20 @@ $idLicencier = intval($_GET['id']);
 $database->query('SELECT COUNT(*) as Nbr FROM res_reservations WHERE id_licencier = ' . $idLicencier);
 $result = $database->single();
 
-if($result === false)
-    die (false);
-
-$database->query("DELETE FROM `res_prioritaires` WHERE `id_licencier` = :id");
-$database->bind(':id', $idLicencier);
-$database->execute();
-
-if($result['Nbr'] == 0)
+// Pas de réservation
+if($result === false || $result['Nbr'] == 0)
 {
     // Suppression dans  res_prioritaire et res_licenciers   
     $database->query("DELETE FROM `res_licenciers` WHERE `id_licencier` = :id");
-    $database->bind(':id', $idLicencier);
-    $database->execute();
 }
 else 
 {
     // sinon
     // res_licenciers Actif = Non et Suppression dans res_prioritaire   
     $database->query("UPDATE `res_licenciers` SET `Actif` = 'Non' WHERE `id_licencier` = :id");
-    $database->bind(':id', $idLicencier);
-    $database->execute();
 }
+$database->bind(':id', $idLicencier);
+$database->execute();
 
 die(true);
 ?>
