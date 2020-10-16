@@ -181,7 +181,7 @@
 	<div class="container">
 		<div class="row bg-transparent">
 			<div class="col-4 bg-light p-2">
-				<form action="index.php" method="post">
+				<form>
 			     	<button class="btn btn-outline-warning btn-lg btn-block" type="submit"><i class="fas fa-sign-out-alt"></i> Quitter</button>
 			   </form>
 			</div>
@@ -207,9 +207,13 @@
 		           type: "GET",
 		           url: "index.php",
 		           data: form.serialize(), // serializes the form's elements.
-		           success: function(data) {
-		        		// show response from the php script.
-		        	   	alert(data); 
+		           success: function(response) { 
+		        	   	var data = $.parseJSON(response);
+						$.alert({
+							columnClass: 'medium',
+						    title: data.title,
+						    content: data.content
+						});
 		        	   	
 		        	   	location.reload();
 		    	   } 

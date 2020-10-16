@@ -1,6 +1,6 @@
 <!-- adm_exportation.html 
-	@version : 1.0.0
-	@date : 2020-10-06
+	@version : 1.0.1
+	@date : 2020-10-16
 -->
 
 {include="adm_header"}
@@ -29,11 +29,17 @@
 	    e.preventDefault(); // avoid to execute the actual submit of the form.
 	    
 	    $.ajax({
-	           type: "GET",
-	           url: "admin.php?page=database_dump>",
-	           success: function(data) { alert(data); } // show response from the php script.
-	    });	    
-	});
+           type: "GET",
+           url: "admin.php?page=database_dump>",
+           success: function(response) {
+       	   		var data = $.parseJSON(response);
+				$.alert({
+					columnClass: 'medium',
+				    title: data.title,
+				    content: data.content
+				})
+	    	}    
+		})
 	</script>
 </body>
 </html>

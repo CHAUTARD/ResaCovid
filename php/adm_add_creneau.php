@@ -33,13 +33,15 @@ if($_GET['id_creneau'] > 0) {
 // Non -> Création
 if($result === false) {
     $database->query('INSERT INTO `res_creneaux` (`id_creneau`, `Nom`, `Salle`, `Jour`, `Heure_Debut`, `Heure_Fin`, `Libre`, `id_ouvreur`, `Nbr_Place`, `Ord`, `Actif`) VALUES (NULL, :Nom, :Salle, :Jour, :HeureDebut, :HeureFin, :Libre, :LicenceOuvreur, :NbrPlace, :addOrd, :addActif);');
-    $msg = "Créneau créé !";
+    $title = "Créneau créé !";
+    $content = "Le nouveau créneau vient d'être créé";
     
 } else {
     // Oui -> Update
     $database->query('UPDATE `res_creneaux` SET `Nom` = :Nom, `Salle` = :Salle, `Jour` = :Jour, `Heure_Debut` = :HeureDebut, `Heure_Fin` = :HeureFin, `Libre` = :Libre, `id_ouvreur` = :LicenceOuvreur, `Nbr_Place` = :NbrPlace, `Ord` = :addOrd, `Actif` = :addActif WHERE `id_creneau` = :id_creneau');
     $database->bind(':id_creneau', $_GET['id_creneau']);
-    $msg = "Licencié modifié !";
+    $title = "Créneau modifié !";
+    $content = "Les modifications ont été apportés au créneau.";
 }
 
 $Actif = isset($_GET['addActif']) ? $_GET['addActif']: $result['Actif'];
@@ -65,5 +67,8 @@ if($result === false) {
 }
 */
 
-Die($msg);
+Die(json_encode(array(
+    'title' => $title,
+    'content' => $content
+)));
 ?>

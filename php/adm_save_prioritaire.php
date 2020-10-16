@@ -1,5 +1,7 @@
 <?php
 /* adm_save_prioritaire.php
+ *      @version : 1.0.0
+ *      @date : 2020-10-16
  * 
  * Sauve les créneaux prioritaires pour le licencié sauver dans la session
  * $_SESSION['id_licencier_prioritaire']
@@ -29,5 +31,8 @@ foreach($_GET as $key => $value)
     }
 }
 
-Die("Priorité(s) mise(s) à jour !");
+die(json_encode(array(
+    'title' => 'Priorité(s) mise(s) à jour !',
+    'content' => "Les prioritées pour le licencié ont été mise à jour."
+)));
 ?>

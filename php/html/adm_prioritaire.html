@@ -1,6 +1,6 @@
 <!-- adm_prioritaire.html 
-	@version : 1.0.2
-	@date : 2020-10-14
+	@version : 1.0.3
+	@date : 2020-10-16
 -->
 
 {include="adm_header"}
@@ -14,12 +14,28 @@
 			<div class="col-sm-3">
 				<div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
 					{loop="$creneaux"}
-					<a class="nav-link{$value.Active}{$value.Disabled}" id="v-tab-{$value.id_creneau}" data-toggle="pill" href="#v-pills-{$value.id_creneau}" role="tab" aria-controls="v-pills-{$value.id_creneau}" aria-selected="true">{$value.Salle} {$value.Jour} {$value.Heure_Debut} {$value.Nbr_Place}</a>
+					<a class="nav-link{$value.Active}{$value.Disabled}" id="v-tab-{$value.id_creneau}" data-toggle="pill" href="#v-pills-{$value.id_creneau}" role="tab" aria-controls="v-pills-{$value.id_creneau}" aria-selected="true" onmousedown='$("#id_creneau").val({$value.id_creneau});'>{$value.Salle} {$value.Jour} {$value.Heure_Debut} {$value.Nbr_Place}</a>
 					{/loop}
 				</div>
 			</div>
 			<div class="col">
-				<div class="tab-content" id="v-pills-tabContent">
+				<nav class="navbar navbar-dark" style="background-color: #e3f2fd;">
+					<form class="form-inline my-2 my-lg-0 ml-auto" id="id_form_find_prioritaire">					
+      					<div class="input-group">
+
+      						<div class="input-group-prepend">
+        						<span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
+      						</div>
+      						
+      						<input class="form-control mr-sm-2" type="text" name="LicNom" placeholder="N° licence où Nom" aria-label="Search" aria-describedby="basic-addon1" required />
+      						
+							<button class="btn btn-outline-primary btn-md my-2 my-sm-0 ml-3" type="submit"><i class="fas fa-user-lock" title="Ajouter un prioritaire"></i> Ajouter un prioritaire</button>
+      					</div>
+      					<input type="hidden" name="id_creneau" id="id_creneau" value="{$id_creneau}"/>
+    				</form>
+				</nav>
+				
+				<div class="tab-content" id="v-pills-tabContent">				 
 					{loop="$creneaux"}
 					<div class="tab-pane fade{$value.ShowActive}" id="v-pills-{$value.id_creneau}" role="tabpanel" aria-labelledby="v-pills-{$value.id_creneau}">
 						<ul class="list-group">
@@ -36,17 +52,53 @@
 	</div>
 	
 	<script>
-	function DelPrioritaire(id_prioritaire) {    
-	    $.ajax({
-           type: "GET",
-           url: "admin.php?page=delete_prioritaire",	
-           data: { id_prioritaire: id_prioritaire},
-           success: function(data) { 
-        	   alert(data); 
-        	   location.reload(true);
-           }
-	    })
-	}
+	$(document).ready(
+			function() {
+				// this is the id of the form
+				$("#id_form_find_prioritaire").submit(function(e) {
+				    e.preventDefault(); // avoid to execute the actual submit of the form.
+				    var form = $(this);
+				    			    
+				    $.ajax({
+						type: "GET",
+						url: "admin.php?page=find_prioritaire",
+						data: form.serialize(), // serializes the form's elements.
+						success: function(response) { 
+							var data = $.parseJSON(response);
+							
+							$.alert({
+								columnClass: 'medium',
+							    title: data.title,
+							    content: data.content
+							});
+			
+							// Rechargement des données
+							document.reload(true);
+			           }
+				    })    
+				});
+				
+				function DelPrioritaire(id_prioritaire) {    
+				    $.ajax({
+			           type: "GET",
+			           url: "admin.php?page=delete_prioritaire",	
+			           dataType : 'json',
+			           data: { id_prioritaire: id_prioritaire},
+			           success: function(response) { 
+			        	   	var data = $.parseJSON(response);
+							$.alert({
+								columnClass: 'medium',
+							    title: data.title,
+							    content: data.content
+							});
+							
+							// Rechargement de la page
+				        	location.reload(true);
+			           }
+				    })
+				}
+			}
+		)
 	</script>
 </body>
 </html>	

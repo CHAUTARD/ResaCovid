@@ -1,7 +1,7 @@
 <?php
-/* adm_exportation_table.php
- *  Version : 1.0.1
- *  Date : 2020-10-04
+/** adm_exportation_table.php
+ *      @version : 1.0.2
+ *      @date : 2020-10-16
  */
 
 $entete  = "-- ----------------------\n";
@@ -55,7 +55,8 @@ foreach( $resultset as $r)
     $insertions .= "\n";
 }
 
-$fichierDump = fopen("sql/vsttreservation-".date("Ymdhis").".sql", "wb");
+$file = "sql/vsttreservation-".date("Ymdhis").".sql";
+$fichierDump = fopen($file, "wb");
 fwrite($fichierDump, $entete);
 fwrite($fichierDump, $creations);
 fwrite($fichierDump, $insertions);
@@ -66,4 +67,9 @@ $tpl->assign('information', 'Sauvegarde SQL terminée');
 
 //draw the template
 $tpl->draw('adm_menu');
+
+die(json_encode(array(
+    'title' => 'Base de donnée sauvegardé !',
+    'content' => "La base de donnée a été sauvegardé dans :<br />".$file
+)));
 ?>

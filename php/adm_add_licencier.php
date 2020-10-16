@@ -1,7 +1,7 @@
 <?php
 /*  adm_add_licencier.php
- * Version : 1.0.2
- * Date : 2020.10-15
+ *      @version : 1.0.3
+ *      @date : 2020.10-16
  *  
  *  Ajout, Modification d'un licencié
  *  
@@ -30,11 +30,13 @@ $result = $database->single();
 // Non -> Création
 if($result === false) {
     $database->query('INSERT INTO `res_licenciers` (`id_licencier`, `Civilite`, `Nom`, `Surnom`, `Prenom`, `Equipe`, `Telephone`, `Email`, `Ouvreur`, `Admin`, `Actif`) VALUES (:id_licencier, :Civilite, :Nom, :Surnom, :Prenom, :Equipe, :Telephone, :Email, :Ouvreur, :Admin);');
-    $msg = "Licencié(e) créé(e) !";
+    $title = "Licencié(e) créé(e) !";
+    $content = sprintf("Le licencié %s %s a été créé.", $_GET['addPrenom'], $_GET['addNom']);
 } else {
     // Oui -> Update
     $database->query('UPDATE `res_licenciers` SET `Civilite` = :Civilite, `Nom` = :Nom, `Surnom` = :Surnom, `Prenom` = :Prenom, `Equipe` = :Equipe, `Telephone` = :Telephone, `Email` = :Email, `Ouvreur` = :Ouvreur, `Admin` = :Admin, `Actif` = :Actif WHERE `id_licencier` = :id_licencier');
-    $msg = "Licencié(e) modifié(e) !";
+    $title = "Licencié(e) modifié(e) !";
+    $content = sprintf("Le licencié %s %s a été modifié.", $_GET['addPrenom'], $_GET['addNom']);
 }
 
 $Ouvreur = isset($_GET['addOuvreur']) ? $_GET['addOuvreur']: $result['Ouvreur'];
@@ -55,7 +57,8 @@ $database->bind(':Actif', $Actif);
 
 $database->execute();
 
-//$database->Dump().
-
-Die($msg);
+die(json_encode(array(
+    'title' => $title,
+    'content' => $content
+)));
 ?>

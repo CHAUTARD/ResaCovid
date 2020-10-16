@@ -1,6 +1,6 @@
 <!-- adm_creneau.html 
-	Version : 1.0.4
-	Date : 2020-10-15
+	Version : 1.0.5
+	Date : 2020-10-16
 -->
 
 {include="adm_header"}
@@ -366,8 +366,13 @@
 						type: "GET",
 						url: "admin.php?page=add_creneau&id_creneau=0",	
 						data: form.serialize(), // serializes the form's elements.
-						success: function(data) { 
-							alert(data);  // show response from the php script.
+						success: function(response) {
+							var data = $.parseJSON(response);
+							$.alert({
+								columnClass: 'medium',
+							    title: data.title,
+							    content: data.content
+							});
 							
 							// Rechargement des données
 							table.ajax.reload();

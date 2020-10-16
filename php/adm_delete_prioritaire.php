@@ -1,6 +1,8 @@
 <?php
 /* adm_delete_prioritaire.php
- *
+ *      @version : 1.0.0
+ *      @date : 2020-10-16
+ *      
  * Supprime physiquement un enregistrement prioritaire
  * 
  * $_GET['id_prioritaire'] = id_prioritaire
@@ -11,5 +13,8 @@ $database->query("DELETE FROM `res_prioritaires` WHERE `id_prioritaire` = :id");
 $database->bind(':id', intval($_GET['id_prioritaire']));
 $database->execute();
 
-die('Enregistrement supprimé !');
+die(json_encode(array(
+    'title' => 'Enregistrement supprimé !',
+    'content' => "Le licencié n'est plus prioritaire sur ce créneau."
+)));
 ?>

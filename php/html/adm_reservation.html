@@ -58,7 +58,7 @@
 					<div class="{$value.Outside}">{$value.Num}</div>
 						{loop="$value.event"}
 							{if="$value.Nbr == 0"}
-							<button type="button" class="event btn {$value.type} rounded-pill btn-sm" style="font-size:smaller;" onclick="alert('Pas de joueur inscrit à ce créneau !')">{$value.name}</button>
+							<button type="button" class="event btn {$value.type} rounded-pill btn-sm" style="font-size:smaller;" onclick="$.alert({ title: 'Information !', content: 'Pas de joueur inscrit à ce créneau !'})">{$value.name}</button>
 							{else}
 							<button type="button" class="event btn {$value.type} rounded-pill btn-sm" style="font-size:smaller;" onclick="ShowJoueur('{$value.name_popup}', {$value.id_creneau}, {$value.iDate})">{$value.name}</button>
 							{/if}
