@@ -1,14 +1,12 @@
 <?php
 /** adm_creneau.php
- *  @version : 1.0.4
- *  @date : 2020-10-15
+ *  @version : 1.0.5
+ *  @date : 2020-10-16
  *  
  * Administration des creneaux
  */
 
 $tpl->assign( 'titre', '<i class="far fa-calendar-alt"></i> Les creneaux');
-
-$jour = array( 1 => 'Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi', 'Dimanche');
 
 // // Recherche tous les enregistrements existent
 $database->query("SELECT * FROM `res_creneaux` ORDER BY `Jour` ASC, `Heure_Debut`");
@@ -23,7 +21,7 @@ foreach($result as $r)
         'Nom' => $r['Nom'],
         'Salle' => $r['Salle'],
         'nJour' => $r['Jour'],
-        'Jour' => $jour[ $r['Jour'] ],
+        'Jour' => $JOUR_FR[ $r['Jour'] ],
         'Heure_Debut' => formatHeure($r['Heure_Debut']),
         'Heure_Fin' => formatHeure($r['Heure_Fin']),
         'Libre' => $r['Libre'],

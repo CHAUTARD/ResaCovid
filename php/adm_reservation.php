@@ -1,7 +1,7 @@
 <?php
-/* adm_reservation
- * Version : 1.0.0
- * Date : 2020-09-25
+/** adm_reservation
+ *      @version : 1.0.0
+ *      @date : 2020-09-25
  * 
  * Consultation des réservations.
  * 
@@ -21,8 +21,7 @@ else
 
 $mois = $date->format('m');
 
-$moisFr = array( 1 => 'Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'); 
-$moisClair = $moisFr[ (int) $mois];
+$moisClair = $MOIS_FR[ (int) $mois];
 $year = $date->format('Y');
 
 $date->modify("-1 month");
@@ -156,7 +155,7 @@ for($i=$libreDevant+1; $i < 36; $i++)
             }
         
             $case[$i] = array(
-                'Num' => $j,
+               'Num' => $j,
                'Outside' => 'date', // 'outside'
                'event' => $event
             ); 

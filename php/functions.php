@@ -4,6 +4,10 @@
  *  Date : 2020-10-14 
  */
 
+// Les constantes tableau n'étant disponible qua partir de la version 5.6
+$MOIS_FR = array( 1 => 'Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre');
+$JOUR_FR = array( 1 => 'Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi', 'Dimanche');
+
 /** Recherche du nom d'un joueur à partir de son numéro de licence
  * 
  * @param global $database
