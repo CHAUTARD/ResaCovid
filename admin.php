@@ -36,6 +36,9 @@ require_once 'php/functions.php';
 // Logo de l'association
 $tpl->assign('logo', 'img/logo.gif');
 
+// Version de php du serveur
+$tpl->assign('phpversion', phpversion() );
+
 // Appel de traitement en AJAX
 
 if(isset($_GET) && isset($_GET['page']))
