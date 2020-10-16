@@ -1,7 +1,7 @@
 <?php
 /** adm_reservation
- *      @version : 1.0.0
- *      @date : 2020-09-25
+ *      @version : 1.0.1
+ *      @date : 2020-10-16
  * 
  * Consultation des réservations.
  * 
@@ -63,14 +63,13 @@ $result = $database->resultSet();
 $creneau = array( 1 => false, false, false, false, false, false, false);
     
 foreach($result as $r)
-{
-    // Remplacement du 0 par 7 -> Dimanche
-    if($r['Jour'] == 0) $r['Jour'] = 7;
-    
+{   
     $creneau[$r['Jour']][] = array(
         'id_creneau' => $r['id_creneau'],
         'libre' => $r['Libre'],
-        'titre' => sprintf("(%s) %s/%s (%s/%d)", substr($r['Salle'], 0, 1), formatHeure($r['Heure_Debut']), formatHeure($r['Heure_Fin']), '%d', $r['Nbr_Place'])
+        'titre_salle' => sprintf("(%s) %s/%s (%%d/%d)", substr($r['Salle'], 0, 1), formatHeure($r['Heure_Debut']), formatHeure($r['Heure_Fin']), $r['Nbr_Place']),
+        // Jour en clair pour la popup
+        'titre_popup' => sprintf("(%s) %s %s/%s (%%d/%d)", substr($r['Salle'], 0, 1),  $JOUR_FR[$r['Jour']], formatHeure($r['Heure_Debut']), formatHeure($r['Heure_Fin']), $r['Nbr_Place'])
     );
 }
 
@@ -129,7 +128,7 @@ for($i=$libreDevant+1; $i < 36; $i++)
         else 
         {
             foreach( $creneau[$JourSemaine] as $value)
-            {
+            {                
                 // Recherche du nombre de joueur sur ce créneau
                 $database->query("SELECT count(*) as count FROM `res_reservations` WHERE `id_creneau`=:id_creneau AND `iDate`= :iDate And `Ouvreur`='Non';");
                 $database->bind('id_creneau', $value['id_creneau']);
@@ -150,7 +149,8 @@ for($i=$libreDevant+1; $i < 36; $i++)
                     'iDate' => $JourAnnee,
                     'Nbr' => $Nbr,
                     'type' => $color, 
-                    'name' => sprintf( $value['titre'], $Nbr )
+                    'name' => sprintf( $value['titre_salle'], $Nbr ),
+                    'name_popup' => sprintf( $value['titre_popup'], $Nbr )
                 );
             }
         

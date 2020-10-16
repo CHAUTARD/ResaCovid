@@ -1,16 +1,12 @@
 /* theme.css
- * Version : 1.0.0
+ * 	@version : 1.0.1
+ *  @date : 2020-10-16
  */
-body, html, .container-fluid {
-  height: 100%;
-}
+body, html, .container-fluid { height: 100%; }
 
 body {
   min-height: 100vh;
-
   color: #333;
-
-  // background: linear-gradient(0deg, #F0C27B 10%, #4B1248 90%);
   background: linear-gradient(148deg, #fcb045 10%, #0070ff 50%, #fcb045 90%);
 }
 
