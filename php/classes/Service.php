@@ -37,12 +37,13 @@ class Service
      */
     protected $ipSource;
           
-    public function __construct($database) {
+    public function __construct() {
+        global $database;
         
         // Le licencier a t'il un numéro de serie
         // Recherche si le joueur existe
-        $sql = sprintf('SELECT Serie FROM res_fftt WHERE id_licencier = "%d";', $_SESSION['id_licencier'] );
-        $database->query($sql);
+        $database->query('SELECT Serie FROM res_fftt WHERE id_licencier = :id_licencier;' );
+        $database->bind(':id_licencier', $_SESSION['id_licencier']);       
         $result = $database->single();
         
         // Le code ne correspond pas !
@@ -56,6 +57,8 @@ class Service
             $database->bind(':id_licencier', $_SESSION['id_licencier']);
             $database->bind(':serie', $this->getSerial());
             $database->execute();
+            
+            $this->initialization();
         }
         else
         {     
@@ -109,7 +112,7 @@ class Service
     /*
      * Paramètres d'entrée: 
      *  -serie: numéro de série attribué par l'application (15 caractéres: [A..Z] [0..9]). 
-     *      Ce numéro de série doitétre initialisé 1 seule fois par utilisateur (application installée)et fait partie de toutes les requétes ultérieures
+     *      Ce numéro de série doit être initialisé 1 seule fois par utilisateur (application installée)et fait partie de toutes les requétes ultérieures
      *  -tm: Timestamp en clair
      *  -tmc: Timestamp crypté
      *  -id: ID de l'application qui émet la demande
@@ -130,8 +133,8 @@ class Service
      */
     public function getClubsByDepartement($departement)
     {
-        return $this->getCachedData("clubs_{$departement}", 3600*24*7, function($service) use ($departement) {
-            return Service::getCollection($service->getData('http://www.fftt.com/mobile/pxml/xml_club_dep2.php', array('dep' => $departement)), 'club');
+        return $this->getCachedData("clubs_{$departement}", 3600*24*7, function($this) use ($departement) {
+            return Service::getCollection($this->getData('http://www.fftt.com/mobile/pxml/xml_club_dep2.php', array('dep' => $departement)), 'club');
         });
     }
     
@@ -152,8 +155,8 @@ class Service
      */
     public function getClub($numero)
     {
-        return $this->getCachedData("club_{$numero}", 3600*24*7, function($service) use ($numero) {
-            return Service::getObject($service->getData('http://www.fftt.com/mobile/pxml/xml_club_detail.php', array('club' => $numero)), 'club');
+        return $this->getCachedData("club_{$numero}", 3600*24*7, function($this) use ($numero) {
+            return Service::getObject($this->getData('http://www.fftt.com/mobile/pxml/xml_club_detail.php', array('club' => $numero)), 'club');
         });
     }
     
@@ -183,23 +186,23 @@ class Service
      */
     public function getJoueur($licence)
     {
-        $joueur = $this->getCachedData("joueur_{$licence}", 3600*24*7, function($service) use ($licence) {
-            return Service::getObject($service->getData('http://www.fftt.com/mobile/pxml/xml_joueur.php', array('licence' => $licence, 'auto' => 1)), 'joueur');
+        $joueur = $this->getCachedData("joueur_{$licence}", 3600*24*7, function($this) use ($licence) {
+            return Service::getObject($this->getData('http://www.fftt.com/mobile/pxml/xml_joueur.php', array('licence' => $licence, 'auto' => 1)), 'joueur');
         });
             
-            if (!isset($joueur['licence'])) {
-                return null;
-            }
-            
-            if (empty($joueur['natio'])) {
-                $joueur['natio'] = 'F';
-            }
-            
-            $joueur['photo'] = "http://www.fftt.com/espacelicencie/photolicencie/{$joueur['licence']}_.jpg";
-            $joueur['progmois'] = round($joueur['point'] - $joueur['apoint'], 2); // Progression mensuelle
-            $joueur['progann'] = round($joueur['point'] - $joueur['valinit'], 2); // Progression annuelle
-            
-            return $joueur;
+        if (!isset($joueur['licence'])) {
+            return null;
+        }
+        
+        if (empty($joueur['natio'])) {
+            $joueur['natio'] = 'F';
+        }
+        
+        $joueur['photo'] = "http://www.fftt.com/espacelicencie/photolicencie/{$joueur['licence']}_.jpg";
+        $joueur['progmois'] = round($joueur['point'] - $joueur['apoint'], 2); // Progression mensuelle
+        $joueur['progann'] = round($joueur['point'] - $joueur['valinit'], 2); // Progression annuelle
+        
+        return $joueur;
     }
     
     public function cleanJoueur($licence)
@@ -226,14 +229,14 @@ class Service
      */
     public function getJoueurParties($licence)
     {
-        return $this->getCachedData("joueurparties_{$licence}", 3600*24*7, function($service) use ($licence) {
-            return Service::getCollection($service->getData('http://www.fftt.com/mobile/pxml/xml_partie_mysql.php', array('licence' => $licence, 'auto' => 1)), 'partie');
+        return $this->getCachedData("joueurparties_{$licence}", 3600*24*7, function($this) use ($licence) {
+            return Service::getCollection($this->getData('http://www.fftt.com/mobile/pxml/xml_partie_mysql.php', array('licence' => $licence, 'auto' => 1)), 'partie');
         });
     }
     
     /*
      * Fonction: 
-     *  Renvoie une liste des parties déun joueur de la base SPID
+     *  Renvoie une liste des parties d'un joueur de la base SPID
      *  
      * Paramétres d'entrée: 
      *  -serie: numéro de série de l'utilisateur qui émet la demande 
@@ -244,14 +247,14 @@ class Service
      */  
     public function getJoueurPartiesSpid($licence)
     {
-        return $this->getCachedData("joueurspid_{$licence}", 3600*24*1, function($service) use ($licence) {
-            return Service::getCollection($service->getData('http://www.fftt.com/mobile/pxml/xml_partie.php', array('numlic' => $licence)), 'resultat');
+        return $this->getCachedData("joueurspid_{$licence}", 3600*24*1, function($this) use ($licence) {
+            return Service::getCollection($this->getData('http://www.fftt.com/mobile/pxml/xml_partie.php', array('numlic' => $licence)), 'resultat');
         });
     }
     
     /*
      * Fonction: 
-     *  Renvoie léhistorique classement déun joueur
+     *  Renvoie l'historique classement d'un joueur
      *  
      * Paramétres d'entrée: 
      *      -serie: numéro de série de l'utilisateur qui émet la demande 
@@ -262,8 +265,8 @@ class Service
      */
     public function getJoueurHistorique($licence)
     {
-        return $this->getCachedData("joueur_historique_{$licence}", 3600*24*2, function($service) use ($licence) {
-            return Service::getCollection($service->getData('http://www.fftt.com/mobile/pxml/xml_histo_classement.php', array('numlic' => $licence)), 'histo');
+        return $this->getCachedData("joueur_historique_{$licence}", 3600*24*2, function($this) use ($licence) {
+            return Service::getCollection($this->getData('http://www.fftt.com/mobile/pxml/xml_histo_classement.php', array('numlic' => $licence)), 'histo');
         });
     }
     
@@ -280,8 +283,8 @@ class Service
      */
     public function getJoueursByName($nom, $prenom= '')
     {
-        return $this->getCachedData("joueurs_{$nom}_{$prenom}", 3600*24*7, function($service) use ($nom, $prenom) {
-            return Service::getCollection($service->getData('http://www.fftt.com/mobile/pxml/xml_liste_joueur.php', array('nom' => $nom, 'prenom' => $prenom)), 'joueur');
+        return $this->getCachedData("joueurs_{$nom}_{$prenom}", 3600*24*7, function($this) use ($nom, $prenom) {
+            return Service::getCollection($this->getData('http://www.fftt.com/mobile/pxml/xml_liste_joueur.php', array('nom' => $nom, 'prenom' => $prenom)), 'joueur');
         });
     }
     
@@ -298,8 +301,8 @@ class Service
      */
     public function getJoueursByClub($club)
     {
-        return $this->getCachedData("clubjoueurs_{$club}", 3600*24*7, function($service) use ($club) {
-            return Service::getCollection($service->getData('http://www.fftt.com/mobile/pxml/xml_liste_joueur.php', array('club' => $club)), 'joueur');
+        return $this->getCachedData("clubjoueurs_{$club}", 3600*24*7, function($this) use ($club) {
+            return Service::getCollection($this->getData('http://www.fftt.com/mobile/pxml/xml_liste_joueur.php', array('club' => $club)), 'joueur');
         });
     }
     
@@ -324,8 +327,8 @@ class Service
             $type = 'M';
         }
         
-        $teams = $this->getCachedData("clubequipes_{$club}_{$type}", 3600*24*7, function($service) use ($club, $type) {
-            return Service::getCollection($service->getData('http://www.fftt.com/mobile/pxml/xml_equipe.php', array('numclu' => $club, 'type' => $type)), 'equipe');
+        $teams = $this->getCachedData("clubequipes_{$club}_{$type}", 3600*24*7, function($this) use ($club, $type) {
+            return Service::getCollection($this->getData('http://www.fftt.com/mobile/pxml/xml_equipe.php', array('numclu' => $club, 'type' => $type)), 'equipe');
         });
             
             foreach($teams as &$team) {
@@ -358,8 +361,8 @@ class Service
      */
     public function getPoules($division)
     {
-        $poules = $this->getCachedData("poules_{$division}", 3600*24*7, function($service) use ($division) {
-            return Service::getCollection($service->getData('http://www.fftt.com/mobile/pxml/xml_result_equ.php', array('action' => 'poule', 'D1' => $division)), 'poule');
+        $poules = $this->getCachedData("poules_{$division}", 3600*24*7, function($this) use ($division) {
+            return Service::getCollection($this->getData('http://www.fftt.com/mobile/pxml/xml_result_equ.php', array('action' => 'poule', 'D1' => $division)), 'poule');
         });
             
             foreach($poules as &$poule) {
@@ -378,8 +381,8 @@ class Service
      */
     public function getPouleClassement($division, $poule = null)
     {
-        return $this->getCachedData("pouleclassement_{$division}_{$poule}", 3600*24*1, function($service) use ($division, $poule) {
-            return Service::getCollection($service->getData('http://www.fftt.com/mobile/pxml/xml_result_equ.php', array('auto' => 1, 'action' => 'classement', 'D1' => $division, 'cx_poule' => $poule)), 'classement');
+        return $this->getCachedData("pouleclassement_{$division}_{$poule}", 3600*24*1, function($this) use ($division, $poule) {
+            return Service::getCollection($this->getData('http://www.fftt.com/mobile/pxml/xml_result_equ.php', array('auto' => 1, 'action' => 'classement', 'D1' => $division, 'cx_poule' => $poule)), 'classement');
         });
     }
     
@@ -388,8 +391,8 @@ class Service
      */
     public function getPouleRencontres($division, $poule = null)
     {
-        return $this->getCachedData("poulerencontres_{$division}_{$poule}", 3600*24*1, function($service) use ($division, $poule) {
-            return Service::getCollection($service->getData('http://www.fftt.com/mobile/pxml/xml_result_equ.php', array('auto' => 1, 'D1' => $division, 'cx_poule' => $poule)), 'tour');
+        return $this->getCachedData("poulerencontres_{$division}_{$poule}", 3600*24*1, function($this) use ($division, $poule) {
+            return Service::getCollection($this->getData('http://www.fftt.com/mobile/pxml/xml_result_equ.php', array('auto' => 1, 'D1' => $division, 'cx_poule' => $poule)), 'tour');
         });
     }
     
@@ -413,8 +416,8 @@ class Service
      */
     public function getIndivGroupes($division)
     {
-        $groupes = $this->getCachedData("groupes_{$division}", 3600*24*7, function($service) use ($division) {
-            return Service::getCollection($service->getData('http://www.fftt.com/mobile/pxml/xml_result_indiv.php', array('action' => 'poule', 'res_division' => $division)), 'tour');
+        $groupes = $this->getCachedData("groupes_{$division}", 3600*24*7, function($this) use ($division) {
+            return Service::getCollection($this->getData('http://www.fftt.com/mobile/pxml/xml_result_indiv.php', array('action' => 'poule', 'res_division' => $division)), 'tour');
         });
             
             foreach($groupes as &$groupe) {
@@ -437,8 +440,8 @@ class Service
      */
     public function getGroupeClassement($division, $groupe = null)
     {
-        return $this->getCachedData("groupeclassement_{$division}_{$groupe}", 3600*24*1, function($service) use ($division, $groupe) {
-            return Service::getCollection($service->getData('http://www.fftt.com/mobile/pxml/xml_result_indiv.php', array('action' => 'classement', 'res_division' => $division, 'cx_tableau' => $groupe)), 'classement');
+        return $this->getCachedData("groupeclassement_{$division}_{$groupe}", 3600*24*1, function($this) use ($division, $groupe) {
+            return Service::getCollection($this->getData('http://www.fftt.com/mobile/pxml/xml_result_indiv.php', array('action' => 'classement', 'res_division' => $division, 'cx_tableau' => $groupe)), 'classement');
         });
     }
     
@@ -447,8 +450,8 @@ class Service
      */
     public function getGroupeRencontres($division, $groupe = null)
     {
-        return $this->getCachedData("grouperencontres_{$division}_{$groupe}", 3600*24*1, function($service) use ($division, $groupe) {
-            return Service::getCollection($service->getData('http://www.fftt.com/mobile/pxml/xml_result_indiv.php', array('action' => 'partie', 'res_division' => $division, 'cx_tableau' => $groupe)), 'partie');
+        return $this->getCachedData("grouperencontres_{$division}_{$groupe}", 3600*24*1, function($this) use ($division, $groupe) {
+            return Service::getCollection($this->getData('http://www.fftt.com/mobile/pxml/xml_result_indiv.php', array('action' => 'partie', 'res_division' => $division, 'cx_tableau' => $groupe)), 'partie');
         });
     }
     
@@ -471,8 +474,8 @@ class Service
             $type = 'L';
         }
         
-        return $this->getCachedData("organismes_{$type}", 3600*24*30, function($service) use ($type) {
-            return Service::getCollection($service->getData('http://www.fftt.com/mobile/pxml/xml_organisme.php', array('type' => $type)), 'organisme');
+        return $this->getCachedData("organismes_{$type}", 3600*24*30, function($this) use ($type) {
+            return Service::getCollection($this->getData('http://www.fftt.com/mobile/pxml/xml_organisme.php', array('type' => $type)), 'organisme');
         });
     }
     
@@ -493,8 +496,8 @@ class Service
             $type = 'E';
         }
         
-        return $this->getCachedData("epreuves_{$organisme}_{$type}", 3600*24*30, function($service) use ($organisme, $type) {
-            return Service::getCollection($service->getData('http://www.fftt.com/mobile/pxml/xml_epreuve.php', array('type' => $type, 'organisme' => $organisme)), 'epreuve');
+        return $this->getCachedData("epreuves_{$organisme}_{$type}", 3600*24*30, function($this) use ($organisme, $type) {
+            return Service::getCollection($this->getData('http://www.fftt.com/mobile/pxml/xml_epreuve.php', array('type' => $type, 'organisme' => $organisme)), 'epreuve');
         });
     }
     
@@ -519,8 +522,8 @@ class Service
             $type = 'E';
         }
         
-        return $this->getCachedData("divisions_{$organisme}_{$epreuve}_{$type}", 3600*24*7, function($service) use ($organisme, $epreuve, $type) {
-            return Service::getCollection($service->getData('http://www.fftt.com/mobile/pxml/xml_division.php', array('organisme' => $organisme, 'epreuve' => $epreuve, 'type' => $type)), 'division');
+        return $this->getCachedData("divisions_{$organisme}_{$epreuve}_{$type}", 3600*24*7, function($this) use ($organisme, $epreuve, $type) {
+            return Service::getCollection($this->getData('http://www.fftt.com/mobile/pxml/xml_division.php', array('organisme' => $organisme, 'epreuve' => $epreuve, 'type' => $type)), 'division');
         });
     }
     
@@ -549,8 +552,8 @@ class Service
         $params = array();
         parse_str($link, $params);
         
-        return $this->getCachedData("rencontre_".sha1($link), 3600*24*1, function($service) use ($params) {
-            return Service::getObject($service->getData('http://www.fftt.com/mobile/pxml/xml_chp_renc.php', $params), null);
+        return $this->getCachedData("rencontre_".sha1($link), 3600*24*1, function($this) use ($params) {
+            return Service::getObject($this->getData('http://www.fftt.com/mobile/pxml/xml_chp_renc.php', $params), null);
         });
     }
     
@@ -573,8 +576,8 @@ class Service
      */
     public function getLicencesByName($nom, $prenom= '')
     {
-        return $this->getCachedData("licences_{$nom}_{$prenom}", 3600*24*2, function($service) use ($nom, $prenom) {
-            return Service::getCollection($service->getData('http://www.fftt.com/mobile/pxml/xml_liste_joueur_o.php', array('nom' => strtoupper($nom), 'prenom' => ucfirst($prenom))), 'joueur');
+        return $this->getCachedData("licences_{$nom}_{$prenom}", 3600*24*2, function($this) use ($nom, $prenom) {
+            return Service::getCollection($this->getData('http://www.fftt.com/mobile/pxml/xml_liste_joueur_o.php', array('nom' => strtoupper($nom), 'prenom' => ucfirst($prenom))), 'joueur');
         });
     }
     
@@ -593,8 +596,8 @@ class Service
      */
     public function getLicencesByClub($club)
     {
-        return $this->getCachedData("licencesclub_{$club}", 3600*24*2, function($service) use ($club) {
-            return Service::getCollection($service->getData('http://www.fftt.com/mobile/pxml/xml_liste_joueur_o.php', array('club' => $club)), 'joueur');
+        return $this->getCachedData("licencesclub_{$club}", 3600*24*2, function($this) use ($club) {
+            return Service::getCollection($this->getData('http://www.fftt.com/mobile/pxml/xml_liste_joueur_o.php', array('club' => $club)), 'joueur');
         });
     }
     
@@ -610,8 +613,8 @@ class Service
      *      -licence: numéro de licence
      */
     public function getLicence($licence)
-    {
-        return $this->getCachedData("licence_{$licence}", 3600*24*2, function($service) use ($licence) {
+    {       
+        return $this->getCachedData("licence_{$licence}", 3600*24*2, function($service) use ($licence) {           
             return Service::getObject($service->getData('http://www.fftt.com/mobile/pxml/xml_licence.php', array('licence' => $licence)), 'licence');
         });
     }

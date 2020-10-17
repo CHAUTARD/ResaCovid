@@ -1,6 +1,6 @@
 <!-- adm_licencier.html 
-  Version : 1.0.5
-  Date : 2020-10-16
+  Version : 1.0.6
+  Date : 2020-10-17
 -->
 
 {include="adm_header"}
@@ -65,6 +65,7 @@
 									<div class="form-group row">
 										<div class="col-sm-6">
 											<label for="addLicence" class="col-form-label">N° Licence : </label>
+											<!-- button type="button" class="btn btn-outline-primary btn-sm" id="id_find_licence" title="Rechercher un licencier"><i class="fas fa-search"></i></button -->
 											<input type="number" min="1" class="form-control" id="addLicence" name="addLicence" placeholder="Saisir votre numéro de licence FFTT" required>
 											<div class="valid-feedback">Valide</div>
 											<div class="invalid-feedback">Erreur dans la saisie.</div>
@@ -408,7 +409,45 @@
 							table.ajax.reload();
 			           }
 				    })    
+				});
+				
+				/* Recherche d'un licencié par le numéro de licence
+				$("#id_find_licence").click(function() { 
+					$.ajax({
+						type: "GET",
+						url: "admin.php",
+						data: {
+							page: 'fftt_licence_num',
+							licence : $("#addLicence").val()
+						},
+						success: function(response) { 						
+							switch(response) {
+								case 0:
+									$.alert({
+										columnClass: 'medium',
+								        title : 'Saisir le numéro de licence',
+								        content : "Saisir le numéro de licence dans le champ 'N° de Licence'"
+									});
+									break;
+									
+								case 1:
+									$.alert({
+										columnClass: 'medium',
+								        title : 'Numéro de licence inconnu',
+								        content : "Saisir le numéro de licence dans le champ 'N° de Licence'"
+									});
+									break;								
+								
+								default:
+									var data = $.parseJSON(response);
+									
+									console.log(data);
+							}
+
+			           }
+				    })  
 				})
+				*/
 			})
 	</script>
 </body>
