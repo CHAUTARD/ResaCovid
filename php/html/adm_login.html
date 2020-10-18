@@ -92,21 +92,21 @@
 </html>
 
 <script>
- 	$(document).ready(function(){	 
-	    $("#recoverSubmit").click(function(e){
+$(document).ready(function(){	 
+    $("#recoverSubmit").click(function(e){
 
-	        e.preventDefault();
-	        	        
-	        $.ajax({
-	        	type: "GET",
-				url: 'admin.php?page=password&email=' + $('#email').val(),
-				
-				success: function(data) { 
-	        	   console.log(data);  // show response from the php script.
-	        	   
-	        	   $('#LostPasswordModal').modal('hide');
-	           	}
-			})
-	    })
-	})
+        e.preventDefault();
+        	        
+        $.ajax({
+        	type: "GET",
+			url: 'admin.php?page=password&email=' + $('#email').val(),
+			
+			success: function(data) { 
+        	   console.log(data);  // show response from the php script.
+        	   
+        	   $('#LostPasswordModal').modal('hide');
+           	}
+		})
+    })
+})
 </script>

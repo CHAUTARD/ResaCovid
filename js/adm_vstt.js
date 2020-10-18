@@ -134,6 +134,31 @@ function DelCreneau( yearNum, creneau) {
     });
 }
 
+/*
+ * Envoye d'un email à partir du formulaire de contact
+ */
+
+function SendContactEmail() {
+
+    $.ajax({
+        type: "GET",
+        url: "admin.php?page=send_email",
+        data: {
+        	nom:  $("#emailNom").val(),
+        	email: $("#emailAdresse").val(),
+        	message: $("#emailMessage").val()
+        },
+        success : function(response){  
+			$.alert({
+				columnClass: 'medium',
+			    title: 'Courriel',
+			    content: response
+			})
+        }
+    });
+    
+    return false;
+}
 
 /*
  * Confirmation avant la suppression de tables
