@@ -38,6 +38,7 @@ $tpl->assign('logo', 'img/logo.gif');
 
 // Version de php du serveur
 $tpl->assign('phpversion', phpversion() );
+$tpl->assign('mysqlVersion', $database->GetMysqlVersion() );
 
 // Appel de traitement en AJAX
 

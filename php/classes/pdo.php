@@ -215,4 +215,8 @@ class SimplePDO {
           }
       }
   }
+  
+  public function GetMysqlVersion() {
+      return $this->_pdo->getAttribute(PDO::ATTR_SERVER_VERSION);
+  }
 }
