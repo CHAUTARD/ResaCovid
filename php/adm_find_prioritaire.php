@@ -13,13 +13,13 @@
       'id_creneau' => string '2' (length=1)
  */
 
-$LicNom = $_GET['LicNom'];
+$LicNom = trim($_GET['LicNom']);
 
 // LicNom numérique ou caractère
 if(is_numeric($LicNom)) {
     // Recherche sur le numéro de licence
-    $database->query("SELECT Nom, Prenom FROM `res_licenciers` WHERE `id_licencier` = :id");
-    $database->bind(':id', $LicNom);
+    $database->query("SELECT Nom, Prenom FROM `res_licenciers` WHERE `id_licencier` = :id" );
+    $database->bind(':id', $LicNom, PDO::PARAM_INT);
     $resultNP = $database->single();
     
     if($resultNP === false) {
@@ -27,18 +27,17 @@ if(is_numeric($LicNom)) {
             'title' => "Licencié non trouvé !",
             'content' => 'Ce numéro de licence ne correspond à aucun joueur du club.'
        );
-    } else  {
-        // Existe déjà comme prioritaire
-        $database->query("SELECT id_prioritaire FROM `res_prioritaires` WHERE `id_licencier` = :id AND `id_creneau` = :id_creneau");
-        $database->bind(':id', $LicNom);
-        $database->bind(':id_creneau', $_GET['id_creneau']);
-        $result = $database->single();
+    } else  {      
+        // Le licencier est t'il déjà prioritaire sur ce créneau
+        $database->query("SELECT id_prioritaire FROM  `res_prioritaires` WHERE pr.id_creneau = :id_creneau AND `id_licencier` = :id_licencier");
+        $database->bind(':id_creneau', $_GET['id_creneau'], PDO::PARAM_INT);
+        $database->bind(':id_licencier', $LicNom, PDO::PARAM_INT);
+        $result = $database->resultSet();
         
-        if($result === false) 
-        {
+        if($result === false || count($result == 0)) {
             $database->query("INSERT INTO `res_prioritaires` (`id_prioritaire`, `id_creneau`, `id_licencier`) VALUES ( NULL, :id_creneau, :id_licencier);");
-            $database->bind(':id_creneau', $_GET['id_creneau']);
-            $database->bind(':id_licencier', $LicNom);
+            $database->bind(':id_creneau', $_GET['id_creneau'], PDO::PARAM_INT);
+            $database->bind(':id_licencier', $LicNom, PDO::PARAM_INT);
             $database->execute();
             
             $data = array(
@@ -50,74 +49,78 @@ if(is_numeric($LicNom)) {
         {
             $data = array(
                 'title' => "Licencié existe déjà !",
-                'content' => sprintf( "%s %s est déjà inscrit !", $resultNP['Prenom'], $resultNP['Nom'])
+                'content' => sprintf( "%s %s est déjà inscrit comme prioritaire pour ce créneau !", $resultNP['Prenom'], $resultNP['Nom'])
             );
         }
-    }  
-} else {
-    // Recherche sur le numéro de licence
-    $database->query("SELECT li.id_licencier, li.Nom, li.Prenom FROM `res_licenciers` li LEFT JOIN  `res_prioritaires` pr USING(id_licencier)" .
-        "WHERE ( li.`Nom` LIKE :nom OR li.`SurNom` LIKE :nom ) AND ISNULL(pr.`id_prioritaire`) ORDER BY Nom, Prenom");
-    $database->bind(':nom', '%' . strtoupper($LicNom) . '%');
-        
-    $resultNP = $database->resultSet();
+    }
+    die(json_encode($data));
+}
+
+// Recherche sur le nom du licence
+$database->query("SELECT id_licencier, Nom, Prenom FROM `res_licenciers` WHERE `Nom` LIKE :nom OR `SurNom` LIKE :nom ORDER BY Nom, Prenom");
+$database->bind(':nom', '%' . strtoupper($LicNom) . '%');
     
-    if($resultNP === false) {
+$resultNP = $database->resultSet();
+      
+if($resultNP === false) {
+    $data = array(
+        'title' => "Licencié non trouvé !",
+        'content' => 'Aucun licencié ne correspond à ce nom où surnom (' . strtoupper($LicNom) . ').'
+    );
+    die(json_encode($data));
+} 
+
+// Combien d'enregistrement trouvé ?
+switch (count($resultNP) ) {
+    case 0 :
         $data = array(
-            'title' => "Licencié non trouvé ou déjà présent!",
-            'content' => 'Aucun licencié ne correspond à ce nom où surnom.'
+            'title' => "Licencié non trouvé !",
+            'content' => 'Aucun licencié ne correspond à ce nom, surnom.'
         );
-    } else  {
-        // Combien d'enregistrement trouvé ?
-        switch (count($resultNP) ) {
-            case 0 :
-                $data = array(
-                    'title' => "Licencié non trouvé où déjà présent !",
-                    'content' => 'Aucun licencié ne correspond à ce nom, surnom.'
-                );
-                break;
-                
-            case 1 :   
-                // Existe déjà comme prioritaire
-                $database->query("SELECT id_prioritaire FROM `res_prioritaires` WHERE `id_licencier` = :id AND `id_creneau` = :id_creneau");
-                $database->bind(':id', $result['id_licencier']);
-                $database->bind(':id_creneau', $_GET['id_creneau']);
-                $result = $database->single();
-                
-                if($result === false)
-                {               
-                    $database->query("INSERT INTO `res_prioritaires` (`id_prioritaire`, `id_creneau`, `id_licencier`) VALUES ( NULL, :id_creneau, :id_licencier);");
-                    $database->bind(':id_creneau', $_GET['id_creneau']);
-                    $database->bind(':id_licencier', $result['id_licencier']);
-                    $database->execute();
-                    
-                    $data = array(
-                        'title' => "Licencié trouvé !",
-                        'content' => sprintf( "%s %s ajouté !", $resultNP['Prenom'], $resultNP['Nom'])
-                    );
-                }
-                else 
-                {
-                    $data = array(
-                        'title' => "Licencié existe déjà !",
-                        'content' => sprintf( "%s %s est déjà inscrit !", $resultNP['Prenom'], $resultNP['Nom'])
-                    );
-                }
-                break;
-                
-            default:
-                $msg = "Plusieurs licenciés correspondent :<br /><ul>";
-                foreach($resultNP as $r) {
-                    $msg .= sprintf( "<li> Lic : %d\t=>\t%s %s</li>", $r['id_licencier'], $r['Prenom'], $r['Nom']) ;
-                }
-                $msg .= '</ul>';
-                
-                $data = array(
-                    'title' => "Licenciés trouvés !",
-                    'content' => $msg
-                );
+        break;
+        
+    case 1 :  
+        $idLicencier = $resultNP[0]['id_licencier'];
+        $Nom = $resultNP[0]['Nom'];
+        $Prenom = $resultNP[0]['Prenom'];
+        
+        // Le licencier est t'il déjà prioritaire sur ce créneau
+        $database->query("SELECT id_prioritaire FROM  `res_prioritaires` WHERE pr.id_creneau = :id_creneau AND `id_licencier` = :id_licencier");
+        $database->bind(':id_creneau', $_GET['id_creneau'], PDO::PARAM_INT);  
+        $database->bind(':id_licencier', $idLicencier, PDO::PARAM_INT);   
+        $result = $database->resultSet();
+        
+        if($result === false || count($result == 0)) {
+            $database->query("INSERT INTO `res_prioritaires` (`id_prioritaire`, `id_creneau`, `id_licencier`) VALUES ( NULL, :id_creneau, :id_licencier);");
+            $database->bind(':id_creneau', $_GET['id_creneau'], PDO::PARAM_INT);
+            $database->bind(':id_licencier', $idLicencier, PDO::PARAM_INT);
+            $database->execute();
+            
+            $data = array(
+                'title' => "Licencié trouvé !",
+                'content' => sprintf( "%s %s ajouté !", $Prenom, $Nom)
+            );
         }
-    } 
+        else 
+        {
+            $data = array(
+                'title' => "Licencié existe déjà !",
+                'content' => sprintf( "%s %s est déjà inscrit comme prioritaire pour ce créneau !", $Prenom, $Nom)
+            );
+        }
+        break;
+        
+    default:
+        $msg = "Plusieurs licenciés correspondent :<br /><ul>";
+        foreach($resultNP as $r) {
+            $msg .= sprintf( "<li> Lic : %d\t=>\t%s %s</li>", $r['id_licencier'], $r['Prenom'], $r['Nom']) ;
+        }
+        $msg .= '</ul>';
+        
+        $data = array(
+            'title' => "Licenciés trouvés !",
+            'content' => $msg
+        );
 }
 
 die(json_encode($data));

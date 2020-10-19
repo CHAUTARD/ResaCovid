@@ -50,55 +50,62 @@
 		</div>
 		<br />
 	</div>
-	
-	<script>
-	$(document).ready(
-			function() {
-				// this is the id of the form
-				$("#id_form_find_prioritaire").submit(function(e) {
-				    e.preventDefault(); // avoid to execute the actual submit of the form.
-				    var form = $(this);
-				    			    
-				    $.ajax({
-						type: "GET",
-						url: "admin.php?page=find_prioritaire",
-						data: form.serialize(), // serializes the form's elements.
-						success: function(response) { 
-							var data = $.parseJSON(response);
-							
-							$.alert({
-								columnClass: 'medium',
-							    title: data.title,
-							    content: data.content
-							});
-			
-							// Rechargement des données
-							document.reload(true);
-			           }
-				    })    
-				});
-				
-				function DelPrioritaire(id_prioritaire) {    
-				    $.ajax({
-			           type: "GET",
-			           url: "admin.php?page=delete_prioritaire",	
-			           dataType : 'json',
-			           data: { id_prioritaire: id_prioritaire},
-			           success: function(response) { 
-			        	   	var data = $.parseJSON(response);
-							$.alert({
-								columnClass: 'medium',
-							    title: data.title,
-							    content: data.content
-							});
-							
-							// Rechargement de la page
-				        	location.reload(true);
-			           }
-				    })
-				}
-			}
-		)
-	</script>
 </body>
+
+<script>
+$(document).ready(
+	function() {
+		// this is the id of the form
+		$("#id_form_find_prioritaire").submit(function(e) {
+		    e.preventDefault(); // avoid to execute the actual submit of the form.
+		    var form = $(this);
+		    			    
+		    $.ajax({
+				type: "GET",
+				url: "admin.php?page=find_prioritaire",
+				data: form.serialize(), // serializes the form's elements.
+				success: function(response) { 
+					var data = $.parseJSON(response);
+					
+					$.alert({
+						columnClass: 'medium',
+					    title: data.title,
+					    content: data.content
+					});
+	
+					// Rechargement des données
+					document.reload(true);
+	           }
+		    })    
+		});
+		
+		// Modification du champ id_creneau caché en fonction de l'onglet actif
+		{loop="$creneaux"}
+		$('#v-tab-{$value.id_creneau}').click(function(){ $('#id_creneau').val({$value.id_creneau}); });
+		{/loop}
+	}
+);
+	
+// Suppression d'un prioritaire
+function DelPrioritaire(id_prioritaire) {    
+    $.ajax({
+       type: "GET",
+       url: "admin.php?page=delete_prioritaire",	
+       dataType : 'json',
+       data: { id_prioritaire: id_prioritaire},
+       success: function(response) { 
+    	   	var data = $.parseJSON(response);
+    	   	
+			$.alert({
+				columnClass: 'medium',
+			    title: data.title,
+			    content: data.content
+			});
+			
+			// Rechargement de la page
+        	location.reload(true);
+       }
+    })
+}
+</script>
 </html>	
