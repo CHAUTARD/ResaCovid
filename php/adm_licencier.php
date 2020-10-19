@@ -2,8 +2,8 @@
 /**
  * adm_licencier.php
  * 
- *      @version : 1.0.3
- *      @date : 2020-10-16
+ *      @version : 1.0.4
+ *      @date : 2020-10-19
  */
 
 $tpl->assign( 'titre', '<i class="fas fa-users"></i> Les licenciers');
@@ -27,7 +27,7 @@ id_creneau	 Salle	  Jour 	Heure_Debut Heure_Fin
 $data = array();
 
 foreach($result as $r)
-    $data[$r['id_creneau']] = sprintf( "%s %s de %s à %s", $r['Salle'], $JOUR_FR[$r['jour']], formatHeure($r['Heure_Debut']), formatHeure($r['Heure_Fin']));
+    $data[$r['id_creneau']] = sprintf( "%s %s de %s à %s", $r['Salle'], $JOUR_FR[$r['Jour']], formatHeure($r['Heure_Debut']), formatHeure($r['Heure_Fin']));
 
 $tpl->assign('creneaux', $data);
 

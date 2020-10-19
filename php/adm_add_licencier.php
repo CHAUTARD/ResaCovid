@@ -1,7 +1,7 @@
 <?php
 /*  adm_add_licencier.php
- *      @version : 1.0.3
- *      @date : 2020.10-16
+ *      @version : 1.0.4
+ *      @date : 2020.10-19
  *  
  *  Ajout, Modification d'un licencié
  *  
@@ -27,16 +27,38 @@ $database->query("SELECT id_licencier, Ouvreur, Admin, Actif FROM `res_licencier
 $database->bind(':id', $_GET['addLicence']);
 $result = $database->single();
 
+// Mise en forme des Nom, Surnom et Prénom
+$civiliteMr = ($_GET['addCivilite'] == 'Mr');
+$nom = strtoupper($_GET['addNom']);
+$surnom = strtoupper($_GET['addSurnom']);
+$prenom = ucfirst(strtolower($_GET['addPrenom']));
+
 // Non -> Création
 if($result === false) {
-    $database->query('INSERT INTO `res_licenciers` (`id_licencier`, `Civilite`, `Nom`, `Surnom`, `Prenom`, `Equipe`, `Telephone`, `Email`, `Ouvreur`, `Admin`, `Actif`) VALUES (:id_licencier, :Civilite, :Nom, :Surnom, :Prenom, :Equipe, :Telephone, :Email, :Ouvreur, :Admin);');
-    $title = "Licencié(e) créé(e) !";
-    $content = sprintf("Le licencié %s %s a été créé.", $_GET['addPrenom'], $_GET['addNom']);
+    $database->query('INSERT INTO `res_licenciers` (`id_licencier`, `Civilite`, `Nom`, `Surnom`, `Prenom`, `Equipe`, `Telephone`, `Email`, `Ouvreur`, `Admin`, `Actif`) VALUES (:id_licencier, :Civilite, :Nom, :Surnom, :Prenom, :Equipe, :Telephone, :Email, :Ouvreur, :Admin, :Actif);');
+    if($civiliteMr)
+    {
+        $title = "Licencié créé !";
+        $content = sprintf("Le licencié %s %s a été créé.", $prenom, $nom);
+    }
+    else
+    {
+        $title = "Licenciée créée !";
+        $content = sprintf("La licenciée %s %s a été créé.", $prenom, $nom);
+    }
 } else {
     // Oui -> Update
     $database->query('UPDATE `res_licenciers` SET `Civilite` = :Civilite, `Nom` = :Nom, `Surnom` = :Surnom, `Prenom` = :Prenom, `Equipe` = :Equipe, `Telephone` = :Telephone, `Email` = :Email, `Ouvreur` = :Ouvreur, `Admin` = :Admin, `Actif` = :Actif WHERE `id_licencier` = :id_licencier');
-    $title = "Licencié(e) modifié(e) !";
-    $content = sprintf("Le licencié %s %s a été modifié.", $_GET['addPrenom'], $_GET['addNom']);
+    if($civiliteMr)
+    {
+        $title = "Licencié modifié !";
+        $content = sprintf("Le licencié %s %s a été modifié.", $prenom, $nom);
+    }
+    else 
+    {
+        $title = "Licenciée modifiée !";
+        $content = sprintf("La licenciée %s %s a été modifié.", $prenom, $nom);
+    }
 }
 
 $Ouvreur = isset($_GET['addOuvreur']) ? $_GET['addOuvreur']: $result['Ouvreur'];
@@ -45,9 +67,9 @@ $Actif = isset($_GET['addActif']) ? $_GET['addActif']: $result['Actif'];
 
 $database->bind(':id_licencier', $_GET['addLicence'], PDO::PARAM_INT);
 $database->bind(':Civilite', $_GET['addCivilite']);
-$database->bind(':Nom', strtoupper($_GET['addNom']));
-$database->bind(':Surnom', strtoupper($_GET['addSurnom'])); 
-$database->bind(':Prenom', ucfirst($_GET['addPrenom']));
+$database->bind(':Nom', $nom);
+$database->bind(':Surnom', $surnom); 
+$database->bind(':Prenom', $prenom);
 $database->bind(':Equipe', $_GET['addEquipe'], PDO::PARAM_INT);
 $database->bind(':Telephone', $_GET['addTelephone'], PDO::PARAM_STR); 
 $database->bind(':Email', $_GET['addEmail']);

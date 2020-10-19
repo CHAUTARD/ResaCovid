@@ -1,7 +1,7 @@
 <?php
-/**   f u n c t i o n s . p h p  
- *  Version : 1.0.1
- *  Date : 2020-10-14 
+/**   functions.php  
+ *      @version : 1.0.1
+ *      @date : 2020-10-14 
  */
 
 // Les constantes tableau n'étant disponible qua partir de la version 5.6
