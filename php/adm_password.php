@@ -3,8 +3,8 @@
  * 
  *  Envoi d'un email avec le password
  *  
- *      @version : 1.0.1
- *      @date : 2020-10-15
+ *      @version : 1.0.2
+ *      @date : 2020-10-19
  *
  */
 
@@ -36,7 +36,7 @@ $mail->setLanguage('fr', 'php/classes/PHPMailler/language/');
 
 try {
     //Server settings
-    $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      // Enable verbose debug output
+    $mail->SMTPDebug = false;  //SMTP::DEBUG_SERVER;            // Enable verbose debug output
     $mail->CharSet = 'UTF-8';
     $mail->isSMTP();                                            // Send using SMTP
     $mail->Host       = SMTP_SERVEUR;                           // Set the SMTP server to send through

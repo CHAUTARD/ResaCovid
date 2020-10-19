@@ -1,7 +1,7 @@
 <?php
 /** adm_send_email.php
- *      @version : 1.0.0
- *      @date : 2020-10-18
+ *      @version : 1.0.1
+ *      @date : 2020-10-19
  */
 
 require_once 'php/classes/PHPMailler/PHPMailer.php';
@@ -26,10 +26,10 @@ try {
     
     //Recipients
     $mail->setFrom( $_GET['email'], $_GET['nom']);
-    $mail->addAddress(SMTP_USERNAME);     // Add a recipient
+    $mail->addAddress('patrick.chautard@free.fr');     // Add a recipient
        
     // Content
-    $mail->isHTML(true);                                  // Set email format to HTML
+    $mail->isHTML(true);                               // Set email format to HTML
     $mail->Subject = 'Contact pour le site Résservation table';
     $mail->Body    = $_GET['message'];
     $mail->AltBody = $_GET['message'];
