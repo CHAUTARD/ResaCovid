@@ -17,14 +17,14 @@ $result = $database->single();
 // Pas de réservation
 if($result === false || $result['Nbr'] == 0)
 {
-    // Suppression dans  res_prioritaire et res_licenciers   
-    $database->query("DELETE FROM `res_licenciers` WHERE `id_licencier` = :id");
+    // Suppression dans  res_prioritaire et res_licencies   
+    $database->query("DELETE FROM `res_licencies` WHERE `id_licencier` = :id");
 }
 else 
 {
     // sinon
-    // res_licenciers Actif = Non et Suppression dans res_prioritaire   
-    $database->query("UPDATE `res_licenciers` SET `Actif` = 'Non' WHERE `id_licencier` = :id");
+    // res_licencies Actif = Non et Suppression dans res_prioritaire   
+    $database->query("UPDATE `res_licencies` SET `Actif` = 'Non' WHERE `id_licencier` = :id");
 }
 $database->bind(':id', $idLicencier);
 $database->execute();

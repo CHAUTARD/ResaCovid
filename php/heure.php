@@ -8,7 +8,7 @@
 //   'jour' => string '2020-09-16' (length=10)
 
 // Recherche des informations sur le joueur connecté
-$database->query("SELECT Nom, Prenom, Ouvreur FROM res_licenciers WHERE id_licencier = :id_licencier");
+$database->query("SELECT Nom, Prenom, Ouvreur FROM res_licencies WHERE id_licencier = :id_licencier");
 $database->bind('id_licencier', $_SESSION['id_licencier'], PDO::PARAM_INT);
 $result = $database->single();
 
@@ -112,7 +112,7 @@ foreach($result as $r)
     }
       
     // Recherche des numeros de licence des inscripts pour ce créneau
-    $database->query("SELECT l.id_licencier, CONCAT( l.Prenom, ' ', l.Nom) as PN  FROM `res_reservations` r LEFT JOIN `res_licenciers` l ON r.id_licencier = l.id_licencier WHERE `id_creneau` = :id_creneau AND `iDate` = :iDate AND r.Ouvreur = 'Non' ORDER BY Nom, Prenom;");
+    $database->query("SELECT l.id_licencier, CONCAT( l.Prenom, ' ', l.Nom) as PN  FROM `res_reservations` r LEFT JOIN `res_licencies` l ON r.id_licencier = l.id_licencier WHERE `id_creneau` = :id_creneau AND `iDate` = :iDate AND r.Ouvreur = 'Non' ORDER BY Nom, Prenom;");
     $database->bind(':id_creneau', $r['id_creneau']);
     $database->bind(':iDate', $iDate);
     $resultJoueur = $database->resultSet();

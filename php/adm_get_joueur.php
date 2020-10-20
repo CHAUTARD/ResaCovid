@@ -15,7 +15,7 @@
 $ret = '[';
 
 // Recherche de l'ouvreur
-$database->query("SELECT l.Prenom as Prenom, l.Nom as Nom FROM `res_reservations` r LEFT JOIN `res_licenciers` l USING(`id_licencier`) WHERE `id_creneau` = :id_creneau AND `iDate` = :iDate AND r.`Ouvreur` = 'Oui'");
+$database->query("SELECT l.Prenom as Prenom, l.Nom as Nom FROM `res_reservations` r LEFT JOIN `res_licencies` l USING(`id_licencier`) WHERE `id_creneau` = :id_creneau AND `iDate` = :iDate AND r.`Ouvreur` = 'Oui'");
 $database->bind('id_creneau', $_GET['id_creneau']);
 $database->bind('iDate', $_GET['iDate']);
 $result = $database->single();
@@ -24,7 +24,7 @@ if($result !== false)
     $ret .= '{ "ouvreur": true, "nom": "' . $result['Prenom'] . ' ' . $result['Nom'] . '"}';
 
 // Recherche des joueurs
-$database->query("SELECT l.Prenom as Prenom, l.Nom as Nom FROM `res_reservations` r LEFT JOIN `res_licenciers` l USING(`id_licencier`) WHERE `id_creneau` = :id_creneau AND `iDate` = :iDate AND r.`Ouvreur` = 'Non' ORDER BY Nom, Prenom");
+$database->query("SELECT l.Prenom as Prenom, l.Nom as Nom FROM `res_reservations` r LEFT JOIN `res_licencies` l USING(`id_licencier`) WHERE `id_creneau` = :id_creneau AND `iDate` = :iDate AND r.`Ouvreur` = 'Non' ORDER BY Nom, Prenom");
 $database->bind('id_creneau', $_GET['id_creneau']);
 $database->bind('iDate', $_GET['iDate']);
 $result = $database->resultSet();

@@ -26,7 +26,7 @@ if ( preg_match( '/^([0-9]+)$/', $_POST['licence'], $licence) == 0)
 }
 
 // Recherche si le joueur existe
-$database->query("SELECT * FROM res_licenciers WHERE (Actif = 'Oui') AND ( Nom = :Nom OR Surnom = :Nom) AND id_licencier = :id_licencier");
+$database->query("SELECT * FROM res_licencies WHERE (Actif = 'Oui') AND ( Nom = :Nom OR Surnom = :Nom) AND id_licencier = :id_licencier");
 $database->bind(':Nom', $nom);
 $database->bind(':id_licencier', $_POST['licence'], PDO::PARAM_INT);
 $result = $database->single();

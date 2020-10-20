@@ -13,8 +13,8 @@ $dt = date("YmdHis");
 $sqls = array();
 
 // Licenciés
-$sqls[] = sprintf("CREATE TABLE res_licenciers_%s LIKE res_licenciers;", $dt);
-$sqls[] = sprintf("INSERT res_licenciers_%s SELECT * FROM res_licenciers;",  $dt);
+$sqls[] = sprintf("CREATE TABLE res_licencies_%s LIKE res_licencies;", $dt);
+$sqls[] = sprintf("INSERT res_licencies_%s SELECT * FROM res_licencies;",  $dt);
 
 // Prioritaires
 $sqls[] = sprintf("CREATE TABLE res_prioritaires_%s LIKE res_prioritaires;", $dt);
@@ -51,7 +51,7 @@ $sqls[] = "TRUNCATE `res_reservations`";
 $sqls[] = "TRUNCATE `res_prioritaires`";
 
 // Création d'un licencier administrateur pour ne pas être bloqué
-$sqls[] = sprintf("INSERT INTO `res_licenciers` (`id_licencier`, `Civilite`, `Nom`, `Surnom`, `Prenom`, `Classement`, `Equipe`, `Telephone`, `Email`, `Ouvreur`, `Admin`, `Actif`) VALUES ('9399999', 'Mr', '%s', '', 'Toi', '5', '0', '01.01.01.01.01', 'pas.saisie@faux', 'Non', '%s', 'Oui');", USER_NAME, USER_PWD );
+$sqls[] = sprintf("INSERT INTO `res_licencies` (`id_licencier`, `Civilite`, `Nom`, `Surnom`, `Prenom`, `Classement`, `Equipe`, `Telephone`, `Email`, `Ouvreur`, `Admin`, `Actif`) VALUES ('9399999', 'Mr', '%s', '', 'Toi', '5', '0', '01.01.01.01.01', 'pas.saisie@faux', 'Non', '%s', 'Oui');", USER_NAME, USER_PWD );
 
 $database->transaction($sqls);
 

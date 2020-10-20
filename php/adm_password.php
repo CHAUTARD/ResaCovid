@@ -9,7 +9,7 @@
  */
 
 // Recherche si le joueur existe
-$database->query("SELECT Admin, Prenom FROM res_licenciers WHERE (Actif = 'Oui') AND Email=:Email");
+$database->query("SELECT Admin, Prenom FROM res_licencies WHERE (Actif = 'Oui') AND Email=:Email");
 $database->bind(':Email', $_GET['email']);
 $result = $database->single();
 

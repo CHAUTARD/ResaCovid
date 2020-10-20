@@ -18,7 +18,7 @@ $LicNom = trim($_GET['LicNom']);
 // LicNom numérique ou caractère
 if(is_numeric($LicNom)) {
     // Recherche sur le numéro de licence
-    $database->query("SELECT Nom, Prenom FROM `res_licenciers` WHERE `id_licencier` = :id" );
+    $database->query("SELECT Nom, Prenom FROM `res_licencies` WHERE `id_licencier` = :id" );
     $database->bind(':id', $LicNom, PDO::PARAM_INT);
     $resultNP = $database->single();
     
@@ -57,7 +57,7 @@ if(is_numeric($LicNom)) {
 }
 
 // Recherche sur le nom du licence
-$database->query("SELECT id_licencier, Nom, Prenom FROM `res_licenciers` WHERE `Nom` LIKE :nom OR `SurNom` LIKE :nom ORDER BY Nom, Prenom");
+$database->query("SELECT id_licencier, Nom, Prenom FROM `res_licencies` WHERE `Nom` LIKE :nom OR `SurNom` LIKE :nom ORDER BY Nom, Prenom");
 $database->bind(':nom', '%' . strtoupper($LicNom) . '%');
     
 $resultNP = $database->resultSet();

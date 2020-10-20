@@ -24,7 +24,7 @@ if(isset($_POST['mdp']))
     }
         
     // Recherche si le joueur existe
-    $database->query('SELECT id_licencier FROM res_licenciers WHERE (Actif = "Oui") AND ( Nom = :nom OR Surnom = :nom) AND Admin =:passwd;');  
+    $database->query('SELECT id_licencier FROM res_licencies WHERE (Actif = "Oui") AND ( Nom = :nom OR Surnom = :nom) AND Admin =:passwd;');  
     $database->bind(':nom', $nom);
     $database->bind(':passwd', $_POST['mdp']);
     $result = $database->single();

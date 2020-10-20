@@ -35,7 +35,7 @@ $creneaux = array();
 foreach($result as $r)
 {
     // Recherche des licenciers prioritaire pour ce créneau
-    $database->query("SELECT ROW_NUMBER() OVER (ORDER BY l.Nom, l.Prenom) as num, p.`id_prioritaire`, l.id_licencier, l.Nom, l.Prenom FROM `res_prioritaires` p LEFT JOIN `res_licenciers` l USING(`id_licencier`) WHERE `id_creneau` = :id_creneau ORDER BY l.Nom, l.Prenom");
+    $database->query("SELECT ROW_NUMBER() OVER (ORDER BY l.Nom, l.Prenom) as num, p.`id_prioritaire`, l.id_licencier, l.Nom, l.Prenom FROM `res_prioritaires` p LEFT JOIN `res_licencies` l USING(`id_licencier`) WHERE `id_creneau` = :id_creneau ORDER BY l.Nom, l.Prenom");
     $database->bind(':id_creneau', $r['id_creneau'], PDO::PARAM_INT);
     $resultLic = $database->resultSet();
         

@@ -20,7 +20,7 @@ function GetNomByNumLicence($numLicence, $lenNom = 25)
     global $database;
     
     // Recherche des informations sur le joueur connexté
-    $sql = sprintf("SELECT Nom, Prenom FROM res_licenciers WHERE id_licencier=%d", $numLicence );
+    $sql = sprintf("SELECT Nom, Prenom FROM res_licencies WHERE id_licencier=%d", $numLicence );
     
     $database->query($sql);
     $result = $database->single();
@@ -41,7 +41,7 @@ function GetOuvreurs()
 {
     global $database;
     
-    $database->query("SELECT `id_licencier`,  `Nom`,  `Prenom` FROM `res_licenciers` WHERE Ouvreur = 'Oui' ORDER BY Nom, Prenom;");
+    $database->query("SELECT `id_licencier`,  `Nom`,  `Prenom` FROM `res_licencies` WHERE Ouvreur = 'Oui' ORDER BY Nom, Prenom;");
     $result = $database->resultSet();
     
     $ret = array();

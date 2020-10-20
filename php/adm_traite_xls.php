@@ -95,13 +95,13 @@ if( isset($_POST['page']) ) // si formulaire soumis
                         }
                                                                 
                         // Recherche si l'enregistrement existe
-                        $database->query("SELECT `id_licencier`, `Telephone`,`Email` FROM `res_licenciers` WHERE `id_licencier` = :id_licencier");
+                        $database->query("SELECT `id_licencier`, `Telephone`,`Email` FROM `res_licencies` WHERE `id_licencier` = :id_licencier");
                         $database->bind(':id_licencier', $id_licencier);
                         $result = $database->single();
                         
                         // Non -> Création
                         if($result === false) {
-                            $database->query('INSERT INTO `res_licenciers` (`id_licencier`, `Civilite`, `Nom`, `Prenom`, `Telephone`, `Email`) VALUES (:id_licencier, :Civilite, :Nom, :Prenom, :Telephone, :Email);');
+                            $database->query('INSERT INTO `res_licencies` (`id_licencier`, `Civilite`, `Nom`, `Prenom`, `Telephone`, `Email`) VALUES (:id_licencier, :Civilite, :Nom, :Prenom, :Telephone, :Email);');
                             $msg = "Créé(e) !";
                         } else {
                             // Oui -> Update
@@ -114,7 +114,7 @@ if( isset($_POST['page']) ) // si formulaire soumis
                             if(strlen($Email) == 0 && strlen($result['Email'] > 0) )
                                 $Email = $result['Email'];
                                             
-                            $database->query('UPDATE `res_licenciers` SET `Civilite` = :Civilite, `Nom` = :Nom, `Prenom` = :Prenom, `Telephone` = :Telephone, `Email` = :Email WHERE `id_licencier` = :id_licencier');
+                            $database->query('UPDATE `res_licencies` SET `Civilite` = :Civilite, `Nom` = :Nom, `Prenom` = :Prenom, `Telephone` = :Telephone, `Email` = :Email WHERE `id_licencier` = :id_licencier');
                             $msg = "Modifié(e) !";
                         }
                         

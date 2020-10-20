@@ -23,7 +23,7 @@
  */
 
 // Recherche si l'enregistrement existe
-$database->query("SELECT id_licencier, Ouvreur, Admin, Actif FROM `res_licenciers` WHERE `id_licencier` = :id");
+$database->query("SELECT id_licencier, Ouvreur, Admin, Actif FROM `res_licencies` WHERE `id_licencier` = :id");
 $database->bind(':id', $_GET['addLicence']);
 $result = $database->single();
 
@@ -35,7 +35,7 @@ $prenom = ucfirst(strtolower($_GET['addPrenom']));
 
 // Non -> Création
 if($result === false) {
-    $database->query('INSERT INTO `res_licenciers` (`id_licencier`, `Civilite`, `Nom`, `Surnom`, `Prenom`, `Equipe`, `Telephone`, `Email`, `Ouvreur`, `Admin`, `Actif`) VALUES (:id_licencier, :Civilite, :Nom, :Surnom, :Prenom, :Equipe, :Telephone, :Email, :Ouvreur, :Admin, :Actif);');
+    $database->query('INSERT INTO `res_licencies` (`id_licencier`, `Civilite`, `Nom`, `Surnom`, `Prenom`, `Equipe`, `Telephone`, `Email`, `Ouvreur`, `Admin`, `Actif`) VALUES (:id_licencier, :Civilite, :Nom, :Surnom, :Prenom, :Equipe, :Telephone, :Email, :Ouvreur, :Admin, :Actif);');
     if($civiliteMr)
     {
         $title = "Licencié créé !";
@@ -48,7 +48,7 @@ if($result === false) {
     }
 } else {
     // Oui -> Update
-    $database->query('UPDATE `res_licenciers` SET `Civilite` = :Civilite, `Nom` = :Nom, `Surnom` = :Surnom, `Prenom` = :Prenom, `Equipe` = :Equipe, `Telephone` = :Telephone, `Email` = :Email, `Ouvreur` = :Ouvreur, `Admin` = :Admin, `Actif` = :Actif WHERE `id_licencier` = :id_licencier');
+    $database->query('UPDATE `res_licencies` SET `Civilite` = :Civilite, `Nom` = :Nom, `Surnom` = :Surnom, `Prenom` = :Prenom, `Equipe` = :Equipe, `Telephone` = :Telephone, `Email` = :Email, `Ouvreur` = :Ouvreur, `Admin` = :Admin, `Actif` = :Actif WHERE `id_licencier` = :id_licencier');
     if($civiliteMr)
     {
         $title = "Licencié modifié !";

@@ -9,7 +9,7 @@
 $tpl->assign( 'titre', '<i class="far fa-chart-bar"></i> Statistiques');
 
 // Recherche du nombre total de licencié actif
-$database->query("SELECT COUNT(*) count FROM `res_licenciers` WHERE Actif = 'Oui'");
+$database->query("SELECT COUNT(*) count FROM `res_licencies` WHERE Actif = 'Oui'");
 $result = $database->single();
 
 $total = $result['count'];

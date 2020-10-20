@@ -8,7 +8,7 @@
  */
 
 // Liste des licenciers
-$database->query("SELECT * FROM res_licenciers ORDER BY Nom, Prenom");
+$database->query("SELECT * FROM res_licencies ORDER BY Nom, Prenom");
 $result = $database->resultSet();
 
 $ret = '{ "data": [';

@@ -8,7 +8,7 @@
  * $_GET['id_prioritaire'] = id_prioritaire
  */
 
-// Suppression dans  res_prioritaire et res_licenciers
+// Suppression dans  res_prioritaire et res_licencies
 $database->query("DELETE FROM `res_prioritaires` WHERE `id_prioritaire` = :id");
 $database->bind(':id', intval($_GET['id_prioritaire']));
 $database->execute();

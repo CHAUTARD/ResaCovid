@@ -18,13 +18,13 @@ $result = $database->single();
 
 if($result === false || $result['Nbr'] == 0)
 {
-    // Suppression dans  res_prioritaire et res_licenciers
+    // Suppression dans  res_prioritaire et res_licencies
     $database->query("DELETE FROM `res_creneaux` WHERE `id_creneau` = :id");
 }
 else
 {
     // sinon
-    // res_licenciers Actif = Non et Suppression dans res_prioritaire
+    // res_licencies Actif = Non et Suppression dans res_prioritaire
     $database->query("UPDATE `res_creneaux` SET `Actif` = 'Non' WHERE `id_creneau` = :id");
 }
 $database->bind(':id', $idCreneau);
