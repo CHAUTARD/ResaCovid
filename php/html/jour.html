@@ -1,6 +1,6 @@
 <!-- jour.html 
-	Version : 1.0.1
-	Date : 2020-10-12
+	Version : 1.0.2
+	Date : 2020-10-20
 -->
 
 {include="header"}
@@ -209,13 +209,17 @@
 		           data: form.serialize(), // serializes the form's elements.
 		           success: function(response) { 
 		        	   	var data = $.parseJSON(response);
-						$.alert({
+		        	   	$.confirm({
 							columnClass: 'medium',
 						    title: data.title,
-						    content: data.content
-						});
-		        	   	
-		        	   	location.reload();
+						    content: data.content,
+						    buttons: {
+						        Ok: function () {
+									// Rechargement des données
+									location.reload();
+						        }
+						    }
+						})
 		    	   } 
 			    })   
 			})
