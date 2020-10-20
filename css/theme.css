@@ -55,6 +55,11 @@ div.ColVis {
 }
 
 /*************************************************************
+ * %odification de la couleur du table.hover dans creneau
+ *************************************************************/
+.table-hover-color tbody tr:hover td, .table-hover-color tbody tr:hover th { background-color: #e3f2fd; });
+
+/*************************************************************
  * Tableau des jours
  *************************************************************/
 

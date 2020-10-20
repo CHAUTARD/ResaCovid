@@ -38,11 +38,28 @@
 				<div class="tab-content" id="v-pills-tabContent">				 
 					{loop="$creneaux"}
 					<div class="tab-pane fade{$value.ShowActive}" id="v-pills-{$value.id_creneau}" role="tabpanel" aria-labelledby="v-pills-{$value.id_creneau}">
-						<ul class="list-group">
-							{loop="$value.Licenciers"}
-							<li class="list-group-item"><button onclick="DelPrioritaire({$value.id_prioritaire})"><i class="far fa-trash-alt"></i></button> Lic : {$value.id_licencier}, {$value.Nom} {$value.Prenom}</li>
-							{/loop}
-						</ul>
+						<table class="table table-striped table-bordered table-hover table-hover-color">
+							<thead>
+								<tr>
+									<th scope="col">#</th>
+									<th scope="col">Licence</th>
+									<th scope="col">Nom</th>
+									<th scope="col">Prenom</th>
+									<th scope="col">Supp.</th>
+								</tr>
+							</thead>
+							<tbody>
+								{loop="$value.Licenciers"}
+								<tr>
+									<th scope="row">{$value.num}</th>
+									<td>{$value.id_licencier}</td>
+									<td>{$value.Nom}</td>
+									<td>{$value.Prenom}</td>
+									<td><button onclick="DelPrioritaire({$value.id_prioritaire})"><i class="far fa-trash-alt"></i></button></td>
+								</tr>
+								{/loop}
+							</tbody>
+						</table>
 					</div>
 					{/loop}
 				</div>
@@ -74,16 +91,22 @@ $(document).ready(
 					});
 	
 					// Rechargement des données
-					document.reload(true);
+					location.reload();
 	           }
 		    })    
 		});
 		
 		// Modification du champ id_creneau caché en fonction de l'onglet actif
 		{loop="$creneaux"}
-		$('#v-tab-{$value.id_creneau}').click(function(){ $('#id_creneau').val({$value.id_creneau}); });
+		$('#v-tab-{$value.id_creneau}').click(function(){ 
+			$('#id_creneau').val({$value.id_creneau});
+			// Send Ajax request to backend.php, with src set as "img" in the POST data
+		    $.ajax({
+				type: "GET",
+				url: "admin.php?page=save_idCreneau&idCreneau={$value.id_creneau}"
+		    })
+		});
 		{/loop}
-	}
 );
 	
 // Suppression d'un prioritaire
@@ -93,17 +116,15 @@ function DelPrioritaire(id_prioritaire) {
        url: "admin.php?page=delete_prioritaire",	
        dataType : 'json',
        data: { id_prioritaire: id_prioritaire},
-       success: function(response) { 
-    	   	var data = $.parseJSON(response);
-    	   	
+       success: function(response) {     	   	
 			$.alert({
 				columnClass: 'medium',
-			    title: data.title,
-			    content: data.content
+			    title: 'Enregistrement supprimé !',
+			    content: "Le licencié n'est plus prioritaire sur ce créneau."
 			});
-			
+					
 			// Rechargement de la page
-        	location.reload(true);
+        	location.reload();
        }
     })
 }

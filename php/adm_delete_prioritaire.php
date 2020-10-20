@@ -13,8 +13,5 @@ $database->query("DELETE FROM `res_prioritaires` WHERE `id_prioritaire` = :id");
 $database->bind(':id', intval($_GET['id_prioritaire']));
 $database->execute();
 
-die(json_encode(array(
-    'title' => 'Enregistrement supprimé !',
-    'content' => "Le licencié n'est plus prioritaire sur ce créneau."
-)));
+die(true);
 ?>

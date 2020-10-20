@@ -32,11 +32,10 @@ $result = $database->resultSet();
 
 $creneaux = array();
 
-$actif = true;
 foreach($result as $r)
 {
     // Recherche des licenciers prioritaire pour ce créneau
-    $database->query("SELECT p.`id_prioritaire`, l.id_licencier, l.Nom, l.Prenom FROM `res_prioritaires` p LEFT JOIN `res_licenciers` l USING(`id_licencier`) WHERE `id_creneau` = :id_creneau ORDER BY l.Nom, l.Prenom");
+    $database->query("SELECT ROW_NUMBER() OVER (ORDER BY l.Nom, l.Prenom) as num, p.`id_prioritaire`, l.id_licencier, l.Nom, l.Prenom FROM `res_prioritaires` p LEFT JOIN `res_licenciers` l USING(`id_licencier`) WHERE `id_creneau` = :id_creneau ORDER BY l.Nom, l.Prenom");
     $database->bind(':id_creneau', $r['id_creneau'], PDO::PARAM_INT);
     $resultLic = $database->resultSet();
         
@@ -44,6 +43,10 @@ foreach($result as $r)
         $NbrJoueur = 0;
     else 
         $NbrJoueur = count($resultLic);
+    
+    // Si la variable session n'est pas défini
+    if ( ! isset($_SESSION['idCreneau']))
+        $_SESSION['idCreneau'] = $r['id_creneau'];
     
     $creneaux[] = array(
         'id_creneau' => $r['id_creneau'],
@@ -53,14 +56,12 @@ foreach($result as $r)
         'Nbr_Place' => '(' . $NbrJoueur . '/' . $r['Nbr_Place'] . ')',
         'Disabled' => $NbrJoueur == 0 ? ' disabled' : '',
         'Licenciers' => $resultLic,
-        'Active' => $actif ? ' active' : '',
-        'ShowActive' => $actif ? ' show active' : ''
+        'Active' => $_SESSION['idCreneau'] == $r['id_creneau'] ? ' active' : '',
+        'ShowActive' => $_SESSION['idCreneau'] == $r['id_creneau'] ? ' show active' : ''
     );
     
-    if($actif === true)
+    if($_SESSION['idCreneau'] == $r['id_creneau'])
         $tpl->assign('id_creneau', $r['id_creneau'] );
-        
-    $actif = false;
 }
 
 $tpl->assign('creneaux', $creneaux );
