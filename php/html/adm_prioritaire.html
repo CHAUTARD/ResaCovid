@@ -84,14 +84,17 @@ $(document).ready(
 				success: function(response) { 
 					var data = $.parseJSON(response);
 					
-					$.alert({
+					$.confirm({
 						columnClass: 'medium',
 					    title: data.title,
-					    content: data.content
-					});
-	
-					// Rechargement des données
-					location.reload();
+					    content: data.content,
+					    buttons: {
+					        Ok: function () {
+								// Rechargement des données
+								location.reload();
+					        }
+					    }
+					})
 	           }
 		    })    
 		});
@@ -118,14 +121,17 @@ function DelPrioritaire(id_prioritaire) {
        dataType : 'json',
        data: { id_prioritaire: id_prioritaire},
        success: function(response) {     	   	
-			$.alert({
+			$.confirm({
 				columnClass: 'medium',
 			    title: 'Enregistrement supprimé !',
-			    content: "Le licencié n'est plus prioritaire sur ce créneau."
-			});
-					
-			// Rechargement de la page
-        	location.reload();
+			    content: "Le licencié n'est plus prioritaire sur ce créneau.",
+			    buttons: {
+			        Ok: function () {
+						// Rechargement des données
+						location.reload();
+			        }
+			    }
+			})
        }
     })
 }
