@@ -112,7 +112,7 @@ foreach($result as $r)
     }
       
     // Recherche des numeros de licence des inscripts pour ce créneau
-    $database->query("SELECT l.id_licencier, CONCAT( l.Prenom, ' ', l.Nom) as PN  FROM `res_reservations` r LEFT JOIN `res_licencies` l ON r.id_licencier = l.id_licencier WHERE `id_creneau` = :id_creneau AND `iDate` = :iDate AND r.Ouvreur = 'Non' ORDER BY Nom, Prenom;");
+    $database->query("SELECT l.id_licencier, r.id_reservation, CONCAT( l.Prenom, ' ', l.Nom) as PN  FROM `res_reservations` r LEFT JOIN `res_licencies` l ON r.id_licencier = l.id_licencier WHERE `id_creneau` = :id_creneau AND `iDate` = :iDate AND r.Ouvreur = 'Non' ORDER BY Nom, Prenom;");
     $database->bind(':id_creneau', $r['id_creneau']);
     $database->bind(':iDate', $iDate);
     $resultJoueur = $database->resultSet();
@@ -132,11 +132,11 @@ foreach($result as $r)
     {             
         if($rj['id_licencier'] == $_SESSION['id_licencier'])
         {
-            $inscript[$i][] = array( 'mode' => 'MOD', 'nom' => $rj['PN']);
+            $inscript[$i][] = array( 'mode' => 'MOD', 'id_reservation' => $rj['id_reservation'], 'nom' => $rj['PN']);
             $dejaInscrit = true;
         }
         else
-            $inscript[$i][] = array( 'mode' => '---', 'nom' => $rj['PN']);
+            $inscript[$i][] = array( 'mode' => '---', 'id_reservation' => $rj['id_reservation'], 'nom' => $rj['PN']);
     }
         
     // Plus de places         

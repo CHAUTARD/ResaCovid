@@ -1,5 +1,7 @@
-/* vstt.js
-
+/** vstt.js
+ * 
+ * 		@version : 1.0.0
+ * 		@date : 2020-10-21
  */
 
 /** AddOuvreur
@@ -24,7 +26,11 @@ function AddOuvreur( yearNum, creneau) {
 	           var msg = $.parseJSON(msg);
 	           if(msg.success=='Oui')
 	           {
-	        	   alert(msg.data);
+	        	   $.alert({
+						columnClass: 'medium',
+				        title : 'Ajouter un ouvreur',
+				        content : msg.data
+					});
 	        	   
 	        	   // Rechargement de la page
 	        	   location.reload(true);
@@ -32,13 +38,21 @@ function AddOuvreur( yearNum, creneau) {
 	           }
 	           else
 	           {
-	               alert('Erreur sur le serveur !');
+	        	   $.alert({
+						columnClass: 'medium',
+				        title : 'Ajouter un ouvreur',
+				        content : 'Erreur sur le serveur !'
+					});
 	               return false;
 	           }
            },
 
            error : function(resultat, statut, erreur){
-        	   alert('Erreur lors de la mise à jour !');
+        	   $.alert({
+					columnClass: 'medium',
+			        title : 'Ajouter un ouvreur',
+			        content : 'Erreur lors de la mise à jour !'
+				});
            },
            
            complete : function(resultat, statut){
@@ -68,23 +82,28 @@ function AddJoueur( yearNum, creneau) {
            success : function(msg, statut){ // success est toujours en place, bien sûr !
 	           var msg = $.parseJSON(msg);
 	           if(msg.success=='Oui')
-	           {
-	        	   // Supprimé à la demande de Yves
-	        	   // alert(msg.data);
-	        	   
+	           {        	   
 	        	   // Rechargement de la page
 	        	   location.reload(true);
 	               return true;
 	           }
 	           else
 	           {
-	               alert('Erreur sur le serveur !');
+	        	   $.alert({
+						columnClass: 'medium',
+				        title : 'Ajouter un joueur',
+				        content : 'Erreur sur le serveur !'
+					});
 	               return false;
 	           }
            },
 
            error : function(resultat, statut, erreur){
-        	   alert('Erreur lors de la mise à jour !');
+        	   $.alert({
+					columnClass: 'medium',
+			        title : 'Ajouter un joueur',
+			        content : 'Erreur lors de la mise à jour !'
+				});
            },
            
            complete : function(resultat, statut){
@@ -108,14 +127,18 @@ function DelCreneau( yearNum, creneau) {
          data:{
       	   page:'delete_creneau',
       	   iDate: yearNum,
-      	   iCreneau: creneau
+      	   idCreneau: creneau
          },
          
          success : function(msg, statut){ // success est toujours en place, bien sûr !
 	           var msg = $.parseJSON(msg);
 	           if(msg.success=='Oui')
 	           {
-	        	   alert(msg.data);
+	        	   $.alert({
+						columnClass: 'medium',
+				        title : "Suppression d'un créneau",
+				        content : msg.data
+					});
 	        	   
 	        	   // Rechargement de la page
 	        	   location.reload(true);
@@ -123,13 +146,21 @@ function DelCreneau( yearNum, creneau) {
 	           }
 	           else
 	           {
-	               alert('Erreur sur le serveur !');
+	        	   $.alert({
+						columnClass: 'medium',
+				        title : "Suppression d'un créneau",
+				        content : 'Erreur sur le serveur !'
+					});
 	               return false;
 	           }
          },
 
          error : function(resultat, statut, erreur){
-      	   alert('Erreur lors de la mise à jour !');
+      	   $.alert({
+				columnClass: 'medium',
+		        title : "Suppression d'un créneau",
+		        content : 'Erreur lors de la mise à jour !'
+			})
          },
          
          complete : function(resultat, statut){

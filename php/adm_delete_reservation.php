@@ -19,5 +19,5 @@ $database->query("DELETE FROM `res_reservations` WHERE `id_reservation` = :id_re
 $database->bind(':id_reservation', $_GET['idReservation']);
 $database->execute();
 
-die (json_encode(array('success' => 'Oui', 'data' => "Suppression de la réservation !")) );
+die (true);
 ?>

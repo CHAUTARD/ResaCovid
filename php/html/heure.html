@@ -44,7 +44,7 @@
 						</div>
 						<ul class="list-group list-group-flush">
 						    {loop="$inscript.1"}
-						    	<li class="list-group-item">{if="$value.mode == 'MOD'"}<a href="#" onclick="DelCreneau( {$dayofyear}, {$idCreneau.1})" class="btn btn-primary" alt="Supprimer cette réservation" title="Supprimer cette réservation"> - </a>&nbsp;{/if}<i class="fas fa-table-tennis"></i> {$value.nom}</li>
+						    	<li class="list-group-item">{if="$value.mode == 'MOD'"}<a href="#" onclick="DelReservation({$value.id_reservation})" class="btn btn-primary" alt="Supprimer cette réservation" title="Supprimer cette réservation"> - </a>&nbsp;{/if}<i class="fas fa-table-tennis"></i> {$value.nom}</li>
 							{/loop}
 						</ul>
 					</div>
@@ -74,7 +74,7 @@
 						</div>
 						<ul class="list-group list-group-flush">
 						    {loop="$inscript.2"}
-						    	<li class="list-group-item">{if="$value.mode == 'MOD'"}<a href="#" onclick="DelCreneau( {$dayofyear}, {$idCreneau.2})" class="btn btn-primary" alt="Supprimer cette réservation" title="Supprimer cette réservation"> - </a>&nbsp;{/if}<i class="fas fa-table-tennis"></i> {$value.nom}</li>
+						    	<li class="list-group-item">{if="$value.mode == 'MOD'"}<a href="#" onclick="DelReservation({$value.id_reservation})" class="btn btn-primary" alt="Supprimer cette réservation" title="Supprimer cette réservation"> - </a>&nbsp;{/if}<i class="fas fa-table-tennis"></i> {$value.nom}</li>
 							{/loop}
 						</ul>
 					</div>
@@ -105,7 +105,7 @@
 						</div>
 						<ul class="list-group list-group-flush">
 						    {loop="$inscript.3"}
-						    	<li class="list-group-item">{if="$value.mode == 'MOD'"}<a href="#" onclick="DelCreneau( {$dayofyear}, {$idCreneau.3})" class="btn btn-primary" alt="Supprimer cette réservation" title="Supprimer cette réservation"> - </a>&nbsp;{/if}<i class="fas fa-table-tennis"></i> {$value.nom}</li>
+						    	<li class="list-group-item">{if="$value.mode == 'MOD'"}<a href="#" onclick="DelReservation({$value.id_reservation})" class="btn btn-primary" alt="Supprimer cette réservation" title="Supprimer cette réservation"> - </a>&nbsp;{/if}<i class="fas fa-table-tennis"></i> {$value.nom}</li>
 							{/loop}
 						</ul>
 					</div>
@@ -140,7 +140,7 @@
 						</div>
 						<ul class="list-group list-group-flush">
 						    {loop="$inscript.4"}
-						    	<li class="list-group-item">{if="$value.mode == 'MOD'"}<a href="#" onclick="DelCreneau( {$dayofyear}, {$idCreneau.4})" class="btn btn-primary" alt="Supprimer cette réservation" title="Supprimer cette réservation"> - </a>&nbsp;{/if}<i class="fas fa-table-tennis"></i> {$value.nom}</li>
+						    	<li class="list-group-item">{if="$value.mode == 'MOD'"}<a href="#" onclick="DelReservation({$value.id_reservation})" class="btn btn-primary" alt="Supprimer cette réservation" title="Supprimer cette réservation"> - </a>&nbsp;{/if}<i class="fas fa-table-tennis"></i> {$value.nom}</li>
 							{/loop}
 						</ul>
 					</div>
@@ -170,7 +170,7 @@
 						</div>
 						<ul class="list-group list-group-flush">
 						    {loop="$inscript.5"}
-						    	<li class="list-group-item">{if="$value.mode == 'MOD'"}<a href="#" onclick="DelCreneau( {$dayofyear}, {$idCreneau.5})" class="btn btn-primary" alt="Supprimer cette réservation" title="Supprimer cette réservation"> - </a>&nbsp;{/if}<i class="fas fa-table-tennis"></i> {$value.nom}</li>
+						    	<li class="list-group-item">{if="$value.mode == 'MOD'"}<a href="#" onclick="DelReservation({$value.id_reservation})" class="btn btn-primary" alt="Supprimer cette réservation" title="Supprimer cette réservation"> - </a>&nbsp;{/if}<i class="fas fa-table-tennis"></i> {$value.nom}</li>
 							{/loop}
 						</ul>
 					</div>
@@ -201,7 +201,7 @@
 						</div>
 						<ul class="list-group list-group-flush">
 						    {loop="$inscript.6"}
-						    	<li class="list-group-item">{if="$value.mode == 'MOD'"}<a href="#" onclick="DelCreneau( {$dayofyear}, {$idCreneau.6})" class="btn btn-primary" alt="Supprimer cette réservation" title="Supprimer cette réservation"> - </a>&nbsp;{/if}{$value.nom}</li>
+						    	<li class="list-group-item">{if="$value.mode == 'MOD'"}<a href="#" onclick="DelReservation({$value.id_reservation})" class="btn btn-primary" alt="Supprimer cette réservation" title="Supprimer cette réservation"> - </a>&nbsp;{/if}{$value.nom}</li>
 							{/loop}
 						</ul>
 					</div>

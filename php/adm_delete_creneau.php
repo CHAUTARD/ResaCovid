@@ -10,10 +10,11 @@
  *	id_creneau_date : aRow[7]
  */
 
-$idCreneau = intval($_GET['id']);
+$idCreneau = intval($_GET['id_creneau']);
 
 // Si l'identifiant n'existe pas dans res_reservations
-$database->query('SELECT COUNT(*) as Nbr FROM res_reservations WHERE id_creneau = ' . $idCreneau);
+$database->query('SELECT COUNT(*) as Nbr FROM res_reservations WHERE id_creneau = :id_creneau');
+$database->bind(':id', $idCreneau, PDO::PARAM_INT);
 $result = $database->single();
 
 if($result === false || $result['Nbr'] == 0)
@@ -27,7 +28,7 @@ else
     // res_licencies Actif = Non et Suppression dans res_prioritaire
     $database->query("UPDATE `res_creneaux` SET `Actif` = 'Non' WHERE `id_creneau` = :id");
 }
-$database->bind(':id', $idCreneau);
+$database->bind(':id', $idCreneau, PDO::PARAM_INT);
 $database->execute();
 
 die(true);
