@@ -1,6 +1,6 @@
 <!-- jour.html 
-	Version : 1.0.2
-	Date : 2020-10-20
+	Version : 1.0.3
+	Date : 2021-06-11
 -->
 
 {include="header"}
@@ -22,7 +22,6 @@
 						<div class="col-md-10 mx-auto">
 							<div class="modal-body">
 								<form class="was-validated" id="id_form_save_licencier" method="get">
-									<input type="hidden" name="page" value="adm_add_licencier" />
 									<div class="form-group row">
 										<div class="col-sm-6">
 											<label for="addLicence" class="col-form-label">N° Licence : </label>
@@ -91,8 +90,8 @@
 									</div>
 
 									<div class="modal-footer">
-										<button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-										<button type="submit" class="btn btn-primary">Sauver</button>
+										<button class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+										<input type="submit" class="btn btn-primary" value="Sauver">
 									</div>
 
 								</form>
@@ -192,9 +191,11 @@
 <script>
 	$(document).ready(
 		function() {
-			var table = $('#tReservation')).DataTable({
+			/*
+			var table = $('#tReservation').DataTable({
 				columnDefs : [ { targets: 0, visible : false } ]
 			 });
+			*/
 			    
 			// this is the id of the form
 			$("#id_form_save_licencier").submit(function(e) {
@@ -205,11 +206,12 @@
 			    
 			    $.ajax({
 		           type: "GET",
-		           url: "index.php",
+		           url: "admin.php?page=add_licencier",
 		           data: form.serialize(), // serializes the form's elements.
 		           success: function(response) { 
 		        	   	var data = $.parseJSON(response);
-		        	   	$.confirm({
+		        	   	
+		        	   	$.alert({
 							columnClass: 'medium',
 						    title: data.title,
 						    content: data.content,
