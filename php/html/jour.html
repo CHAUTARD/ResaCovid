@@ -1,6 +1,6 @@
 <!-- jour.html 
-	Version : 1.0.3
-	Date : 2021-06-11
+	Version : 1.0.4
+	Date : 2021-06-15
 -->
 
 {include="header"}
@@ -104,61 +104,58 @@
 	</div>
 
 
-	<div class="container bg-light">	
+	<div class="container-sm">	
 		<div class="alert alert-dark">
 			<div class="row">
 				<div class="col-1 align-self-start"><img width="96" height="96" src="img/logo.gif" text="{#LOGO_TITLE#}" alt="{#LOGO_TITLE#}"></div>
-	        	<div class="col text-center"><h1 class="text-white">Choix du jour</h1></div>   
-				<div class="col-3 align-self-end"><h6 class="text-right">{$now}</h6></div>
+	        	<div class="col">&nbsp;</div>   
+				<div class="col-4 align-self-end"><h6 class="text-center">{$now}</h6></div>
 	      	</div>
 	    </div>
 
-		<br />
-	    <div class="alert alert-info text-center">
-    		<h4>Bonjour, {$licencier.Prenom} {$licencier.Nom} 
-    			<button type="button" class="btn {$btn}" data-toggle="modal" title="{$btnMsg}" data-trigger="hover" data-target="#adherentModal">
-    				<i class="far fa-address-card fa-2x"></i>
-    			</button>						
-    		</h4>
+
+	    <div class="alert alert-info text-center mt-2 mb-2">
+    		Bonjour, {$licencier.Prenom}&nbsp; 
+   			<button type="button" class="btn {$btn}" data-toggle="modal" title="{$btnMsg}" data-trigger="hover" data-target="#adherentModal"><i class="far fa-address-card fa-2x"></i></button>						
 		</div> 
+					
+		<div class="mt-2 mb-2 rounded bg-light p-1">
+		
+		<center><i class="fas fa-calendar-alt fa-2x"> {$mois}</i></center>
 		<br />
 					
-		<center><i class="fas fa-calendar-alt fa-3x"> {$mois}</i></center>
-		<br />
-					
-       	<table class="table table-style">
-       		<thead class="thead-light">
-				<tr>
-				  <th scope="col">Lun</th>
-				  <th scope="col">Mar</th>
-				  <th scope="col">Mer</th>
-				  <th scope="col">Jeu</th>
-				  <th scope="col">Ven</th>
-				  <th scope="col">Sam</th>
-				  <th scope="col">Dim</th>
-				</tr>
-			</thead>
+		
+		<!-- Version bootstrap -->
+		
+		<div class="container mx-auto p-0">
+       		<div class="row  justify-content-md-center">
+				  <div class="col-1 m-1 h6">Lun</div>
+				  <div class="col-1 m-1 h6">Mar</div>
+				  <div class="col-1 m-1 h6">Mer</div>
+				  <div class="col-1 m-1 h6">Jeu</div>
+				  <div class="col-1 m-1 h6">Ven</div>
+				  <div class="col-1 m-1 h6">Sam</div>
+				  <div class="col-1 m-1 h6">Dim</div>
+			</div>
 						
-			<tbody>
-				<tr>{$lgn1}</tr>
-				<tr>{$lgn2}</tr>
-				<tr>{$lgn3}</tr>
-			</tbody>
-		</table>
+			<div class="">
+				<div class="row justify-content-md-center">{$lgn1}</div>
+				<div class="row justify-content-md-center">{$lgn2}</div>
+				<div class="row justify-content-md-center">{$lgn3}</div>
+			</div>
+		</div>
 		
-		{if="count($reservations) == 0"}
-		<br />
-		{else}
-		<h4>Mes réservations :</h4>
+		{if="count($reservations) > 0"}
+		<h3>Mes réservations :</h3>
 		
-		<table class="table">
+		<table class="table table-sm">
 		  <thead>
 		    <tr>
-		    	<th>Date</th>
-				<th>Salle</th>
-				<th>Heure début</th>
-				<th>Heure Fin</th>
-				<th>Action</th>
+		    	<th scope="col">Date</th>
+				<th scope="col">Salle</th>
+				<th scope="col">Heure début</th>
+				<th scope="col">Heure Fin</th>
+				<th scope="col">Action</th>
 		    </tr>
 		  </thead>
 			<tbody>
@@ -175,13 +172,13 @@
 		</table>
 		{/if}
 	</div>
+	</div>
 	
-	<br />
 	<div class="container">
-		<div class="row bg-transparent">
-			<div class="col-4 bg-light p-2">
+		<div class="row mx-auto">
+			<div class="col-4 pl-0 py-2">
 				<form>
-			     	<button class="btn btn-outline-warning btn-lg btn-block" type="submit"><i class="fas fa-sign-out-alt"></i> Quitter</button>
+			     	<button class="btn btn-outline-warning btn-block  bg-light" type="submit"><i class="fas fa-sign-out-alt"></i> Quitter</button>
 			   </form>
 			</div>
 		</div>

@@ -1,8 +1,8 @@
 <?php
 /** adm_prioritaire.php
  * 
- *      @version : 1.0.4
- *      @date : 2020-10-16
+ *      @version : 1.0.5
+ *      @date : 2021-06-17
  * 
  * Administration des prioritaires
  */
@@ -11,9 +11,7 @@ $tpl->assign( 'titre', '<i class="fas fa-table-tennis"></i> Les prioritaires');
 
 // Recherche si l'enregistrement existe
 
-//$database->query("SELECT cr.* FROM `res_creneaux` cr LEFT JOIN `res_creneaux_date` crd USING(id_creneau) WHERE :date BETWEEN crd.Date_Debut AND crd.Date_Fin AND `Libre` = 'Non' ORDER BY cr.`Jour`, cr.`Heure_Debut`");
-$database->query("SELECT * FROM `res_creneaux` WHERE `Actif` = 'Oui' AND `Libre` = 'Non' ORDER BY `Jour`, `Heure_Debut`");
-//$database->bind(':date', date('Y-m-d'));
+$database->query("SELECT * FROM `res_creneaux` cr LEFT JOIN `res_salles` sa USING (id_salle) WHERE `Actif` = 'Oui' AND `Libre` = 'Non' ORDER BY `Jour`, `Heure_Debut`");
 $result = $database->resultSet();
 
 /*

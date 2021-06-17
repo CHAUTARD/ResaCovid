@@ -1,15 +1,18 @@
 <?php
 /** adm_creneau.php
- *  @version : 1.0.5
- *  @date : 2020-10-16
+ *  @version : 1.0.7
+ *  @date : 2021-06-17
  *  
  * Administration des creneaux
  */
 
 $tpl->assign( 'titre', '<i class="far fa-calendar-alt"></i> Les creneaux');
 
-// // Recherche tous les enregistrements existent
-$database->query("SELECT * FROM `res_creneaux` ORDER BY `Jour` ASC, `Heure_Debut`");
+// Liste des salles
+include_once 'get_salles.php';
+
+// Recherche tous les enregistrements existent
+$database->query("SELECT * FROM `res_creneaux` cr LEFT JOIN `res_salles` sa USING (id_salle) WHERE sa.Active = 'Oui' ORDER BY `Jour` ASC, `Heure_Debut`");
 $result = $database->resultSet();
 
 $ret = array();
@@ -19,6 +22,7 @@ foreach($result as $r)
     $ret[] = array(
         'id_creneau' => $r['id_creneau'],
         'Nom' => $r['Nom'],
+        'id_salle' => $r['id_salle'],
         'Salle' => $r['Salle'],
         'nJour' => $r['Jour'],
         'Jour' => $JOUR_FR[ $r['Jour'] ],
@@ -35,6 +39,7 @@ foreach($result as $r)
 
 $tpl->assign('ouvreurs', GetOuvreurs());
 $tpl->assign('creneaux', $ret );
+$tpl->assign('salles', $salles );
 
 //draw the template
 $tpl->draw('adm_creneau');

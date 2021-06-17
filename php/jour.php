@@ -64,7 +64,7 @@ $result = $database->resultSet();
 // false => Pas de créneau
 $aJour = array( 1 => false, false,false,false,false,false,false);
 foreach($result as $r)
-        $aJour[$r['jj']] = true;
+   $aJour[$r['jj']] = true;
     
 // Mois Année avec la première lettre en majuscule
 $tpl->assign('mois', ucfirst(strftime('%B %Y')));
@@ -181,7 +181,8 @@ $iDate = date('yz');
 $database->query("SELECT re.`id_reservation`, re.`id_creneau`, re.`iDate`, cr.`Salle`, cr.`Heure_Debut`, cr.`Heure_Fin` ".
 "FROM `res_reservations` re LEFT JOIN `res_creneaux` cr USING (id_creneau) " .
 "LEFT JOIN `res_creneaux_date` crd USING(id_creneau) " .
-"WHERE :date BETWEEN crd.Date_Debut AND crd.Date_Fin AND re.`id_licencier` = :id_licencier AND re.`Ouvreur` = 'Non' AND cr.`iDate` >= :iDate"); */
+"WHERE :date BETWEEN crd.Date_Debut AND crd.Date_Fin AND re.`id_licencier` = :id_licencier AND re.`Ouvreur` = 'Non' AND cr.`iDate` >= :iDate"); 
+*/
 $database->query("SELECT re.`id_reservation`, re.`id_creneau`, re.`iDate`, cr.`Salle`, cr.`Heure_Debut`, cr.`Heure_Fin` ".
     "FROM `res_reservations` re LEFT JOIN `res_creneaux` cr USING (id_creneau) " .
     "WHERE cr.`Actif` = 'Oui' AND re.`id_licencier` = :id_licencier AND re.`Ouvreur` = 'Non' AND cr.`iDate` >= :iDate");
@@ -243,36 +244,36 @@ function setTd($value='&nbsp;', $etat='OFF' )
     {
         case 'ON':
             if( $aJour[$N] === false)
-                return sprintf('<td><button class="btn btn-warning" title="Pas de créneau sur ce jour" disabled>%s</button></td>', $J);
+                return sprintf('<div class="col-1 m-1"><button class="btn btn-sm btn-warning" title="Pas de créneau sur ce jour" disabled>%s</button></div>', $J);
             break;
             
         case 'TODAY':
             if( $aJour[$N] === false)
-                return sprintf('<td><button class="btn btn-success" title="Pas de créneau aujourd\'hui" disabled>%s</button></td>', $J);
+                return sprintf('<div class="col-1 m-1"><button class="btn btn-sm btn-success" title="Pas de créneau aujourd\'hui" disabled>%s</button></div>', $J);
             break;
             
         case 'OFF':
-            return sprintf('<td><button class="btn btn-secondary" title="Pas disponible" disabled>%s</button></td>', $J);  
+            return sprintf('<div class="col-1 m-1"><button class="btn btn-sm btn-secondary" title="Pas disponible" disabled>%s</button></div>', $J);  
     }
         
         
     switch($etat)
     {
         case 'ON':
-            return sprintf('<td>'.
-            '<form action="index.php" method="get">'.
+            return sprintf(
+            '<form action="index.php" method="get" class="col-1 m-1">'.
                 '<input type="hidden" name="page" value="heure">'.
                 '<input type="hidden" name="jour" id="jour" value="%s">'.
-                '<button type="submit" class="btn btn-outline-primary" title="Voir les créneaux">%s</button>'.
-                '</form></td>', $value, $J );
+                '<button type="submit" class="btn btn-sm btn-outline-primary" title="Voir les créneaux">%s</button>'.
+                '</form>', $value, $J );
             
         case 'TODAY':
-            return sprintf('<td>'.
-                '<form action="index.php" method="get">'.
+            return sprintf(
+                '<form action="index.php" method="get" class="col-1 m-1">'.
                 '<input type="hidden" name="page" value="heure">'.
                 '<input type="hidden" name="jour" id="jour" value="%s">'.
-                '<button type="submit" class="btn btn-outline-success" title="Voir les créneaux du jour">%s</button>'.
-                '</form></td>', $value, $J);
+                '<button type="submit" class="btn btn-sm btn-outline-success" title="Voir les créneaux du jour">%s</button>'.
+                '</form>', $value, $J);
     }
     return false;
 }

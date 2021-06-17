@@ -1,6 +1,6 @@
 <!-- adm_creneau.html 
-	Version : 1.0.5
-	Date : 2020-10-16
+	Version : 1.0.6
+	Date : 2021-06-17
 -->
 
 {include="adm_header"}
@@ -48,7 +48,8 @@
 					<div class="row">
 						<div class="col-md-10 mx-auto">
 							<div class="modal-body">
-								<form class="was-validated" id="id_form_save_creneau" method="get">						
+								<form class="was-validated" id="id_form_save_creneau" method="get">		
+									<input type="hidden" id="addCreneau" name="addCreneau" value="0" >			
 									<div class="form-group row">
 										<div class="col-sm-6">
 											<label for="addNom" class="col-form-label">Appéllation : </label>
@@ -60,12 +61,9 @@
 										<div class="col-sm-6">
 											<label class="col-form-label">Salle : </label>
 											<select class="browser-default custom-select" id="addSalle" name='addSalle'>
-											  <option value="{#SALLE1#}" selected>{#SALLE1#}</option>
-											  {if="NBR_SALLE > 1"}<option value="{#SALLE2#}">{#SALLE2#}</option>{/if}
-											  {if="NBR_SALLE > 2"}<option value="{#SALLE3#}">{#SALLE3#}</option>{/if}
-											  {if="NBR_SALLE > 3"}<option value="{#SALLE4#}">{#SALLE4#}</option>{/if}
-											  {if="NBR_SALLE > 4"}<option value="{#SALLE5#}">{#SALLE5#}</option>{/if}
-											  {if="NBR_SALLE > 5"}<option value="{#SALLE6#}">{#SALLE6#}</option>{/if}
+												{loop="$salles"}
+											  		<option value="{$value.id_salle}">{$value.Salle}</option>
+											  	{/loop}
 											</select>
 										</div>
 									</div>
@@ -94,7 +92,7 @@
 
 									<div class="form-group row">
 										<div class="col-sm-6">
-											<label class="col-form-label">Heure de début : <i class="far fa-clock"></i></label>
+											<label class="col-form-label">Heure de fin : <i class="far fa-clock"></i></label>
       										<input type="time" class="form-control" id="addHeureFin" name="addHeureFin" min="09:00" max="23:00" required>
 											<div class="valid-feedback">Valide</div>
 											<div class="invalid-feedback">Erreur dans la saisie.</div> 
@@ -137,12 +135,12 @@
 									
 									<div class="form-group row">
 										<div class="col-sm-6">
-											<label class="col-form-label">Actif : </label>
 											<div>
-												<input type="radio" name="addActif" class="radioOuiNon demoyes" id="ActifOui" value="Oui" checked>
+												<label class="col-form-label">Actif : </label><br />
+												<input type="radio" name="addActif" class="radioOuiNon demoyes" id="addActifOui" value="Oui" checked>
 												<label for="addActifOui">Oui</label> 
-												<input type="radio" name="addActif" class="radioOuiNon demono" id="ActifNon" value="Non">
-												 <label for="addActifNon">Non</label>
+												<input type="radio" name="addActif" class="radioOuiNon demono" id="addActifNon" value="Non">
+												<label for="addActifNon">Non</label>
 											</div>
 										</div>
 									</div>
@@ -165,6 +163,7 @@
 				<tr>
 					<th scope="col">Ind.</th>
 					<th scope="col">Nom</th>
+					<th scope="col">Id_Salle</th>
 					<th scope="col">Salle</th>
 					<th scope="col">nJour</th>
 					<th scope="col">Jour</th>
@@ -184,6 +183,7 @@
 				<tr{if="$value.Actif == 'Non'"} class="table-warning"{/if}>
 					<td>{$value.id_creneau}</td>
 					<td>{$value.Nom}</td>
+					<td>{$value.id_salle}</td>
 					<td>{$value.Salle}</td>
 					<td>{$value.nJour}</td>
 					<td>{$value.Jour}</td>
@@ -205,18 +205,20 @@
 	<script>
 		const ID_CRENEAU = 0;
 		const NOM = 1;
-		const SALLE = 2;
-		const NJOUR = 3;
-		const JOUR = 4;
-		const HEURE_DEBUT = 5;
-		const HEURE_FIN = 6;
-		const LIBRE = 7;
-		const ID_OUVREUR = 8;
-		const OUVREUR = 9;
-		const PLACE = 10;
-		const ORD = 11;
-		const ACTIF = 12;
-		const LICENCE = 13;
+		const ID_SALLE = 2;
+		const SALLE = 3;
+		const NJOUR = 4;
+		const JOUR = 5;
+		const HEURE_DEBUT = 6;
+		const HEURE_FIN = 7;
+		const LIBRE = 8;
+		const ID_OUVREUR = 9;
+		const OUVREUR = 10;
+		const PLACE = 11;
+		const ORD = 12;
+		const ACTIF = 13;
+		const LICENCE = 14;
+		
 		
 		$(document).ready(
 			function() {
@@ -230,18 +232,18 @@
 					select : true,
 					order: [[ JOUR, 'asc'],[ HEURE_DEBUT, 'asc']],
 					columnDefs : [
-						{ targets: [ ID_CRENEAU, NJOUR, ID_OUVREUR, ACTIF ], visible : false, searchable : false },
+						{ targets: [ ID_CRENEAU, NJOUR, ID_OUVREUR, ACTIF, ID_SALLE, ORD ], visible: false, searchable: false },
 						{ targets: [ JOUR ], orderData: [ NJOUR, HEURE_DEBUT ] },
 						{ targets: [ ID_CRENEAU, HEURE_DEBUT, HEURE_FIN, ACTIF, LICENCE ], className: "text-center", width: "4%" },
-						{ targets: [ ID_CRENEAU, NJOUR, ID_OUVREUR, PLACE, ORD ], className: "text-right" },
+						{ targets: [ ID_CRENEAU, NJOUR, ID_OUVREUR, PLACE, ORD, ID_SALLE ], className: "text-right" },
 						{ targets: [ LICENCE ], searchable: false, orderable: false}
 					],
 					buttons : [{
 						text : '<i class="far fa-plus-square"></i> Ajouter un créneau',
 						action : function( e, dt, node,	config) {
-							$('#addCreneau').val('');
+							$('#addCreneau').val('0');
 							$('#addNom').val('');
-							$('#addSalle').val('Coppée');
+							$('#addSalle').val(1);
 							$('#addJour').val(1);
 							$('#addHeureDebut').val('');
 							$('#addHeureFin').val('');
@@ -249,7 +251,7 @@
 							$('#addIdOuvreur').val(0);
 							$('#addNbrPlace').val(12);
 							$('#addOrd').val(0);
-							$('#addActifOui').prop('checked',true);
+							$('#addActifOui').val('Oui');
 							
 							// Ouverture d'une fenêtre modale
 							$('#creneauModal').modal('show');
@@ -263,7 +265,7 @@
 								// Transfert des données dans le formulaire
 								$('#addCreneau').val(rowData[ID_CRENEAU]);
 								$('#addNom').val(rowData[NOM]);
-								$("#addSalle option[value='" + rowData[SALLE] + "']").prop('selected', true);
+								$("#addSalle option[value='" + rowData[ID_SALLE] + "']").prop('selected', true);
 								$('#addJour').val(rowData[NJOUR]);
 								$('#addHeureDebut').val(rowData[HEURE_DEBUT].replace('h',':'));
 								$('#addHeureFin').val(rowData[HEURE_FIN].replace('h',':'));	
@@ -364,7 +366,7 @@
 				    
 				    $.ajax({
 						type: "GET",
-						url: "admin.php?page=add_creneau&id_creneau=0",	
+						url: "admin.php?page=add_creneau",	
 						data: form.serialize(), // serializes the form's elements.
 						success: function(response) {
 							var data = $.parseJSON(response);

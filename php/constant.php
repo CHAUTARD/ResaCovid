@@ -1,7 +1,7 @@
 <?php
 /** constant.php
-  @version : 1.0.3
-  @date : 2020-10-14
+  @version : 1.0.4
+  @date : 2021-06-15
 */
 
 // Acces à la base de données
@@ -14,11 +14,6 @@ define('DB_PASSWORD', 'resVSTT01'); // the password to be used with the username
 define('LOGO_TITLE', 'Le logo de VSTT');
 define('NOMBRE_EQUIPE', 9);
 define('NUMERO_CLUB', '08930113'); // FFTT
-
-// Nombre et nom des salles
-define('NBR_SALLE', 2);
-define('SALLE1', 'Copée');
-define('SALLE2', 'Tcheuméo');
 
 // Date de début de saison et de fin de saison
 define('ANNEE_SAISON', 2020);

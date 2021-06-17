@@ -1,30 +1,29 @@
 <!-- heure.html
-		@version : 1.0.1
-		@date : 2020-10-12
+	@version : 1.0.2
+	@date : 2021-06-16
  -->
 
 {include="header"}
 
 <body>
-	<div class="container">	
+	<div class="container-sm">	
 		<div class="alert alert-dark">
 			<div class="row">
 				<div class="col-1 align-self-start"><img width="96" height="96" src="img/logo.gif" text="{#LOGO_TITLE#}" alt="{#LOGO_TITLE#}"></div>
-	        	<div class="col text-center"><h1 class="text-white">Choix de l'horaire du {$datechoisie}</h1></div>   
+				<div class="col">&nbsp;</div>   
+	        	<div class="col-4 align-self-end"><h6 class="text-center">Horaire {$datechoisie}</h6></div>   
 	      	</div>
 	    </div>
 		
-		<br />
-	    <div class="alert alert-info text-center">
-    		<h4>Bonjour, {$joueur}</h4>
+		<div class="alert alert-info text-center mt-2 mb-2">
+    		Bonjour, {$prenom}&nbsp; 
 		</div> 
-		<br />
 			
 		{if="$horaire.1 > ''"}					
 		<div class="row">
 			<div class="col-sm-4">	
 				<div class="card">
-					<div class="card-header">
+					<div class="card-header" style="border: 5px solid #{$btBgColor.1};">
 						<h5>
 							<button class="btn {$btColor.1}" type="button" data-toggle="collapse" data-target="#collapse1" aria-expanded="{$expand.1}" aria-controls="collapse1">
 								<i class="fap fa fa-plus"></i> <i class="fas fa-{if="$isLibre.1 == 'Oui'"}door-open{else}table-tennis{/if}"></i> {$horaire.1}</button>
@@ -54,7 +53,7 @@
 			{if="$horaire.2 > ''"}
 			<div class="col-sm-4">
 				<div class="card">
-					<div class="card-header">
+					<div class="card-header" style="border: 5px solid #{$btBgColor.2};">
 						<h5>
 							<button class="btn {$btColor.2}" type="button" data-toggle="collapse" data-target="#collapse2" aria-expanded="{$expand.2}" aria-controls="collapse2">
 								<i class="fap fa fa-plus"></i> <i class="fas fa-{if="$isLibre.2 == 'Oui'"}door-open{else}table-tennis{/if}"></i>  {$horaire.2}</button>
@@ -85,7 +84,7 @@
 			{if="$horaire.3 > ''"}
 			<div class="col-sm-4">
 				<div class="card">
-					<div class="card-header">
+					<div class="card-header" style="border: 5px solid #{$btBgColor.3};">
 						<h5>
 							<button class="btn {$btColor.3}" type="button" data-toggle="collapse" data-target="#collapse3" aria-expanded="{$expand.3}" aria-controls="collapse3">
 								<i class="fap fa fa-plus"></i> <i class="fas fa-{if="$isLibre.3 == 'Oui'"}door-open{else}table-tennis{/if}"></i>  {$horaire.3}</button>
@@ -120,7 +119,7 @@
 		<div class="row">
 			<div class="col-sm-4">
 				<div class="card">
-					<div class="card-header">
+					<div class="card-header" style="border: 5px solid #{$btBgColor.4};">
 						<h5>
 							<button class="btn {$btColor.4}" type="button" data-toggle="collapse" data-target="#collapse4" aria-expanded="{$expand.4}" aria-controls="collapse4">
 								<i class="fap fa fa-plus"></i> <i class="fas fa-{if="$isLibre.4 == 'Oui'"}door-open{else}table-tennis{/if}"></i>  {$horaire.4}</button>
@@ -150,7 +149,7 @@
 			{if="$horaire.5 > ''"}
 			<div class="col-sm-4">
 				<div class="card">
-					<div class="card-header">
+					<div class="card-header" style="border: 5px solid #{$btBgColor.5};">
 						<h5>
 							<button class="btn {$btColor.5}" type="button" data-toggle="collapse" data-target="#collapse5" aria-expanded="{$expand.5}" aria-controls="collapse5">
 								<i class="fap fa fa-plus"></i> <i class="fas fa-{if="$isLibre.5 == 'Oui'"}door-open{else}table-tennis{/if}"></i>  {$horaire.5}</button>
@@ -181,7 +180,7 @@
 			{if="$horaire.6 > ''"}
 			<div class="col-sm-4">
 				<div class="card">
-					<div class="card-header">
+					<div class="card-header" style="border: 5px solid #{$btBgColor.6};">
 						<h5>
 							<button class="btn {$btColor.6}" type="button" data-toggle="collapse" data-target="#collapse6" aria-expanded="{$expand.6}" aria-controls="collapse6">
 								<i class="fap fa fa-plus"></i> <i class="fas fa-{if="$isLibre.6 == 'Oui'"}door-open{else}table-tennis{/if}"></i>  {$horaire.6}</button>
@@ -211,21 +210,22 @@
 			
 		</div>
 		{/if}
-		
-		<br />
-		<div class="row bg-transparent justify-content-between">
-			<div class="col-4 bg-light p-2">
-				<form action="index.php" method="post">
-			     	<button class="btn btn-outline-warning btn-lg btn-block" type="submit"><i class="fas fa-sign-out-alt"></i> Quitter</button>
-			   </form>
-			</div>
-			<div class="col-4 bg-light p-2">
-				<form action="index.php" method="post">
-					<input type="hidden" name="nom" value="{$nom}">
-					<input type="hidden" name="licence" value="{$id_licencier}">
-					<input type="hidden" name="page" value="jour">
-			     	<button class="btn btn-outline-warning btn-lg btn-block" type="submit"><i class="fa fa-repeat" aria-hidden="true"></i> Continuer</button>
-			   </form>
+			
+		<div class="container">
+			<div class="row mx-auto">
+				<div class="col-4 pl-0 py-2">
+					<form>
+				     	<button class="btn btn-outline-warning btn-block bg-light" type="submit"><i class="fas fa-sign-out-alt"></i> Quitter</button>
+				   </form>
+				</div>
+				<div class="col-4 pl-0 py-2">
+					<form action="index.php" method="post">
+						<input type="hidden" name="nom" value="{$nom}">
+						<input type="hidden" name="licence" value="{$id_licencier}">
+						<input type="hidden" name="page" value="jour">
+				     	<button class="btn btn-outline-warning btn-block bg-light" type="submit"><i class="fa fa-repeat" aria-hidden="true"></i> Retour</button>
+				   </form>
+				</div>
 			</div>
 		</div>
 	</div>

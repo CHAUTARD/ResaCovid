@@ -56,7 +56,7 @@ $date->sub( new DateInterval( "P1D" ));
 $DernierJourMoisMoins1  = $date->format('d');
 
 // Recherche des créneaux d'entrainement de tous les jours de la semaine
-$database->query("SELECT `id_creneau`, `Salle`, `Jour`, `Heure_Debut`, `Heure_Fin`, `Libre`,  `Nbr_Place` FROM `res_creneaux` ORDER BY `Jour`, `Heure_Debut`");
+$database->query("SELECT `id_creneau`, `Salle`, `Jour`, `Heure_Debut`, `Heure_Fin`, `Libre`,  `Nbr_Place` FROM `res_creneaux` cr LEFT JOIN `res_salles` sa USING (id_salle) ORDER BY `Jour`, `Heure_Debut`");
 $result = $database->resultSet();
 
 // initialisation du tableau

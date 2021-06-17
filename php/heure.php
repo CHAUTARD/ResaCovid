@@ -1,14 +1,14 @@
 <?php
 /** heure.php
- * @version 1.0.4
- * @date : 2020-10-15
+ * @version 1.0.5
+ * @date : 2021-06-16
  */
 
 // $_GET
 //   'jour' => string '2020-09-16' (length=10)
 
 // Recherche des informations sur le joueur connecté
-$database->query("SELECT Nom, Prenom, Ouvreur FROM res_licencies WHERE id_licencier = :id_licencier");
+$database->query("SELECT Prenom, Ouvreur FROM res_licencies WHERE id_licencier = :id_licencier");
 $database->bind('id_licencier', $_SESSION['id_licencier'], PDO::PARAM_INT);
 $result = $database->single();
 
@@ -20,13 +20,12 @@ if( $result === false)
     exit;
 }
 
-$joueur = sprintf('%s %s', $result['Prenom'], $result['Nom']);
-$tpl->assign('joueur', $joueur);
-$tpl->assign('nom', $result['Nom']);
+$tpl->assign('prenom', $result['Prenom']);
 $tpl->assign('id_licencier', $_SESSION['id_licencier']);
 
 // Couleur du bouton pour le créneau
 $btColor = array( 1 => 'btn-primary', 'btn-primary', 'btn-primary', 'btn-primary', 'btn-primary', 'btn-primary');
+$btBgColor = array( 1 => '007bff', '007bff', '007bff', '007bff', '007bff', '007bff');
 
 // Expand, colapse
 $expand = array( 1 => 'true', 'true', 'true', 'true', 'true', 'true');
@@ -57,10 +56,9 @@ $tpl->assign('dayofyear', $iDate);
 $dJour = date_format( $date, 'N');
 
 // Recherche des créneaux pour le jour choisi
-//$database->query('SELECT cr.`id_creneau`, cr.`Salle`, cr.`Heure_Debut`, cr.`Heure_Fin`, cr.`id_ouvreur`, cr.`Nbr_Place`, cr.`Libre`, cr.`Ord`  FROM `res_creneaux` cr LEFT JOIN `res_creneaux_date` crd USING(id_creneau) WHERE :date BETWEEN crd.Date_Debut AND crd.Date_Fin AND cr.`Jour` = :jour ORDER BY cr.Heure_Debut;');
-$database->query('SELECT `id_creneau`, `Salle`, `Heure_Debut`, `Heure_Fin`, `id_ouvreur`, `Nbr_Place`, `Libre`, `Ord`  FROM `res_creneaux` WHERE `Actif` = "Oui"  AND `Jour` = :jour ORDER BY Heure_Debut;');
-//$database->bind(':date', date('Y-m-d'));
+$database->query('SELECT `id_creneau`, sa.`Salle`, sa.`Color`, `Heure_Debut`, `Heure_Fin`, `id_ouvreur`, `Nbr_Place`, `Libre`, cr.`Ord`  FROM `res_creneaux` cr LEFT JOIN `res_salles` sa USING (id_salle) WHERE cr.`Actif` = "Oui" AND sa.`Active` = "Oui" AND cr.`Jour` = :jour ORDER BY cr.Heure_Debut;');
 $database->bind(':jour', $dJour);
+
 $result = $database->resultSet();
 
 // les creneaux
@@ -82,6 +80,9 @@ $inscript = array();
 $i = 1;
 foreach($result as $r)
 {
+    // Couleur de fond du header de la card
+    $btBgColor[$i] = $r['Color'];
+    
     // Nombre de places disponibles
     $nbrPlace = $r['Nbr_Place'];
 
@@ -204,6 +205,7 @@ foreach($result as $r)
 }
 
 $tpl->assign('btColor', $btColor );
+$tpl->assign('btBgColor', $btBgColor );
 $tpl->assign('expand', $expand );
 $tpl->assign('isOuvreur', $isOuvreur );
 $tpl->assign('horaire', $horaire);

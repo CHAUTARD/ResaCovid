@@ -1,14 +1,14 @@
 <?php
 /*  adm_add_creneau.php 
  * 
- *  @version : 1.0.2
- *  @date : 2020-10-15
+ *  @version : 1.0.3
+ *  @date : 2021-06-17
  *  
  *  Ajout d'un creneau
  *  
     array (size=11)
       'page' => string 'add_creneau' (length=11)
-      'id_creneau' => string '0' (length=1)
+      'addCreneau' => string '0' (length=1)
       'addNom' => string 'Mardi avant les grands' (length=22)
       'addSalle' => string 'Copée' (length=6)
       'addJour' => string '2' (length=1)
@@ -19,35 +19,37 @@
       'addNbrPlace' => string '10' (length=2)
       'addOrd' => string '0' (length=1)
       'addActif' => string 'Oui' (length=3)
- */
-
-$result = false;
-
-// Recherche si l'enregistrement existe
-if($_GET['id_creneau'] > 0) {
-    $database->query("SELECT `id_creneau` FROM `res_creneaux` WHERE `id_creneau` = :id");
-    $database->bind(':id', $_GET['addLicence']);
-    $result = $database->single();
-}    
-
-// Non -> Création
-if($result === false) {
-    $database->query('INSERT INTO `res_creneaux` (`id_creneau`, `Nom`, `Salle`, `Jour`, `Heure_Debut`, `Heure_Fin`, `Libre`, `id_ouvreur`, `Nbr_Place`, `Ord`, `Actif`) VALUES (NULL, :Nom, :Salle, :Jour, :HeureDebut, :HeureFin, :Libre, :LicenceOuvreur, :NbrPlace, :addOrd, :addActif);');
+      
+        page      add_creneau
+        addCreneau    2
+        addNom  	Loisir
+        addSalle        1
+        addJour     	1
+        addHeureDebut   20:00
+        addHeureFin 	21:00
+        addLibre    	Non
+        addOuvreur      93396
+        addNbrPlace 	12
+        addOrd      	1
+        addActif    	Non
+*/
+ 
+// 0 -> Création
+if($_GET['addCreneau'] == 0) {
+    $database->query('INSERT INTO `res_creneaux` (`id_creneau`, `Nom`, `id_salle`, `Jour`, `Heure_Debut`, `Heure_Fin`, `Libre`, `id_ouvreur`, `Nbr_Place`, `Ord`, `Actif`) VALUES (NULL, :Nom, :id_salle, :Jour, :HeureDebut, :HeureFin, :Libre, :LicenceOuvreur, :NbrPlace, :addOrd, :addActif);');
     $title = "Créneau créé !";
     $content = "Le nouveau créneau vient d'être créé";
     
 } else {
     // Oui -> Update
-    $database->query('UPDATE `res_creneaux` SET `Nom` = :Nom, `Salle` = :Salle, `Jour` = :Jour, `Heure_Debut` = :HeureDebut, `Heure_Fin` = :HeureFin, `Libre` = :Libre, `id_ouvreur` = :LicenceOuvreur, `Nbr_Place` = :NbrPlace, `Ord` = :addOrd, `Actif` = :addActif WHERE `id_creneau` = :id_creneau');
-    $database->bind(':id_creneau', $_GET['id_creneau']);
+    $database->query('UPDATE `res_creneaux` SET `Nom` = :Nom, `id_salle` = :id_salle, `Jour` = :Jour, `Heure_Debut` = :HeureDebut, `Heure_Fin` = :HeureFin, `Libre` = :Libre, `id_ouvreur` = :LicenceOuvreur, `Nbr_Place` = :NbrPlace, `Ord` = :addOrd, `Actif` = :addActif WHERE `id_creneau` = :id_creneau');
+    $database->bind(':id_creneau', $_GET['addCreneau']);
     $title = "Créneau modifié !";
     $content = "Les modifications ont été apportés au créneau.";
 }
 
-$Actif = isset($_GET['addActif']) ? $_GET['addActif']: $result['Actif'];
-
 $database->bind(':Nom', $_GET['addNom']);
-$database->bind(':Salle', $_GET['addSalle']);
+$database->bind(':id_salle', $_GET['addSalle']);
 $database->bind(':Jour', $_GET['addJour'], PDO::PARAM_INT); 
 $database->bind(':HeureDebut', $_GET['addHeureDebut']);
 $database->bind(':HeureFin', $_GET['addHeureFin']);
@@ -55,17 +57,8 @@ $database->bind(':Libre', $_GET['addLibre']);
 $database->bind(':LicenceOuvreur', $_GET['addOuvreur'], PDO::PARAM_INT);
 $database->bind(':NbrPlace', $_GET['addNbrPlace'], PDO::PARAM_INT);
 $database->bind(':addOrd', $_GET['addOrd'], PDO::PARAM_INT);
-$database->bind(':Actif', $Actif);
+$database->bind(':addActif', $_GET['addActif']);
 $database->execute();
-
-/* Non -> Création de l'enregistrement dans res_creneau-date avec les valeurs par défaut
-if($result === false) {
-    $database->query('INSERT INTO `res_creneaux_date` (`id_creneau_date`, `id_creneau`, `Date_Debut`, `Date_Fin`) VALUES (NULL, :id_creneau, :DateDebut, :DateFin)');
-    $database->bind(':id_creneau', $database->lastInsertId());
-    $database->bind(':DateDebut', ANNEE_SAISON . '-' . DATE_DEBUT_SAISON);
-    $database->bind(':DateFin', ANNEE_SAISON . '-' . DATE_FIN_SAISON); 
-}
-*/
 
 Die(json_encode(array(
     'title' => $title,
