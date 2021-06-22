@@ -1,0 +1,238 @@
+<!-- adm_salle.html 
+	Version : 1.0.1
+	Date : 2021-06-22
+-->
+
+{include="adm_header"}
+
+<body>
+    <div class="container bg-light">
+    
+		{include="adm_navbar"}
+		
+		<!--  Fenêtre modale Ajouter ou modifier une salle  -->
+		<div class="modal fade" id="salleModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-xl" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title"><i class="far fa-map"></i> Fiche salle</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+
+				<div class="container py-5">
+					<div class="row">
+						<div class="col-md-10 mx-auto">
+							<div class="modal-body">
+								<form class="was-validated" id="id_form_save_salle" method="get">		
+									<input type="hidden" id="addIdSalle" name="addIdSalle" value="0" >			
+									<div class="form-group row">
+										<div class="col-sm-6">
+											<label for="addNom" class="col-form-label">Appéllation : </label>
+											<input type="text" class="form-control" id="addSalle" name="addSalle" placeholder="Appellation de la salle" required>
+											<div class="valid-feedback">Valide</div>
+											<div class="invalid-feedback">Erreur dans la saisie.</div>
+										</div>
+
+										<div class="col-sm-6">
+											<label class="col-form-label">Couleur : <i class="far fa-clock"></i></label>
+      										<input type="color" class="form-control" id="addColor" name="addColor" value="#00FF00" required>
+											<div class="valid-feedback">Valide</div>
+											<div class="invalid-feedback">Erreur dans la saisie.</div>      										
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<div class="col-sm-6">
+											<label class="col-form-label">Ordre : </label>
+											<input type="number" min="0" class="form-control" id="addOrd" name="addOrd" placeholder="Ordre d'affichage des salles en croissant" required>
+										</div>
+
+										<div class="col-sm-6">
+											<div>
+												<label class="col-form-label">Active : </label><br />
+												<input type="radio" name="addActive" class="radioOuiNon demoyes" id="addActiveOui" value="Oui" checked>
+												<label for="addActiveOui">Oui</label> 
+												<input type="radio" name="addActive" class="radioOuiNon demono" id="addActiveNon" value="Non">
+												<label for="addActiveNon">Non</label>
+											</div>
+										</div>
+									</div>
+
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+										<button type="submit" class="btn btn-primary">Sauver</button>
+									</div>
+								</form>
+							</div>
+						</div>						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+		<table id="tSalles" class="table table-striped table-bordered">
+			<thead>
+				<tr>
+					<th scope="col">Ind.</th>
+					<th scope="col">Salle</th>
+					<th scope="col">Couleur</th>
+					<th scope="col">Ord</th>
+					<th scope="col">Active</th>
+					<th scope="col">Nbr.</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop="$salles"}
+				<tr{if="$value.Nbr > 0"} class="table-danger"{else}{if="$value.Active == 'Non'"} class="table-warning"{/if}{/if}>
+					<td>{$value.id_salle}</td>
+					<td>{$value.Salle}</td>
+					<td style="background-color:{$value.Color}">{$value.Color}</td>
+					<td>{$value.Ord}</td>
+					<td>{$value.Active}</td>
+					<td>{$value.Nbr}</td>
+				</tr>
+				{/loop}
+			</tbody>
+		</table>
+	</div>
+	
+	<script>
+		const ID_SALLE = 0;
+		const SALLE = 1;
+		const COLOR = 2;
+		const ORD = 3;
+		const ACTIVE = 4;
+		const NBR = 5;
+		
+		
+		$(document).ready(
+			function() {
+				var table = $('#tSalles').DataTable({
+					scrollY : '75vh',
+					scrollX : false,
+					scrollCollapse : true,
+					paging : false,
+					language : { url : "js/French.json" },
+					dom : 'Bfrtip',
+					select : true,
+					order: [[ ORD, 'asc']],
+					columnDefs : [
+						{ targets: [ SALLE, COLOR, ACTIVE ], className: "text-center", width: "4%" },
+						{ targets: [ ID_SALLE, NBR ], className: "text-right" }
+					],
+					buttons : [{
+						text : '<i class="far fa-plus-square"></i> Ajouter une salle',
+						action : function( e, dt, node,	config) {
+							$('#addIdSalle').val('0');
+							$('#addSalle').val('');
+							$('#addColor').val('#00FF00');
+							$('#addOrd').val(1);
+							$('#addActiveOui').val('Oui');
+							
+							// Ouverture d'une fen�tre modale
+							$('#salleModal').modal('show');
+						}
+					}, {
+						text : '<i class="far fa-edit"></i> Modifier',
+						enabled : false,
+						action : function( e, dt, node, config) {
+							var rowData = dt.row({ selected : true }).data();
+
+								// Transfert des données dans le formulaire
+								$('#addIdSalle').val(rowData[ID_SALLE]);
+								$('#addSalle').val(rowData[SALLE]);
+								$('#addColor').val(rowData[COLOR]);
+								$('#addOrd').val(rowData[ORD]);
+								if (rowData[ACTIVE] == 'Oui')
+									$('#addActiveOui').prop('checked',true);
+								else
+									$('#addActiveNon').prop('checked',true);
+
+								// Ouverture d'une fen�tre modale
+								$('#salleModal').modal('show');
+							}
+						}, {
+							text : '<i class="far fa-trash-alt"></i> Supprimer',
+							enabled : false,
+							action : function( e, dt, node, config) {
+								var aRow = table.row('.selected').data();
+								if (confirm("Confirmez vous la suppression de le salle "	+ aRow[SALLE] + " ?")) {
+									// AJAX Request
+									$.ajax({
+										url : 'admin.php',
+										type : 'GET',
+										data : {
+											page : 'delete_salle',
+											id : aRow[ID_SALLE]
+										},
+										success : function(response) {
+											table.row('.selected').remove().draw(false);
+										}
+									})
+								}
+							}
+						}, {
+							extend : 'pdfHtml5',
+							title: 'Liste des créneaux',
+							exportOptions: {
+			                    columns: [ ID_SALLE, SALLE, COLOR, ORD, ACTIVE ]
+			                },
+							text : '<i class="far fa-file-pdf"></i> PDF'
+						},
+						{
+							extend : 'colvis',
+							text : '<i class="far fa-eye"></i> Affiche/Cache colonne'
+						} 
+					],
+					bJQueryUI : true
+				});
+				
+				/* Désactivation des boutons Modifier, Supprimer */
+				table.on('select deselect', function() {
+					var selectedRows = table.rows({selected : true}).count();
+	
+					table.button(1).enable(selectedRows === 1);
+					table.button(2).enable(selectedRows === 1);
+					table.button(3).enable(selectedRows === 1);
+					
+					// La salle est utilisé dans plusieurs séances
+					if(selectedRows === 1) {
+						var rowData = table.rows( { selected: true } ).data()[0][NBR];
+						if (rowData > 0)
+							table.button(2).enable(false);
+					}
+				});
+										
+				// this is the id of the form
+				$("#id_form_save_salle").submit(function(e) {
+
+				    e.preventDefault(); // avoid to execute the actual submit of the form.
+
+				    var form = $(this);
+				    
+				    $.ajax({
+						type: "GET",
+						url: "admin.php?page=add_salle",	
+						data: form.serialize(), // serializes the form's elements.
+						success: function(response) {
+							var data = $.parseJSON(response);
+							$.alert({
+								columnClass: 'medium',
+							    title: data.title,
+							    content: data.content
+							});
+							
+							// Rechargement des données
+							location.reload();
+						}
+				    })   
+				})
+			}
+		)
+	</script>
+	
+</body>
+</html>	
