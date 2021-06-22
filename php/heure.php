@@ -1,7 +1,7 @@
 <?php
 /** heure.php
- * @version 1.0.5
- * @date : 2021-06-16
+ * @version 1.0.7
+ * @date : 2021-06-20
  */
 
 // $_GET
@@ -22,10 +22,11 @@ if( $result === false)
 
 $tpl->assign('prenom', $result['Prenom']);
 $tpl->assign('id_licencier', $_SESSION['id_licencier']);
+$tpl->assign('nom', $_SESSION['nom']);
 
 // Couleur du bouton pour le créneau
 $btColor = array( 1 => 'btn-primary', 'btn-primary', 'btn-primary', 'btn-primary', 'btn-primary', 'btn-primary');
-$btBgColor = array( 1 => '007bff', '007bff', '007bff', '007bff', '007bff', '007bff');
+$btBgColor = array( 1 => '#007bff', '#007bff', '#007bff', '#007bff', '#007bff', '#007bff');
 
 // Expand, colapse
 $expand = array( 1 => 'true', 'true', 'true', 'true', 'true', 'true');

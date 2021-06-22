@@ -3,13 +3,13 @@
  * 
  * Sélection du jour pour l'inscription à la réservation
  * 
- *  @version : 1.0.4
- *  @date : 2020-10-15
+ *  @version : 1.0.5
+ *  @date : 2021-06-18
  */
 
 /* Champ des tables de la base */
 
-$tpl->assign('version', '1.00' );
+$tpl->assign('version', '1.02' );
 
 $nom = strtoupper($_POST['nom']);
 
@@ -39,6 +39,7 @@ if( $result === false)
 }
 
 $_SESSION['id_licencier'] = $_POST['licence'];
+$_SESSION['nom'] = $result['Nom'];
 
 // Date du jour
 $tpl->assign('now', strftime('%A %d %B %Y'));

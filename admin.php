@@ -1,8 +1,8 @@
 <?php
 /* admin.php
  * 
- * @version : 1.0.2
- * @date : 2020-10-11
+ * @version : 1.0.3
+ * @date : 2021-06-20
  */
 
 // Rapporte les erreurs pour la DODEV. Les autres, vous n'aurez rien ! nada !!!
@@ -55,6 +55,7 @@ if(isset($_POST) && isset($_POST['page']))
         case 'adm_menu':
         case 'adm_licencier':
         case 'adm_creneau':
+        case 'adm_salle':
         case 'adm_priorite':
         case 'adm_prioritaire':
         case 'adm_reservation':
